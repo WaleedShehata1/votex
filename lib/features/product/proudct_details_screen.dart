@@ -172,24 +172,24 @@ class ProductDetailsScreen extends StatelessWidget {
             const SizedBox(height: 10),
 
             // Product Variations (Images)
-            SizedBox(
-              height: 60,
-              child: ListView(
-                scrollDirection: Axis.horizontal,
-                children: List.generate(
-                  4,
-                  (index) => Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 5),
-                    child: Image.asset(
-                      Images.gasCooker,
-                      width: 50,
-                      height: 50,
-                      fit: BoxFit.contain,
-                    ),
-                  ),
-                ),
-              ),
-            ),
+            // SizedBox(
+            //   height: 60,
+            //   child: ListView(
+            //     scrollDirection: Axis.horizontal,
+            //     children: List.generate(
+            //       4,
+            //       (index) => Padding(
+            //         padding: const EdgeInsets.symmetric(horizontal: 5),
+            //         child: Image.asset(
+            //           Images.gasCooker,
+            //           width: 50,
+            //           height: 50,
+            //           fit: BoxFit.contain,
+            //         ),
+            //       ),
+            //     ),
+            //   ),
+            // ),
 
             const SizedBox(height: 15),
 
