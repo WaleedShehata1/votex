@@ -97,6 +97,6 @@ class LoginControllerImp extends LoginController {
 
   @override
   goToForgetPassword() {
-    Get.to(ForgetPassword());
+    Get.to(const ForgetPassword());
   }
 }

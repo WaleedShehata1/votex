@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:votex/controller/LocalizationController.dart';
 
 import '../../../core/constants/colors.dart';
 import '../../../core/constants/dimensions.dart';
@@ -140,7 +139,8 @@ class LoginScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(
-                      padding: const EdgeInsets.all(Dimensions.paddingSizeExtraSmall),
+                      padding: const EdgeInsets.all(
+                          Dimensions.paddingSizeExtraSmall),
                       decoration: BoxDecoration(
                           border: Border.all(color: AppColors.colorFont),
                           borderRadius: BorderRadius.circular(
@@ -153,7 +153,8 @@ class LoginScreen extends StatelessWidget {
                       width: 10.w,
                     ),
                     Container(
-                      padding: const EdgeInsets.all(Dimensions.paddingSizeExtraSmall),
+                      padding: const EdgeInsets.all(
+                          Dimensions.paddingSizeExtraSmall),
                       decoration: BoxDecoration(
                           border: Border.all(color: AppColors.colorFont),
                           borderRadius: BorderRadius.circular(

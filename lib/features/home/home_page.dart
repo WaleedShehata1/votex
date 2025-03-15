@@ -6,7 +6,7 @@ import 'package:votex/core/constants/colors.dart';
 import 'package:votex/core/constants/dimensions.dart';
 
 import '../../core/constants/images.dart';
-import '../card/cardt_screen.dart';
+import '../cart/cart_screen.dart';
 import '../favorite/favorite_screen.dart';
 import '../store/store_screen.dart';
 import 'home_screen.dart';

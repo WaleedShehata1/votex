@@ -1,4 +1,7 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../core/constants/images.dart';
 
@@ -31,7 +34,7 @@ class Product extends StatelessWidget {
                     const BorderRadius.vertical(top: Radius.circular(10)),
                 child: Image.asset(
                   Images.washing, // Replace with actual image
-                  height: 120,
+                  height: 120.h,
                   width: double.infinity,
                   fit: BoxFit.cover,
                 ),

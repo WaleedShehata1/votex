@@ -7,8 +7,7 @@ import '../../core/constants/images.dart';
 import '../../core/constants/styles.dart';
 import '../../core/widget/custom_text_field.dart';
 import '../../core/widget/drop_down.dart';
-import '../../core/widget/drop_down_list.dart';
-import 'widget/product.dart';
+import '../drawer/drawer.dart';
 import 'widget/product_card.dart';
 
 class ProductListScreen extends StatefulWidget {
@@ -35,15 +34,21 @@ class _ProductListScreenState extends State<ProductListScreen> {
     "Microwave",
     "Washing Machine"
   ];
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.menu_outlined, color: Colors.black),
-          onPressed: () {},
+          onPressed: () {
+            setState(() {});
+            _scaffoldKey.currentState?.openDrawer();
+          },
         ),
         title: Container(
           padding:
@@ -151,12 +156,12 @@ class _ProductListScreenState extends State<ProductListScreen> {
           // Product Grid
           Expanded(
             child: GridView.builder(
-              padding: const EdgeInsets.all(16.0),
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              padding: EdgeInsetsDirectional.symmetric(horizontal: 15.w),
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
                 crossAxisSpacing: 10,
                 mainAxisSpacing: 10,
-                childAspectRatio: 0.82,
+                mainAxisExtent: 168.h,
               ),
               itemCount: 6, // Sample items count
               itemBuilder: (context, index) {
@@ -165,7 +170,6 @@ class _ProductListScreenState extends State<ProductListScreen> {
                   child: const ProductCard(
                     name: 'Washing Machine',
                     price: '10,675',
-                    oldPrice: '14,000',
                   ),
                 );
               },
@@ -173,6 +177,7 @@ class _ProductListScreenState extends State<ProductListScreen> {
           ),
         ],
       ),
+      drawer: const AppDrawer(),
     );
   }
 }

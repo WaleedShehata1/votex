@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -37,10 +38,14 @@ class AccountService extends GetxService {
           _handleBlockedAccount();
         }
       } else {
-        print("Error: ${response.statusCode}");
+        if (kDebugMode) {
+          print("Error: ${response.statusCode}");
+        }
       }
     } catch (e) {
-      print("Error checking account status: $e");
+      if (kDebugMode) {
+        print("Error checking account status: $e");
+      }
     }
   }
 

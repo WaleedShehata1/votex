@@ -32,7 +32,7 @@ class SpecialOfferSection extends StatelessWidget {
                     width: 10,
                   ),
                   GestureDetector(
-                    onTap: () => Get.toNamed(RouteHelper.ratedBrandsScreen),
+                    onTap: () => Get.toNamed(RouteHelper.specialOfferScreen),
                     child: const CircleAvatar(
                       maxRadius: 15,
                       backgroundColor: Colors.blue,
@@ -43,7 +43,7 @@ class SpecialOfferSection extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: 20),
           const Row(
             children: [
               OfferCard(

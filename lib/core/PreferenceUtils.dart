@@ -1,4 +1,4 @@
-// ignore_for_file: constant_identifier_names
+// ignore_for_file: constant_identifier_names, unused_element, file_names
 
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:async' show Future;

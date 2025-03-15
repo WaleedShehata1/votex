@@ -1,20 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:votex/core/helper/route_helper.dart';
+import 'package:votex/core/constants/images.dart';
 
-class RatedBrandsScreen extends StatelessWidget {
+import '../drawer/drawer.dart';
+import '../store/store_screen.dart';
+
+class RatedBrandsScreen extends StatefulWidget {
   const RatedBrandsScreen({super.key});
+
+  @override
+  State<RatedBrandsScreen> createState() => _RatedBrandsScreenState();
+}
+
+class _RatedBrandsScreenState extends State<RatedBrandsScreen> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       backgroundColor: Colors.white,
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: Colors.white,
         elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.menu, color: Colors.black),
-          onPressed: () {},
+          onPressed: () {
+            _scaffoldKey.currentState?.openDrawer();
+          },
         ),
         title: Container(
           padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
@@ -61,16 +75,17 @@ class RatedBrandsScreen extends StatelessWidget {
           ],
         ),
       ),
+      drawer: const AppDrawer(),
     );
   }
 
   // Function to build a single row of brands
   Widget _buildBrandRow() {
     List<Map<String, String>> brands = [
-      {'name': 'LG', 'image': 'assets/lg.png'},
-      {'name': 'SAMSUNG', 'image': 'assets/samsung.png'},
-      {'name': 'SHARP', 'image': 'assets/sharp.png'},
-      {'name': 'Fresh', 'image': 'assets/fresh.png'},
+      {'name': 'LG', 'image': Images.brand4},
+      {'name': 'SAMSUNG', 'image': Images.brand3},
+      {'name': 'SHARP', 'image': Images.brand2},
+      {'name': 'Fresh', 'image': Images.brand},
     ];
 
     return Padding(
@@ -82,7 +97,7 @@ class RatedBrandsScreen extends StatelessWidget {
               (brand) => Column(
                 children: [
                   GestureDetector(
-                    onTap: () => Get.toNamed(RouteHelper.specialOfferSection),
+                    onTap: () => Get.to(const ProductListScreen()),
                     child: CircleAvatar(
                       backgroundColor: Colors.white,
                       radius: 30,

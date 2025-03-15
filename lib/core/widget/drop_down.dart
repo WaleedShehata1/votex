@@ -40,7 +40,8 @@ class DefaultDropdown extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DropdownButton(
-      padding: EdgeInsetsDirectional.symmetric(horizontal: 2, vertical: 1),
+      padding:
+          const EdgeInsetsDirectional.symmetric(horizontal: 2, vertical: 1),
       icon: icon ?? const Icon(Icons.expand_more_sharp),
       iconSize: iconSize ?? 20,
       menuWidth: 120.w,

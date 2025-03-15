@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:votex/core/constants/images.dart';
 
 import 'widget/product_card.dart';
 
@@ -32,7 +33,7 @@ class ProductScreen extends StatelessWidget {
               // Product Image
               Center(
                 child: Image.asset(
-                  'assets/washing_machine.png', // Replace with actual image
+                  Images.gasCooker, // Replace with actual image
                   height: 180,
                 ),
               ),
@@ -80,7 +81,7 @@ class ProductScreen extends StatelessWidget {
                       style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.grey[300],
                           foregroundColor: Colors.black),
-                      child: Text("Add to Cart"),
+                      child: const Text("Add to Cart"),
                     ),
                   ),
                   const SizedBox(width: 10),
@@ -90,7 +91,7 @@ class ProductScreen extends StatelessWidget {
                       style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.green,
                           foregroundColor: Colors.white),
-                      child: Text("Buy Now"),
+                      child: const Text("Buy Now"),
                     ),
                   ),
                 ],
@@ -115,7 +116,7 @@ class ProductScreen extends StatelessWidget {
                   children: [
                     Positioned.fill(
                       child: Image.asset(
-                        'assets/video_thumbnail.png', // Replace with actual thumbnail
+                        Images.gasCooker, // Replace with actual thumbnail
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -139,7 +140,7 @@ class ProductScreen extends StatelessWidget {
               const SizedBox(height: 10),
 
               // Review Card
-              ReviewCard(),
+              const ReviewCard(),
             ],
           ),
         ),
@@ -179,8 +180,8 @@ class ReviewCard extends StatelessWidget {
                     Row(
                       children: List.generate(
                           4,
-                          (index) =>
-                              const Icon(Icons.star, color: Colors.amber, size: 16)),
+                          (index) => const Icon(Icons.star,
+                              color: Colors.amber, size: 16)),
                     ),
                   ],
                 ),
@@ -207,7 +208,6 @@ class ReviewCard extends StatelessWidget {
                   return const ProductCard(
                     name: 'Washing Machine',
                     price: '10,675',
-                    oldPrice: '14,000',
                   );
                 },
               ),

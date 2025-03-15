@@ -24,4 +24,14 @@ class Images {
   static const String iconShopping_cart = 'assets/images/shopping_cart.png';
   static const String iconShopping_cart2 = 'assets/images/shopping_cart2.png';
   static const String store2 = 'assets/images/store.png';
+  static const String shape = 'assets/images/shape.png';
+  static const String sensor = 'assets/images/sensor.png';
+  static const String brand = 'assets/images/brand.png';
+  static const String brand2 = 'assets/images/brand2.png';
+  static const String brand3 = 'assets/images/brand3.png';
+  static const String brand4 = 'assets/images/brand4.png';
+
+  //3D
+  static const String gasCooker3D =
+      'assets/3D/tripo_pbr_model_b03b5e3c-8470-422c-a15a-48ecc1f43967.glb';
 }

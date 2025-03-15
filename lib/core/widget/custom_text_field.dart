@@ -1,4 +1,4 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first, must_be_immutable
+// ignore_for_file: public_member_api_docs, sort_constructors_first, must_be_immutable, deprecated_member_use
 // ignore_for_file: unnecessary_null_comparison
 
 import 'package:flutter/material.dart';

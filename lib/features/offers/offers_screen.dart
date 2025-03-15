@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../core/constants/colors.dart';
+import '../../core/constants/dimensions.dart';
 import '../../core/constants/images.dart';
+import '../../core/widget/custom_button.dart';
 
 class SpecialOfferScreen extends StatelessWidget {
   const SpecialOfferScreen({super.key});
@@ -36,7 +40,7 @@ class SpecialOfferScreen extends StatelessWidget {
               children: [
                 _discountButton('All', isSelected: true),
                 _discountButton('10%'),
-                _discountButton('20%', isSelected: true),
+                _discountButton('20%', isSelected: false),
                 _discountButton('30%'),
                 _discountButton('40%'),
               ],
@@ -61,7 +65,7 @@ class SpecialOfferScreen extends StatelessWidget {
                   childAspectRatio: 0.75, // Aspect ratio of items
                 ),
                 itemBuilder: (context, index) {
-                  return const ProductCard();
+                  return const ProductCardOffer();
                 },
               ),
             ),
@@ -91,8 +95,8 @@ class SpecialOfferScreen extends StatelessWidget {
 }
 
 // Product Card Widget
-class ProductCard extends StatelessWidget {
-  const ProductCard({super.key});
+class ProductCardOffer extends StatelessWidget {
+  const ProductCardOffer({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -110,9 +114,9 @@ class ProductCard extends StatelessWidget {
             children: [
               Image.asset(
                 Images.refrigerators, // Change this to your actual image
-                height: 100,
+                height: 95.h,
                 width: double.infinity,
-                fit: BoxFit.cover,
+                fit: BoxFit.fitHeight,
               ),
               Positioned(
                 top: 5,
@@ -134,55 +138,70 @@ class ProductCard extends StatelessWidget {
           ),
           const SizedBox(height: 5),
 
-          // Product Name
-          const Text(
-            'Washing Machine',
-            style: TextStyle(fontWeight: FontWeight.bold),
-          ),
-          const SizedBox(height: 2),
-
-          // Price and Rating Row
+          const Align(
+              alignment: AlignmentDirectional.centerEnd,
+              child: Text("washing machine", style: TextStyle(fontSize: 14))),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text(
-                'EGP 10,675',
-                style: TextStyle(
-                    fontSize: 14,
-                    color: Colors.blue,
-                    fontWeight: FontWeight.bold),
-              ),
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
-                decoration: BoxDecoration(
+                padding: const EdgeInsetsDirectional.symmetric(
+                    horizontal: 5, vertical: 2),
+                decoration: const BoxDecoration(
                   color: Colors.orange,
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius: BorderRadiusDirectional.only(
+                    topEnd: Radius.circular(15),
+                    bottomEnd: Radius.circular(15),
+                  ),
                 ),
                 child: const Row(
                   children: [
                     Text('4.2',
-                        style: TextStyle(color: Colors.white, fontSize: 12)),
-                    Icon(Icons.star, color: Colors.white, size: 14),
+                        style: TextStyle(
+                          fontSize: 10,
+                          color: Colors.white,
+                        )),
+                    Icon(
+                      Icons.star,
+                      size: 15,
+                      color: Colors.white,
+                    )
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  children: [
+                    const Text(
+                      "12.566",
+                      style: TextStyle(
+                        fontSize: 10,
+                        decoration: TextDecoration.lineThrough,
+                        color: Colors.red,
+                      ),
+                    ),
+                    SizedBox(
+                      width: 2.w,
+                    ),
+                    const Text('EGP 10.675',
+                        style: TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.blue)),
                   ],
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 5),
-
-          // Add to Cart Button
-          SizedBox(
-            width: double.infinity,
-            child: ElevatedButton(
-              onPressed: () {},
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.blue,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8)),
-              ),
-              child: const Text('Add to cart',
-                  style: TextStyle(color: Colors.white)),
-            ),
+          CustomButton(
+            onPressed: () {},
+            buttonText: 'Add to cart',
+            boarderColor: AppColors.colorFont,
+            textColor: Colors.white,
+            width: 110,
+            height: 30,
+            radius: Dimensions.paddingSizeExtremeLarge,
           ),
         ],
       ),

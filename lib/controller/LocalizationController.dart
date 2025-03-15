@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -6,7 +8,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../core/constants/app_constants.dart';
 import '../core/constants/dimensions.dart';
 import '../core/helper/chache_helper.dart';
-import '../core/helper/route_helper.dart';
 import '../core/model/language_model.dart';
 
 class LocalizationController extends GetxController implements GetxService {

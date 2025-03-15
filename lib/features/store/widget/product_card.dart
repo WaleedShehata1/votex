@@ -4,7 +4,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../core/constants/colors.dart';
 import '../../../core/constants/dimensions.dart';
 import '../../../core/constants/images.dart';
-import '../../../core/shape/sale_shape.dart';
 import '../../../core/widget/custom_button.dart';
 
 class ProductCard extends StatelessWidget {
@@ -12,12 +11,10 @@ class ProductCard extends StatelessWidget {
     super.key,
     required this.name,
     required this.price,
-    required this.oldPrice,
   });
 
   final String name;
   final String price;
-  final String oldPrice;
 
   @override
   Widget build(BuildContext context) {
@@ -31,14 +28,14 @@ class ProductCard extends StatelessWidget {
         alignment: AlignmentDirectional.topCenter,
         children: [
           Padding(
-            padding: const EdgeInsetsDirectional.symmetric(vertical: 8),
+            padding: const EdgeInsetsDirectional.symmetric(vertical: 3),
             child: Column(
               mainAxisSize:
                   MainAxisSize.min, // Ensure it takes only necessary space
               children: [
                 Image.asset(
                   Images.washing,
-                  height: 100,
+                  height: 95,
                   width: 80,
                   fit: BoxFit.fitHeight,
                 ),
@@ -91,8 +88,8 @@ class ProductCard extends StatelessWidget {
                   buttonText: 'Add to cart',
                   boarderColor: AppColors.colorFont,
                   textColor: Colors.white,
-                  width: 110,
-                  height: 30,
+                  width: 105.h,
+                  height: 25.w,
                   radius: Dimensions.paddingSizeExtremeLarge,
                 ),
               ],

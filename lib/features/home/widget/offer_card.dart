@@ -119,32 +119,28 @@ class OfferCard extends StatelessWidget {
                     color: Colors.red,
                   ),
                 ), // Sale Ribbon
-                Positioned(
-                  top: 0,
-                  left: 0,
-                  child: ClipPath(
-                    clipper: SaleBannerClipper(),
-                    child: Container(
-                      decoration: const BoxDecoration(
-                          color: Colors.red,
-                          borderRadius: BorderRadiusDirectional.only(
-                              topEnd: Radius.circular(10))),
-                      width: 58.w,
-                      height: 58.h,
-                      alignment: Alignment.topLeft,
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 10, top: 10),
-                        child: RotatedBox(
-                          quarterTurns: -1,
-                          child: Transform.rotate(
-                            angle: 0.7,
-                            child: const Text(
-                              "SALE",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 12,
-                              ),
+                ClipPath(
+                  clipper: SaleBannerClipper(),
+                  child: Container(
+                    decoration: const BoxDecoration(
+                        color: Colors.red,
+                        borderRadius: BorderRadiusDirectional.only(
+                            topEnd: Radius.circular(10))),
+                    width: 58.w,
+                    height: 58.h,
+                    alignment: Alignment.topLeft,
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 10, top: 10),
+                      child: RotatedBox(
+                        quarterTurns: -1,
+                        child: Transform.rotate(
+                          angle: 0.7,
+                          child: const Text(
+                            "SALE",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 12,
                             ),
                           ),
                         ),

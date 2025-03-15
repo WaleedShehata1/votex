@@ -1,5 +1,6 @@
-// ignore_for_file: must_be_immutable
+// ignore_for_file: must_be_immutable, unused_local_variable
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -27,7 +28,9 @@ class _SplashScreenState extends State<SplashScreen> {
     bool first = await AppUsageService.isFirstTime();
 
     bool isLogin = await AppUsageService.isLogin();
-    print("object $first ");
+    if (kDebugMode) {
+      print("object $first ");
+    }
     // if (!first) {
     //   if (!isLogin) {
     //     await Future.delayed(const Duration(seconds: 3), () {

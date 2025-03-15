@@ -1,4 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:model_viewer_plus/model_viewer_plus.dart';
+import 'package:votex/core/constants/images.dart';
+
+import '../../core/constants/colors.dart';
+import '../../core/constants/dimensions.dart';
+import '../../core/helper/route_helper.dart';
+import '../../core/widget/custom_button.dart';
+import '../store/widget/product_card.dart';
 
 class ProductDetailsScreen extends StatelessWidget {
   const ProductDetailsScreen({super.key});
@@ -10,13 +20,13 @@ class ProductDetailsScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.black),
-          onPressed: () {},
-        ),
         actions: [
           IconButton(
-            icon: const Icon(Icons.shopping_cart, color: Colors.black),
+            icon: const Icon(Icons.favorite_border, color: Colors.red),
+            onPressed: () {},
+          ),
+          IconButton(
+            icon: const Icon(Icons.reply_rounded, color: Colors.black),
             onPressed: () {},
           ),
         ],
@@ -24,53 +34,141 @@ class ProductDetailsScreen extends StatelessWidget {
       body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(horizontal: 15),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             // Product Image
-            Center(
-              child: Image.asset(
-                'assets/washing_machine.png',
+            const Center(
+              // child: Image.asset(
+              //   Images.gasCooker,
+              //   height: 200,
+              //   fit: BoxFit.contain,
+              // ),
+              child: SizedBox(
                 height: 200,
-                fit: BoxFit.contain,
+                width: 250,
+                child: ModelViewer(
+                  backgroundColor: Color.fromARGB(0xFF, 0xEE, 0xEE, 0xEE),
+                  src: Images.gasCooker3D,
+                  alt: 'A 3D model of an astronaut',
+                  ar: true,
+                  autoRotate: true,
+                  iosSrc:
+                      'https://modelviewer.dev/shared-assets/models/Astronaut.usdz',
+                  disableZoom: true,
+                ),
               ),
             ),
             const SizedBox(height: 10),
 
             // Product Title, Rating & Price
-            Row(
+            const Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
                       'Washing Machine',
                       style:
                           TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                     ),
-                    Row(
-                      children: [
-                        Icon(Icons.star, color: Colors.orange, size: 18),
-                        Icon(Icons.star, color: Colors.orange, size: 18),
-                        Icon(Icons.star, color: Colors.orange, size: 18),
-                        Icon(Icons.star, color: Colors.orange, size: 18),
-                        Icon(Icons.star_half, color: Colors.orange, size: 18),
-                        SizedBox(width: 5),
-                        Text('(4.2)', style: TextStyle(color: Colors.blue)),
-                      ],
+                    Text(
+                      '(LG)',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.blue,
+                      ),
                     ),
                   ],
                 ),
-                Text(
-                  'EGP 10,675',
-                  style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.blue),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(Icons.star, color: Colors.orange, size: 16),
+                    Icon(Icons.star, color: Colors.orange, size: 16),
+                    Icon(Icons.star, color: Colors.orange, size: 16),
+                    Icon(Icons.star, color: Colors.orange, size: 16),
+                    Icon(Icons.star_half, color: Colors.orange, size: 16),
+                    Text('(4/5)', style: TextStyle(color: Colors.blue)),
+                  ],
                 ),
               ],
             ),
-
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                children: [
+                  const Text(
+                    "13.335",
+                    style: TextStyle(
+                      fontSize: 10,
+                      decoration: TextDecoration.lineThrough,
+                      color: Colors.red,
+                    ),
+                  ),
+                  SizedBox(
+                    width: 2.w,
+                  ),
+                  const Text('EGP 10.675',
+                      style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.blue)),
+                ],
+              ),
+            ),
+            Row(
+              children: [
+                Row(
+                  children: [
+                    Container(
+                      height: 25,
+                      width: 25,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: Colors.grey,
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 5,
+                    ),
+                    Container(
+                      height: 25,
+                      width: 25,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: Colors.black,
+                      ),
+                    ),
+                  ],
+                ),
+                CustomButton(
+                  onPressed: () {},
+                  buttonText: 'Add to cart',
+                  boarderColor: AppColors.colorFont,
+                  textColor: Colors.white,
+                  width: 100.w,
+                  height: 30,
+                  borderRadius: BorderRadius.circular(10.r),
+                  radius: Dimensions.paddingSizeExtremeLarge,
+                ),
+                const SizedBox(
+                  width: 5,
+                ),
+                CustomButton(
+                  onPressed: () {},
+                  buttonText: 'Buy now',
+                  boarderColor: Colors.green,
+                  textColor: Colors.white,
+                  width: 100.w,
+                  height: 30,
+                  borderRadius: BorderRadius.circular(10.r),
+                  radius: Dimensions.paddingSizeExtremeLarge,
+                ),
+              ],
+            ),
             const SizedBox(height: 10),
 
             // Product Variations (Images)
@@ -83,7 +181,7 @@ class ProductDetailsScreen extends StatelessWidget {
                   (index) => Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 5),
                     child: Image.asset(
-                      'assets/washing_machine.png',
+                      Images.gasCooker,
                       width: 50,
                       height: 50,
                       fit: BoxFit.contain,
@@ -102,16 +200,19 @@ class ProductDetailsScreen extends StatelessWidget {
                 ClipRRect(
                   borderRadius: BorderRadius.circular(10),
                   child: Image.asset(
-                    'assets/washing_machine_video_thumbnail.png',
+                    Images.gasCooker,
                     height: 180,
                     width: double.infinity,
                     fit: BoxFit.cover,
                   ),
                 ),
-                const Icon(
-                  Icons.play_circle_fill,
-                  color: Colors.white,
-                  size: 50,
+                GestureDetector(
+                  onTap: () {},
+                  child: const Icon(
+                    Icons.play_circle_fill,
+                    color: Colors.white,
+                    size: 50,
+                  ),
                 ),
               ],
             ),
@@ -122,6 +223,7 @@ class ProductDetailsScreen extends StatelessWidget {
             const Text(
               "Use washing machines to easily clean your clothes. Featuring advanced technology, these machines "
               "help save water, energy, and time. Designed for efficiency, they provide a powerful and smooth washing experience.",
+              textAlign: TextAlign.start,
               style: TextStyle(fontSize: 14, color: Colors.black54),
             ),
 
@@ -132,15 +234,15 @@ class ProductDetailsScreen extends StatelessWidget {
               'Ratings & Reviews',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
-            Row(
+            const Row(
               children: [
-                const Icon(Icons.star, color: Colors.orange, size: 20),
-                const Icon(Icons.star, color: Colors.orange, size: 20),
-                const Icon(Icons.star, color: Colors.orange, size: 20),
-                const Icon(Icons.star, color: Colors.orange, size: 20),
-                const Icon(Icons.star_half, color: Colors.orange, size: 20),
-                const SizedBox(width: 5),
-                const Text('4.5 (102 Reviews)',
+                Icon(Icons.star, color: Colors.orange, size: 20),
+                Icon(Icons.star, color: Colors.orange, size: 20),
+                Icon(Icons.star, color: Colors.orange, size: 20),
+                Icon(Icons.star, color: Colors.orange, size: 20),
+                Icon(Icons.star_half, color: Colors.orange, size: 20),
+                SizedBox(width: 5),
+                Text('4/5',
                     style: TextStyle(fontSize: 14, color: Colors.black54)),
               ],
             ),
@@ -154,36 +256,33 @@ class ProductDetailsScreen extends StatelessWidget {
                 color: Colors.grey[100],
                 borderRadius: BorderRadius.circular(10),
               ),
-              child: Row(
+              child: const Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const CircleAvatar(
-                    backgroundImage: AssetImage('assets/user.png'),
+                  CircleAvatar(
                     radius: 20,
+                    child: Icon(Icons.person),
                   ),
-                  const SizedBox(width: 10),
+                  SizedBox(width: 10),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
+                        Text(
                           'Mohamed Ahmed',
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
                         Row(
                           children: [
-                            const Icon(Icons.star,
-                                color: Colors.orange, size: 18),
-                            const Icon(Icons.star,
-                                color: Colors.orange, size: 18),
-                            const Icon(Icons.star,
-                                color: Colors.orange, size: 18),
-                            const Icon(Icons.star,
-                                color: Colors.orange, size: 18),
-                            const Icon(Icons.star_half,
+                            Icon(Icons.star, color: Colors.orange, size: 18),
+                            Icon(Icons.star, color: Colors.orange, size: 18),
+                            Icon(Icons.star, color: Colors.orange, size: 18),
+                            Icon(Icons.star, color: Colors.orange, size: 18),
+                            Icon(Icons.star_half,
                                 color: Colors.orange, size: 18),
                           ],
                         ),
-                        const Text(
+                        Text(
                           "Great washing machine, easy to use and energy-efficient!",
                           style: TextStyle(fontSize: 14),
                         ),
@@ -194,72 +293,25 @@ class ProductDetailsScreen extends StatelessWidget {
               ),
             ),
 
-            const SizedBox(height: 15),
-
-            // Related Products Section
-            const Text(
-              'Related Products',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-
-            const SizedBox(height: 10),
+            SizedBox(height: 20.h),
 
             // Product List
             GridView.builder(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
-                childAspectRatio: 0.7,
                 crossAxisSpacing: 10,
                 mainAxisSpacing: 10,
+                mainAxisExtent: 168.h,
               ),
               itemCount: 4,
               itemBuilder: (context, index) {
-                return Container(
-                  padding: const EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.grey.shade300),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Center(
-                        child: Image.asset(
-                          index.isEven
-                              ? 'assets/washing_machine.png'
-                              : 'assets/oven.png',
-                          height: 80,
-                          fit: BoxFit.contain,
-                        ),
-                      ),
-                      const SizedBox(height: 5),
-                      const Text('Washing Machine',
-                          style: TextStyle(fontSize: 14)),
-                      Row(
-                        children: [
-                          const Icon(Icons.star,
-                              color: Colors.orange, size: 14),
-                          const Text('4.2', style: TextStyle(fontSize: 12)),
-                        ],
-                      ),
-                      Text(
-                        'EGP 10,675',
-                        style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.blue),
-                      ),
-                      const SizedBox(height: 5),
-                      ElevatedButton(
-                        onPressed: () {},
-                        style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.blue),
-                        child: const Text('Add to Cart',
-                            style: TextStyle(color: Colors.white)),
-                      ),
-                    ],
+                return GestureDetector(
+                  onTap: () => Get.toNamed(RouteHelper.productDetailsScreen),
+                  child: const ProductCard(
+                    name: 'Washing Machine',
+                    price: '10,675',
                   ),
                 );
               },
