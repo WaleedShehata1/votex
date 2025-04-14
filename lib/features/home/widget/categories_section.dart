@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
+import '../../../core/helper/route_helper.dart';
+import '../../../core/model/subcategory_model.dart';
+import '../../store/store_screen.dart';
 import 'category_card.dart';
 
 class CategoriesSection extends StatelessWidget {
-  const CategoriesSection({super.key});
-
+  const CategoriesSection({super.key, required this.listSubCategoryes});
+  final List<SubcategoryModel> listSubCategoryes;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -31,7 +35,9 @@ class CategoriesSection extends StatelessWidget {
                     width: 10,
                   ),
                   GestureDetector(
-                    // onTap: () => Get.toNamed(RouteHelper.ratedBrandsScreen),
+                    onTap: () => Get.to(
+                      const ProductListScreen(),
+                    ),
                     child: const CircleAvatar(
                       maxRadius: 15,
                       backgroundColor: Colors.blue,
@@ -44,21 +50,23 @@ class CategoriesSection extends StatelessWidget {
           ),
           GridView.builder(
             shrinkWrap: true,
-            itemCount: 4,
+            itemCount: listSubCategoryes.length,
             physics: const NeverScrollableScrollPhysics(),
             itemBuilder: (context, index) {
-              return const CategoryCard(
-                category: 'Washing Machine',
+              return CategoryCard(
+                category: listSubCategoryes[index].nameCategores,
+                image: listSubCategoryes[index].imageSubCategores,
               );
             },
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
               crossAxisSpacing: 5,
               mainAxisSpacing: 5,
-              childAspectRatio: 0.1,
-              mainAxisExtent: 190,
+              childAspectRatio: 1,
+              mainAxisExtent: 195,
             ),
           ),
+          const SizedBox(height: 10),
         ],
       ),
     );

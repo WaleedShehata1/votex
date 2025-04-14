@@ -2,9 +2,11 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:votex/core/constants/colors.dart';
 import 'package:votex/core/constants/dimensions.dart';
 
+import '../../controller/home/home_controller.dart';
 import '../../core/constants/images.dart';
 import '../cart/cart_screen.dart';
 import '../favorite/favorite_screen.dart';
@@ -19,6 +21,9 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final HomeControllerImp homeController = Get.put(
+    HomeControllerImp(),
+  );
   int selectedIndex = 0;
   static List<Widget> _widgetOption = [
     const HomeScreen(),

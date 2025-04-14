@@ -22,7 +22,7 @@ class ProductCard extends StatefulWidget {
   final ItemModel item;
   final String name;
   final String image;
-  final String price;
+  final double price;
   final String rate;
 
   @override

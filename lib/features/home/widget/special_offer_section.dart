@@ -1,13 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:votex/core/helper/route_helper.dart';
 
 import '../../../core/model/item_model.dart';
 import '../../offers/offers_screen.dart';
+import '../../product/proudct_details_screen.dart';
 import 'offer_card.dart';
 
 class SpecialOfferSection extends StatelessWidget {
-  const SpecialOfferSection({super.key, required this.listItems});
+  const SpecialOfferSection({
+    super.key,
+    required this.listItems,
+    required this.listItemsOffer,
+  });
+  final List<ItemModel> listItemsOffer;
   final List<ItemModel> listItems;
   @override
   Widget build(BuildContext context) {
@@ -50,27 +57,34 @@ class SpecialOfferSection extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 20),
-          const SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(
-              children: [
-                OfferCard(
-                  name: "listItems[0].name",
-                  price: "listItems[0].newPrice",
-                  oldPrice: "listItems[0].oldPrice",
-                  image: "listItems[0].imageIcon",
-                  rate: "listItems[0].rate",
-                  discount: "listItems[0].discount",
-                ),
-                // OfferCard(
-                //   name: listItems[1].name,
-                //   price: listItems[1].newPrice,
-                //   oldPrice: listItems[1].oldPrice,
-                //   image: listItems[1].imageIcon,
-                //   rate: listItems[1].rate,
-                //   discount: listItems[1].discount,
-                // ),
-              ],
+          SizedBox(
+            height: 195.h,
+            width: double.maxFinite,
+            child: Expanded(
+              child: GridView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: listItemsOffer.length,
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 1,
+                      mainAxisExtent: 160,
+                      mainAxisSpacing: 10),
+                  itemBuilder: (context, i) {
+                    return GestureDetector(
+                      onTap: () => Get.to(ProductDetailsScreen(
+                        items: listItems,
+                        item: listItemsOffer[i],
+                      )),
+                      child: OfferCard(
+                        name: listItemsOffer[i].itemName,
+                        price: listItemsOffer[i].price.toString(),
+                        oldPrice: (listItemsOffer[i].price *
+                            (1 - (listItemsOffer[i].discount / 100))),
+                        image: listItemsOffer[i].imageIcon,
+                        rate: listItemsOffer[i].rate,
+                        discount: listItemsOffer[i].discount.toString(),
+                      ),
+                    );
+                  }),
             ),
           ),
         ],

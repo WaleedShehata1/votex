@@ -24,7 +24,7 @@ class OfferCard extends StatelessWidget {
   final String image;
   final String discount;
   final String rate;
-  final String oldPrice;
+  final double oldPrice;
   @override
   Widget build(BuildContext context) {
     return Expanded(
@@ -40,12 +40,12 @@ class OfferCard extends StatelessWidget {
               padding: const EdgeInsetsDirectional.symmetric(vertical: 8),
               child: Column(
                 children: [
-                  // CustomImageWidget(
-                  //   height: 100,
-                  //   width: 80,
-                  //   fit: BoxFit.fitHeight,
-                  //   image: image,
-                  // ),
+                  CustomImageWidget(
+                    height: 100,
+                    width: 80,
+                    fit: BoxFit.fitHeight,
+                    image: image,
+                  ),
                   const SizedBox(height: 5),
                   Align(
                       alignment: AlignmentDirectional.centerEnd,
@@ -83,7 +83,7 @@ class OfferCard extends StatelessWidget {
                         child: Row(
                           children: [
                             Text(
-                              oldPrice,
+                              oldPrice.toString(),
                               style: const TextStyle(
                                 fontSize: 10,
                                 decoration: TextDecoration.lineThrough,

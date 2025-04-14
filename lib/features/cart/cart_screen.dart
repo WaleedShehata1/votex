@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
 import 'package:votex/core/model/item_model.dart';
 
@@ -8,22 +9,32 @@ import '../../core/constants/images.dart';
 import '../../core/widget/custom_button.dart';
 import '../../core/widget/custom_image_widget.dart';
 
-class CartScreen extends StatelessWidget {
-  final Map<String, dynamic> proposalItem = {
+class CartScreen extends StatefulWidget {
+  CartScreen({super.key});
+
+  @override
+  State<CartScreen> createState() => _CartScreenState();
+}
+
+class _CartScreenState extends State<CartScreen> {
+  final CartControllerImp cartController = Get.put(
+    CartControllerImp(),
+  );
+  Map<String, dynamic> proposalItem = {
     "name": "Sensor",
-    "price": 00,
+    "price": 0.0,
     "image": Images.sensor
   };
+  @override
+  void initState() {
+    cartController.call(proposalItem['price']);
 
-  CartScreen({super.key});
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return GetBuilder<CartControllerImp>(builder: (controller) {
-      double subtotal = controller.cartItems.fold(
-          0, (sum, item) => sum + (double.parse(item.price) * item.count));
-      double deliveryFee = 60.20;
-      double totalCost = subtotal + deliveryFee + proposalItem["price"];
       return Scaffold(
         backgroundColor: Colors.white,
         body: Padding(
@@ -66,9 +77,10 @@ class CartScreen extends StatelessWidget {
               ),
 
               SummarySection(
-                  subtotal: subtotal,
-                  delivery: deliveryFee,
-                  totalCost: totalCost),
+                  subtotal: controller.subtotal,
+                  sensorCost: controller.sensorCost,
+                  delivery: controller.deliveryFee,
+                  totalCost: controller.totalCost),
 
               // const CheckoutButton(),
               CustomButton(
@@ -328,10 +340,12 @@ class SummarySection extends StatelessWidget {
   final double subtotal;
   final double delivery;
   final double totalCost;
+  final double sensorCost;
 
   const SummarySection(
       {super.key,
       required this.subtotal,
+      required this.sensorCost,
       required this.delivery,
       required this.totalCost});
 
@@ -339,7 +353,7 @@ class SummarySection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const SummaryRow(label: "Sensor", value: 900),
+        SummaryRow(label: "Sensor", value: sensorCost),
         SummaryRow(label: "Subtotal", value: subtotal),
         SummaryRow(label: "Delivery", value: delivery),
         const Divider(thickness: 0.5),

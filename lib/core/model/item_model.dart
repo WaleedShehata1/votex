@@ -7,16 +7,16 @@ class ItemModel {
       imageUrl,
       itemDescription,
       itemName,
-      discount,
       imageIcon,
       idSubCategory,
-      price,
       rate,
       stock,
       dateAdd,
       supCategory,
       videoUrl;
   int count;
+  double price;
+  double discount;
   bool isMoreSale;
 
   ItemModel({
@@ -49,10 +49,10 @@ class ItemModel {
       imageUrl: data['imageUrl'],
       itemDescription: data['description'],
       itemName: data['name'],
-      discount: data['discount'],
+      discount: double.parse(data['discount']),
       imageIcon: data['imageIcon'],
       idSubCategory: data['idSubCategory'],
-      price: data['price'],
+      price: double.parse(data['price']),
       rate: data['rate'],
       stock: data['stock'],
       supCategory: data['supCategory'],

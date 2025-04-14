@@ -152,7 +152,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
               child: Row(
                 children: [
                   Text(
-                    widget.item.price,
+                    widget.item.price.toString(),
                     style: const TextStyle(
                       fontSize: 10,
                       decoration: TextDecoration.lineThrough,
@@ -163,7 +163,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                     width: 2.w,
                   ),
                   Text(
-                      'EGP ${double.parse(widget.item.price) * (1 - (double.parse(widget.item.discount) / 100.0))}',
+                      'EGP ${widget.item.price * (1 - (widget.item.discount / 100.0))}',
                       style: const TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.bold,
