@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 
 import '../../core/model/item_model.dart';
 import '../../core/widget/custom_snackbar.dart';

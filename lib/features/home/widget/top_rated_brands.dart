@@ -23,7 +23,7 @@ class TopRatedBrands extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
+              const Text(
                 'Top rated brands',
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
@@ -31,7 +31,7 @@ class TopRatedBrands extends StatelessWidget {
                 onTap: () => Get.to(RatedBrandsScreen(
                   brands: listBrands,
                 )),
-                child: Row(
+                child: const Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
@@ -60,7 +60,7 @@ class TopRatedBrands extends StatelessWidget {
               child: GridView.builder(
                   scrollDirection: Axis.horizontal,
                   itemCount: listBrands.length,
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 1, mainAxisExtent: 160),
                   itemBuilder: (context, i) {
                     return GestureDetector(

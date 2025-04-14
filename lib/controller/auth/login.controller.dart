@@ -97,7 +97,7 @@ class LoginControllerImp extends LoginController {
           print("Login failed: ${loginResult.message}");
         }
       } on Exception catch (e) {
-        print("FacebookAuthException: ${e}");
+        print("FacebookAuthException: $e");
       } catch (e) {
         print("General error: ${e.toString()}");
       }

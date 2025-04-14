@@ -24,7 +24,7 @@ class SpecialOfferSection extends StatelessWidget {
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
               GestureDetector(
-                onTap: () => Get.to(SpecialOfferScreen()),
+                onTap: () => Get.to(const SpecialOfferScreen()),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -50,7 +50,7 @@ class SpecialOfferSection extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 20),
-          SingleChildScrollView(
+          const SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: Row(
               children: [

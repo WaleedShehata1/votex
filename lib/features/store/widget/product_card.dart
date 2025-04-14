@@ -90,9 +90,10 @@ class _ProductCardState extends State<ProductCard> {
                         children: [
                           Text(
                             widget.rate,
-                            style: TextStyle(fontSize: 10, color: Colors.white),
+                            style: const TextStyle(
+                                fontSize: 10, color: Colors.white),
                           ),
-                          Icon(Icons.star, size: 15, color: Colors.white),
+                          const Icon(Icons.star, size: 15, color: Colors.white),
                         ],
                       ),
                     ),
@@ -137,7 +138,7 @@ class _ProductCardState extends State<ProductCard> {
                     icon = Icons.favorite_outlined;
                   });
                 },
-                child: Icon(Icons.favorite, color: Colors.red)),
+                child: const Icon(Icons.favorite, color: Colors.red)),
           ),
         ],
       ),

@@ -24,7 +24,7 @@ class _HomePageState extends State<HomePage> {
     const HomeScreen(),
     const ProductListScreen(),
     CartScreen(),
-    SavedItemsScreen(),
+    const SavedItemsScreen(),
   ];
   void onItemTapped(int index) {
     setState(() {

@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../core/constants/colors.dart';
 import '../../../core/constants/dimensions.dart';
-import '../../../core/constants/images.dart';
 import '../../../core/constants/styles.dart';
 import '../../../core/widget/custom_image_widget.dart';
 

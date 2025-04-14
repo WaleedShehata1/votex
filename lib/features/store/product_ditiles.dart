@@ -47,7 +47,8 @@ class ProductScreen extends StatelessWidget {
               // Product Name
               Text(
                 "${item.itemName} (${item.brandName})",
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                style:
+                    const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 5),
 
@@ -71,7 +72,7 @@ class ProductScreen extends StatelessWidget {
               // Price
               Text(
                 "QAR ${item.price}",
-                style: TextStyle(
+                style: const TextStyle(
                     fontSize: 22,
                     fontWeight: FontWeight.bold,
                     color: Colors.green),

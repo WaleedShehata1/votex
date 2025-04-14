@@ -66,11 +66,11 @@ class OfferCard extends StatelessWidget {
                         child: Row(
                           children: [
                             Text(rate,
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontSize: 10,
                                   color: Colors.white,
                                 )),
-                            Icon(
+                            const Icon(
                               Icons.star,
                               size: 15,
                               color: Colors.white,
@@ -143,8 +143,8 @@ class OfferCard extends StatelessWidget {
                         child: Transform.rotate(
                           angle: 0.7,
                           child: Text(
-                            "$discount\%",
-                            style: TextStyle(
+                            "${discount}%",
+                            style: const TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
                               fontSize: 12,

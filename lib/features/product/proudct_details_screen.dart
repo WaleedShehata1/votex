@@ -102,7 +102,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                 height: 200,
                 width: 250,
                 child: ModelViewer(
-                  backgroundColor: Color.fromARGB(0xFF, 0xEE, 0xEE, 0xEE),
+                  backgroundColor: const Color.fromARGB(0xFF, 0xEE, 0xEE, 0xEE),
                   src: srcGlb,
                   autoRotate: true,
                 ),

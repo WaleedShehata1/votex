@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:votex/core/helper/route_helper.dart';
 
 import 'category_card.dart';
 

@@ -83,9 +83,9 @@ class AppDrawer extends StatelessWidget {
                   },
                   icon: Icons.settings,
                   title: "Settings"),
-              SizedBox(height: 15),
+              const SizedBox(height: 15),
               const Divider(color: Colors.grey, height: 2, thickness: 0.5),
-              SizedBox(height: 15),
+              const SizedBox(height: 15),
               // Sign Out
               DrawerItem(onTap: () {}, icon: Icons.logout, title: "Sign Out"),
             ],
