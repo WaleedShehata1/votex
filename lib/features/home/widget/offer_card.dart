@@ -6,6 +6,7 @@ import '../../../core/constants/dimensions.dart';
 import '../../../core/constants/images.dart';
 import '../../../core/shape/sale_shape.dart';
 import '../../../core/widget/custom_button.dart';
+import '../../../core/widget/custom_image_widget.dart';
 
 // ignore: must_be_immutable
 class OfferCard extends StatelessWidget {
@@ -13,10 +14,16 @@ class OfferCard extends StatelessWidget {
     super.key,
     required this.name,
     required this.price,
+    required this.image,
+    required this.rate,
+    required this.discount,
     required this.oldPrice,
   });
   final String name;
   final String price;
+  final String image;
+  final String discount;
+  final String rate;
   final String oldPrice;
   @override
   Widget build(BuildContext context) {
@@ -33,12 +40,12 @@ class OfferCard extends StatelessWidget {
               padding: const EdgeInsetsDirectional.symmetric(vertical: 8),
               child: Column(
                 children: [
-                  Image.asset(
-                    Images.washing,
-                    height: 100,
-                    width: 80,
-                    fit: BoxFit.fitHeight,
-                  ),
+                  // CustomImageWidget(
+                  //   height: 100,
+                  //   width: 80,
+                  //   fit: BoxFit.fitHeight,
+                  //   image: image,
+                  // ),
                   const SizedBox(height: 5),
                   Align(
                       alignment: AlignmentDirectional.centerEnd,
@@ -56,9 +63,9 @@ class OfferCard extends StatelessWidget {
                             bottomEnd: Radius.circular(15),
                           ),
                         ),
-                        child: const Row(
+                        child: Row(
                           children: [
-                            Text('4.2',
+                            Text(rate,
                                 style: TextStyle(
                                   fontSize: 10,
                                   color: Colors.white,
@@ -135,8 +142,8 @@ class OfferCard extends StatelessWidget {
                         quarterTurns: -1,
                         child: Transform.rotate(
                           angle: 0.7,
-                          child: const Text(
-                            "SALE",
+                          child: Text(
+                            "$discount\%",
                             style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,

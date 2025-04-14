@@ -1,10 +1,13 @@
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:votex/controller/cart_controller.dart';
 
 import '../../controller/auth/forgetpassword.controller.dart';
 import '../../controller/auth/login.controller.dart';
 import '../../controller/auth/resetpassword.controller.dart';
 import '../../controller/auth/signupController.dart';
+import '../../controller/home/home_controller.dart';
+import '../../controller/saved/saved_controller.dart';
 
 class Mybinding extends Bindings {
   @override
@@ -17,5 +20,8 @@ class Mybinding extends Bindings {
     Get.lazyPut(() => ForgetPasswordControllerImp(), fenix: true);
     Get.lazyPut(() => ResetPasswordControllerImp(), fenix: true);
     Get.lazyPut(() => SignUpControllerImp(), fenix: true);
+    Get.lazyPut(() => HomeControllerImp(), fenix: true);
+    Get.lazyPut(() => SavedControllerImp(), fenix: true);
+    Get.lazyPut(() => CartControllerImp(), fenix: true);
   }
 }

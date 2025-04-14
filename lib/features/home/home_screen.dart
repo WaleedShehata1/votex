@@ -1,22 +1,58 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
+import 'package:votex/core/model/brand_model.dart';
+import 'package:votex/features/store/product_ditiles.dart';
 
 import '../../core/constants/colors.dart';
 import '../../core/constants/dimensions.dart';
 import '../../core/constants/images.dart';
 import '../../core/constants/styles.dart';
+import '../../core/model/item_model.dart';
 import '../../core/widget/custom_text_field.dart';
+import '../rated brand/all_rated_brands.dart';
+import '../store/store_screen.dart';
+import 'widget/brand_circle.dart';
 import 'widget/categories_section.dart';
 import 'widget/premium_home_banner.dart';
 import 'widget/special_offer_section.dart';
 import 'widget/top_rated_brands.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
   @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  @override
+  void initState() {
+    getBrand();
+    super.initState();
+  }
+
+  List<BrandModel> listBrands = [];
+  List<QueryDocumentSnapshot> listBrands2 = [];
+  getBrand() async {
+    QuerySnapshot brads =
+        await FirebaseFirestore.instance.collection('brads').get();
+
+    for (var brand in brads.docs) {
+      listBrands.add(BrandModel.fromFirestore(brand));
+      print(brand.id);
+      print(listBrands[0]);
+    }
+    listBrands2.addAll(brads.docs);
+    print(listBrands.length);
+  }
+
+  @override
   Widget build(BuildContext context) {
+    List<ItemModel> listItems = [];
+    CollectionReference items = FirebaseFirestore.instance.collection('items');
     return Scaffold(
       backgroundColor: Colors.white,
       body: Column(
@@ -127,19 +163,82 @@ class HomeScreen extends StatelessWidget {
             height: 22.h,
           ),
           SizedBox(
-            height: MediaQuery.of(context).size.height * 0.657,
-            child: const SingleChildScrollView(
+            height: MediaQuery.of(context).size.height * 0.602,
+            child: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(height: 5),
-                  TopRatedBrands(),
-                  SizedBox(height: 10),
-                  PremiumHomeBanner(),
-                  SizedBox(height: 10),
-                  SpecialOfferSection(),
-                  SizedBox(height: 30),
-                  CategoriesSection(),
+                  const SizedBox(height: 5),
+                  Padding(
+                    padding: const EdgeInsetsDirectional.symmetric(
+                        horizontal: 15, vertical: 5),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const Text(
+                              'Top rated brands',
+                              style: TextStyle(
+                                  fontSize: 16, fontWeight: FontWeight.bold),
+                            ),
+                            GestureDetector(
+                              onTap: () => Get.to(RatedBrandsScreen(
+                                brands: listBrands,
+                              )),
+                              child: const Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    'See All',
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  CircleAvatar(
+                                    maxRadius: 15,
+                                    backgroundColor: Colors.blue,
+                                    child: Icon(Icons.arrow_forward_rounded),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 10),
+                        SizedBox(
+                          height: 120,
+                          width: double.maxFinite,
+                          child: GridView.builder(
+                              scrollDirection: Axis.horizontal,
+                              itemCount: listBrands.length,
+                              gridDelegate:
+                                  const SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisCount: 1, mainAxisExtent: 90),
+                              itemBuilder: (context, i) {
+                                return GestureDetector(
+                                  onTap: () => Get.to(() => ProductListScreen(
+                                        brand: listBrands[i].BrandId,
+                                      )),
+                                  child: BrandCircle(
+                                    brand: listBrands[i].brandName,
+                                    image: listBrands[i].imageUrl,
+                                  ),
+                                );
+                              }),
+                        )
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  const PremiumHomeBanner(),
+                  const SizedBox(height: 10),
+                  const SizedBox(height: 30),
+                  const CategoriesSection(),
                 ],
               ),
             ),

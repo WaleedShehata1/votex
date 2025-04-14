@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:votex/core/constants/images.dart';
+import 'package:votex/core/model/item_model.dart';
 
+import '../../core/widget/custom_image_widget.dart';
 import 'widget/product_card.dart';
 
 class ProductScreen extends StatelessWidget {
-  const ProductScreen({super.key});
-
+  const ProductScreen({super.key, required this.item});
+  final ItemModel item;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,39 +34,43 @@ class ProductScreen extends StatelessWidget {
             children: [
               // Product Image
               Center(
-                child: Image.asset(
-                  Images.gasCooker, // Replace with actual image
-                  height: 180,
-                ),
-              ),
+                  // child: Image.asset(
+                  //   Images.gasCooker, // Replace with actual image
+                  //   height: 180,
+                  // ),
+                  child: CustomImageWidget(
+                image: item.imageUrl,
+                height: 180,
+              )),
               const SizedBox(height: 10),
 
               // Product Name
-              const Text(
-                "Washing Machine (LG)",
+              Text(
+                "${item.itemName} (${item.brandName})",
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 5),
 
               // Rating Row
-              const Row(
+              Row(
                 children: [
-                  Icon(Icons.star, color: Colors.amber, size: 20),
-                  Icon(Icons.star, color: Colors.amber, size: 20),
-                  Icon(Icons.star, color: Colors.amber, size: 20),
-                  Icon(Icons.star, color: Colors.amber, size: 20),
-                  Icon(Icons.star_half, color: Colors.amber, size: 20),
-                  SizedBox(width: 8),
-                  Text("4.5"),
-                  SizedBox(width: 8),
-                  Text("(223 Reviews)", style: TextStyle(color: Colors.grey)),
+                  const Icon(Icons.star, color: Colors.amber, size: 20),
+                  const Icon(Icons.star, color: Colors.amber, size: 20),
+                  const Icon(Icons.star, color: Colors.amber, size: 20),
+                  const Icon(Icons.star, color: Colors.amber, size: 20),
+                  const Icon(Icons.star_half, color: Colors.amber, size: 20),
+                  const SizedBox(width: 8),
+                  Text(item.rate),
+                  const SizedBox(width: 8),
+                  const Text("(223 Reviews)",
+                      style: TextStyle(color: Colors.grey)),
                 ],
               ),
               const SizedBox(height: 10),
 
               // Price
-              const Text(
-                "QAR 10,675",
+              Text(
+                "QAR ${item.price}",
                 style: TextStyle(
                     fontSize: 22,
                     fontWeight: FontWeight.bold,
@@ -99,10 +105,13 @@ class ProductScreen extends StatelessWidget {
               const SizedBox(height: 15),
 
               // Product Description
-              Text(
-                "LG washing machines are among the best home appliances, combining advanced technology with practical design..."
-                "They feature innovative technologies like TurboWash and AI DD, enhancing cleaning efficiency while saving water and electricity.",
-                style: TextStyle(color: Colors.grey[700]),
+              SizedBox(
+                width: 200,
+                height: 100,
+                child: Text(
+                  item.itemDescription,
+                  style: TextStyle(color: Colors.grey[700]),
+                ),
               ),
               const SizedBox(height: 15),
 
@@ -194,24 +203,26 @@ class ReviewCard extends StatelessWidget {
               '"Great design, top washing with TurboWash and AI DD. Saves energy and water, super quiet. Highly recommended!"',
               style: TextStyle(color: Colors.grey[700]),
             ),
-            Expanded(
-              child: GridView.builder(
-                padding: const EdgeInsets.all(16.0),
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 10,
-                  mainAxisSpacing: 10,
-                  childAspectRatio: 0.82,
-                ),
-                itemCount: 6, // Sample items count
-                itemBuilder: (context, index) {
-                  return const ProductCard(
-                    name: 'Washing Machine',
-                    price: '10,675',
-                  );
-                },
-              ),
-            ),
+            // Expanded(
+            //   child: GridView.builder(
+            //     padding: const EdgeInsets.all(16.0),
+            //     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            //       crossAxisCount: 2,
+            //       crossAxisSpacing: 10,
+            //       mainAxisSpacing: 10,
+            //       childAspectRatio: 0.82,
+            //     ),
+            //     itemCount: 6, // Sample items count
+            //     itemBuilder: (context, index) {
+            //       return ProductCard(
+            //         name: 'Washing Machine',
+            //         price: '10,675',
+            //         image: '',
+            //         rate: '', item: ,
+            //       );
+            //     },
+            //   ),
+            // ),
           ],
         ),
       ),

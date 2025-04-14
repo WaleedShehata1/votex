@@ -100,34 +100,16 @@ class CustomTextFieldState extends State<CustomTextField> {
   bool _obscureText = true;
   bool _change = true;
   String? errorMessage(String str) {
-    if (widget.hintText == "serialNumberHint".tr) {
-      return "serialNumberRequired".tr;
-    } else if (widget.hintText == "password".tr) {
+    if (widget.hintText == 'Your Password'.tr) {
       return "passwordRequired".tr;
     } else if (widget.hintText == "ConfirmPassword".tr) {
       return "passwordRequired".tr;
-    } else if (widget.hintText == "name".tr) {
+    } else if (widget.hintText == 'Full Name'.tr) {
       return "nameRequired".tr;
-    } else if (widget.hintText == "phone".tr) {
+    } else if (widget.hintText == 'Mobile Phone'.tr) {
       return "phoneRequired".tr;
-    } else if (widget.hintText == "address".tr) {
-      return "addressRequired".tr;
-    } else if (widget.hintText == "trade_name".tr) {
-      return "commercial_registerRequired".tr;
-    } else if (widget.hintText == "tax_number".tr) {
-      return "Tax_registerRequired".tr;
-    } else if (widget.hintText == "region".tr) {
-      return "regionRequired".tr;
-    } else if (widget.hintText == "current_user".tr) {
-      return "Enter_name".tr;
-    } else if (widget.hintText == "20-3-2023".tr) {
-      return "Enter_date".tr;
-    } else if (widget.hintText == "email".tr) {
+    } else if (widget.hintText == 'Email'.tr) {
       return "emailRequired".tr;
-    } else if (widget.hintText == "title_message".tr) {
-      return "title_messageRequired".tr;
-    } else if (widget.hintText == "message".tr) {
-      return "messageRequired".tr;
     }
 
     return null;
@@ -169,7 +151,8 @@ class CustomTextFieldState extends State<CustomTextField> {
                       return errorMessage(widget.hintText);
                     }
 
-                    if (widget.titleText == "password".tr && value.length < 8) {
+                    if (widget.titleText == 'Your Password'.tr &&
+                        value.length < 8) {
                       return 'Password must be at least 8 characters'.tr;
                     } else if (widget.hintText == "ConfirmPassword".tr &&
                         value.trim().length < 8) {}
@@ -185,7 +168,7 @@ class CustomTextFieldState extends State<CustomTextField> {
                       }
                     }
 
-                    if (widget.hintText == "email".tr) {
+                    if (widget.hintText == 'Email'.tr) {
                       if (!GetUtils.isEmail(value)) {
                         return "invalidEmail".tr;
                       }

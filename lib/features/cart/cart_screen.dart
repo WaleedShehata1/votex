@@ -1,40 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get_state_manager/src/simple/get_state.dart';
+import 'package:votex/core/model/item_model.dart';
 
+import '../../controller/cart_controller.dart';
 import '../../core/constants/images.dart';
 import '../../core/widget/custom_button.dart';
+import '../../core/widget/custom_image_widget.dart';
 
 class CartScreen extends StatelessWidget {
-  final List<Map<String, dynamic>> cartItems = [
-    {
-      "name": "Washing Machine",
-      "price": 10675,
-      "quantity": 1,
-      "image": Images.refrigerators
-    },
-    {
-      "name": "Washing Machine",
-      "price": 10675,
-      "quantity": 1,
-      "image": Images.refrigerators
-    },
-    {
-      "name": "Washing Machine",
-      "price": 10675,
-      "quantity": 1,
-      "image": Images.refrigerators
-    },
-    {
-      "name": "Refrigerator",
-      "price": 22675,
-      "quantity": 1,
-      "image": Images.refrigerators
-    },
-  ];
-
   final Map<String, dynamic> proposalItem = {
     "name": "Sensor",
-    "price": 900,
+    "price": 00,
     "image": Images.sensor
   };
 
@@ -42,72 +19,74 @@ class CartScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double subtotal = cartItems.fold(
-        0, (sum, item) => sum + (item['price'] * item['quantity']));
-    double deliveryFee = 60.20;
-    double totalCost = subtotal + deliveryFee + proposalItem["price"];
-
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: Padding(
-        padding: EdgeInsetsDirectional.symmetric(horizontal: 10.w),
-        child: Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Transform.translate(
-                  offset: const Offset(80, -30),
-                  child: Image.asset(
-                    Images.shape,
-                    width: 220,
-                    height: 200,
-                    fit: BoxFit.cover,
-                  ),
-                ),
-                const Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Text(
-                    "Cart",
-                    style: TextStyle(
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
+    return GetBuilder<CartControllerImp>(builder: (controller) {
+      double subtotal = controller.cartItems.fold(
+          0, (sum, item) => sum + (double.parse(item.price) * item.count));
+      double deliveryFee = 60.20;
+      double totalCost = subtotal + deliveryFee + proposalItem["price"];
+      return Scaffold(
+        backgroundColor: Colors.white,
+        body: Padding(
+          padding: EdgeInsetsDirectional.symmetric(horizontal: 10.w),
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Transform.translate(
+                    offset: const Offset(80, -30),
+                    child: Image.asset(
+                      Images.shape,
+                      width: 220,
+                      height: 200,
+                      fit: BoxFit.cover,
                     ),
                   ),
-                ),
-              ],
-            ),
-            Expanded(
-              child: ListView.builder(
-                itemCount: cartItems.length,
-                itemBuilder: (context, index) {
-                  return CartItemCard(cartItems[index], proposalItem);
-                },
+                  const Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Text(
+                      "Cart",
+                      style: TextStyle(
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
+                ],
               ),
-            ),
+              Expanded(
+                child: ListView.builder(
+                  itemCount: controller.cartItems.length,
+                  itemBuilder: (context, index) {
+                    return CartItemCard(
+                        controller.cartItems[index], proposalItem);
+                  },
+                ),
+              ),
 
-            SummarySection(
-                subtotal: subtotal,
-                delivery: deliveryFee,
-                totalCost: totalCost),
+              SummarySection(
+                  subtotal: subtotal,
+                  delivery: deliveryFee,
+                  totalCost: totalCost),
 
-            // const CheckoutButton(),
-            CustomButton(
-              height: 30.h,
-              buttonText: "Checkout",
-              textColor: Colors.white,
-            ),
-          ],
+              // const CheckoutButton(),
+              CustomButton(
+                height: 30.h,
+                buttonText: "Checkout",
+                textColor: Colors.white,
+              ),
+            ],
+          ),
         ),
-      ),
-    );
+      );
+    });
   }
 }
 
 // Cart Item Widget
 class CartItemCard extends StatefulWidget {
-  final Map<String, dynamic> item;
+  final ItemModel item;
   final Map<String, dynamic> proposalItem;
   const CartItemCard(this.item, this.proposalItem, {super.key});
 
@@ -139,8 +118,8 @@ class _CartItemCardState extends State<CartItemCard> {
                     child: Stack(
                       alignment: AlignmentDirectional.bottomEnd,
                       children: [
-                        Image.asset(
-                          widget.item["image"],
+                        CustomImageWidget(
+                          image: widget.item.imageIcon,
                           height: 100.h,
                           width: 100.w,
                           fit: BoxFit.fitHeight,
@@ -171,7 +150,7 @@ class _CartItemCardState extends State<CartItemCard> {
                       ),
                       const SizedBox(height: 4),
                       Text(
-                        widget.item["name"],
+                        widget.item.itemName,
                         style: TextStyle(
                             fontSize: 13.sp, fontWeight: FontWeight.bold),
                       ),
@@ -179,7 +158,7 @@ class _CartItemCardState extends State<CartItemCard> {
                       Row(
                         children: [
                           Text(
-                            "EGP ${widget.item["price"]}",
+                            "EGP ${widget.item.price}",
                             style: const TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,

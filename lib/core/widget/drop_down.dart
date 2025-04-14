@@ -46,6 +46,15 @@ class DefaultDropdown extends StatelessWidget {
       iconSize: iconSize ?? 20,
       menuWidth: 120.w,
       isExpanded: true,
+      hint: Center(
+          child: Text(
+        labelText.toString(),
+        style: TextStyle(
+            fontSize: fontSize ?? 12,
+            color: Colors.black87,
+            overflow: TextOverflow.ellipsis,
+            fontWeight: FontWeight.w400),
+      )),
       style: TextStyle(
           fontSize: fontSize ?? 12,
           color: Colors.black87,

@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:votex/core/constants/images.dart';
-
+import '../../core/model/brand_model.dart';
+import '../../core/widget/custom_image_widget.dart';
 import '../drawer/drawer.dart';
 import '../store/store_screen.dart';
 
 class RatedBrandsScreen extends StatefulWidget {
-  const RatedBrandsScreen({super.key});
-
+  const RatedBrandsScreen({super.key, required this.brands});
+  // final List<QueryDocumentSnapshot> brands;
+  final List<BrandModel> brands;
   @override
   State<RatedBrandsScreen> createState() => _RatedBrandsScreenState();
 }
@@ -65,11 +66,39 @@ class _RatedBrandsScreenState extends State<RatedBrandsScreen> {
 
             // Brand Grid
             Expanded(
-              child: ListView.builder(
-                itemCount: 4, // Number of rows
+              child: GridView.builder(
+                shrinkWrap: true,
+                itemCount: widget.brands.length,
+                physics: const NeverScrollableScrollPhysics(),
                 itemBuilder: (context, index) {
-                  return _buildBrandRow();
+                  return Column(
+                    children: [
+                      GestureDetector(
+                        onTap: () => Get.to(ProductListScreen(
+                          brand: widget.brands[index].BrandId,
+                        )),
+                        child: CircleAvatar(
+                          backgroundColor: Colors.blue,
+                          radius: 32,
+                          child: CustomImageWidget(
+                            image: widget.brands[index].imageUrl,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 5),
+                      Text(
+                        widget.brands[index].brandName,
+                        style: const TextStyle(fontSize: 14),
+                      ),
+                    ],
+                  );
                 },
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 4,
+                  crossAxisSpacing: 5,
+                  mainAxisSpacing: 5,
+                  childAspectRatio: 0.1,
+                ),
               ),
             ),
           ],
@@ -80,40 +109,35 @@ class _RatedBrandsScreenState extends State<RatedBrandsScreen> {
   }
 
   // Function to build a single row of brands
-  Widget _buildBrandRow() {
-    List<Map<String, String>> brands = [
-      {'name': 'LG', 'image': Images.brand4},
-      {'name': 'SAMSUNG', 'image': Images.brand3},
-      {'name': 'SHARP', 'image': Images.brand2},
-      {'name': 'Fresh', 'image': Images.brand},
-    ];
-
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 15),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: brands
-            .map(
-              (brand) => Column(
-                children: [
-                  GestureDetector(
-                    onTap: () => Get.to(const ProductListScreen()),
-                    child: CircleAvatar(
-                      backgroundColor: Colors.white,
-                      radius: 30,
-                      backgroundImage: AssetImage(brand['image']!),
-                    ),
-                  ),
-                  const SizedBox(height: 5),
-                  Text(
-                    brand['name']!,
-                    style: const TextStyle(fontSize: 14),
-                  ),
-                ],
-              ),
-            )
-            .toList(),
-      ),
-    );
-  }
+  // Widget _buildBrandRow(List<BrandModel> brands) {
+  //   return Padding(
+  //     padding: const EdgeInsets.only(bottom: 15),
+  //     child: Row(
+  //       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+  //       children: brands
+  //           .map(
+  //             (brand) => Column(
+  //               children: [
+  //                 GestureDetector(
+  //                   onTap: () => Get.to(ProductListScreen(
+  //                     brand: brand.BrandId,
+  //                   )),
+  //                   child: CircleAvatar(
+  //                     backgroundColor: Colors.white,
+  //                     radius: 30,
+  //                     backgroundImage: AssetImage(brand.imageUrl!),
+  //                   ),
+  //                 ),
+  //                 const SizedBox(height: 5),
+  //                 Text(
+  //                   brand.brandName!,
+  //                   style: const TextStyle(fontSize: 14),
+  //                 ),
+  //               ],
+  //             ),
+  //           )
+  //           .toList(),
+  //     ),
+  //   );
+  // }
 }

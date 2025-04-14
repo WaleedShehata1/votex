@@ -1,2 +1,0 @@
-C:/Users/Waleed/Desktop/votex/votex/android/app/.cxx/Debug/3c2c6k2x/armeabi-v7a/CMakeFiles/edit_cache.dir
-C:/Users/Waleed/Desktop/votex/votex/android/app/.cxx/Debug/3c2c6k2x/armeabi-v7a/CMakeFiles/rebuild_cache.dir

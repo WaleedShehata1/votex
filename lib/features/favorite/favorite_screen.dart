@@ -4,79 +4,80 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:votex/core/constants/images.dart' show Images;
+import 'package:votex/core/model/item_model.dart';
 
+import '../../controller/saved/saved_controller.dart';
 import '../../core/constants/dimensions.dart';
 import '../../core/constants/styles.dart';
 import '../../core/helper/route_helper.dart';
 import '../../core/widget/custom_button.dart';
+import '../../core/widget/custom_image_widget.dart';
 
 class SavedItemsScreen extends StatelessWidget {
-  final List<Map<String, dynamic>> savedItems = [
-    {"name": "Washing Machine", "price": 10675, "image": Images.gasCooker},
-    {"name": "Washing Machine", "price": 10675, "image": Images.gasCooker},
-    {"name": "Washing Machine", "price": 10675, "image": Images.gasCooker},
-    {"name": "Washing Machine", "price": 10675, "image": Images.gasCooker},
-  ];
-
-  SavedItemsScreen({super.key});
+  const SavedItemsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: Column(
-        children: [
-          SizedBox(
-            height: 10.h,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Transform.translate(
-                offset: const Offset(80, -30),
-                child: Image.asset(
-                  Images.shape,
-                  width: 250,
-                  height: 180,
-                  fit: BoxFit.cover,
+    return GetBuilder<SavedControllerImp>(
+        init: SavedControllerImp(),
+        builder: (controller) {
+          return Scaffold(
+            backgroundColor: Colors.white,
+            body: Column(
+              children: [
+                SizedBox(
+                  height: 10.h,
                 ),
-              ),
-              const Padding(
-                padding: EdgeInsets.all(8.0),
-                child: Text(
-                  "Save",
-                  style: TextStyle(
-                    fontSize: 22,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Transform.translate(
+                      offset: const Offset(80, -30),
+                      child: Image.asset(
+                        Images.shape,
+                        width: 250,
+                        height: 180,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Text(
+                        "Save",
+                        style: TextStyle(
+                          fontSize: 22,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.625,
+                  width: double.infinity,
+                  child: ListView.builder(
+                    padding: EdgeInsetsDirectional.symmetric(
+                        horizontal: 15.w, vertical: 5.h),
+                    itemCount: controller.savedItems.length,
+                    itemBuilder: (context, index) {
+                      return GestureDetector(
+                          onTap: () =>
+                              Get.toNamed(RouteHelper.productDetailsScreen),
+                          child: SavedItemCard(controller.savedItems[index]));
+                    },
                   ),
                 ),
-              ),
-            ],
-          ),
-          SizedBox(
-            height: MediaQuery.of(context).size.height * 0.625,
-            width: double.infinity,
-            child: ListView.builder(
-              padding: EdgeInsetsDirectional.symmetric(
-                  horizontal: 15.w, vertical: 5.h),
-              itemCount: savedItems.length,
-              itemBuilder: (context, index) {
-                return GestureDetector(
-                    onTap: () => Get.toNamed(RouteHelper.productDetailsScreen),
-                    child: SavedItemCard(savedItems[index]));
-              },
+              ],
             ),
-          ),
-        ],
-      ),
-    );
+          );
+        });
   }
 }
 
 // Saved Item Widget
 class SavedItemCard extends StatelessWidget {
-  final Map<String, dynamic> item;
+  final ItemModel item;
 
   const SavedItemCard(this.item, {super.key});
 
@@ -88,17 +89,18 @@ class SavedItemCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-              padding: const EdgeInsetsDirectional.symmetric(
-                  horizontal: 7, vertical: 2),
-              decoration: BoxDecoration(
-                  color: const Color(0xfff5f7fa),
-                  borderRadius: BorderRadius.circular(10.r)),
-              child: Image.asset(
-                item["image"],
-                height: 110.h,
-                width: 100.w,
-                fit: BoxFit.fitHeight,
-              )),
+            padding: const EdgeInsetsDirectional.symmetric(
+                horizontal: 7, vertical: 2),
+            decoration: BoxDecoration(
+                color: const Color(0xfff5f7fa),
+                borderRadius: BorderRadius.circular(10.r)),
+            child: CustomImageWidget(
+              height: 110.h,
+              width: 100.w,
+              fit: BoxFit.fitHeight,
+              image: item.imageIcon,
+            ),
+          ),
           const SizedBox(width: 12),
           Expanded(
             child: Column(
@@ -113,13 +115,13 @@ class SavedItemCard extends StatelessWidget {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  item["name"],
+                  item.itemName,
                   style:
                       TextStyle(fontSize: 13.sp, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  "EGP ${item["price"]}",
+                  "EGP ${item.price}",
                   style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,

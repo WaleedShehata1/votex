@@ -32,6 +32,5 @@ class Images {
   static const String brand4 = 'assets/images/brand4.png';
 
   //3D
-  static const String gasCooker3D =
-      'assets/3D/tripo_pbr_model_b03b5e3c-8470-422c-a15a-48ecc1f43967.glb';
+  static const String gasCooker3D = 'assets/images/بوتجاز.glb';
 }

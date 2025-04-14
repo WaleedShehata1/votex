@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "940242670367",
+    "firebase_url": "https://chat-app-d86a7-default-rtdb.firebaseio.com",
+    "project_id": "chat-app-d86a7",
+    "storage_bucket": "chat-app-d86a7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:940242670367:android:2549faec03b0f6c1ac162a",
+        "android_client_info": {
+          "package_name": "com.example.votex"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "940242670367-7hrbqeuih485a4i8mr8s15b57eedettb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDfmMVht41CBwgZJFNGM1dPW4jJp_pAbJI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "940242670367-7hrbqeuih485a4i8mr8s15b57eedettb.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "940242670367-bugqm31kiobsukhjcejhhikrsd5ebks9.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.votex"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

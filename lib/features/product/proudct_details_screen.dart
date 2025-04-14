@@ -1,17 +1,61 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_3d_controller/flutter_3d_controller.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:model_viewer_plus/model_viewer_plus.dart';
+import 'package:video_player/video_player.dart';
 import 'package:votex/core/constants/images.dart';
-
+import '../../controller/saved/saved_controller.dart';
 import '../../core/constants/colors.dart';
 import '../../core/constants/dimensions.dart';
 import '../../core/helper/route_helper.dart';
+import '../../core/model/item_model.dart';
 import '../../core/widget/custom_button.dart';
 import '../store/widget/product_card.dart';
 
-class ProductDetailsScreen extends StatelessWidget {
-  const ProductDetailsScreen({super.key});
+class ProductDetailsScreen extends StatefulWidget {
+  const ProductDetailsScreen(
+      {super.key, required this.item, required this.items});
+  final ItemModel item;
+  final List<ItemModel> items;
+
+  @override
+  State<ProductDetailsScreen> createState() => _ProductDetailsScreenState();
+}
+
+class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
+  final SavedControllerImp savedController = Get.put(
+    SavedControllerImp(),
+  );
+  late VideoPlayerController _controller;
+  final List<ItemModel> items = [];
+  Flutter3DController controller = Flutter3DController();
+  String? chosenAnimation;
+  IconData? icon = Icons.favorite_border_outlined;
+  String? chosenTexture;
+  bool changeModel = false;
+  String srcGlb = 'assets/images/ddd.glb';
+  @override
+  void initState() {
+    controller.onModelLoaded.addListener(() {
+      debugPrint('model is loaded : ${controller.onModelLoaded.value}');
+    });
+    super.initState();
+    print(widget.item.videoUrl);
+    _controller = VideoPlayerController.networkUrl(
+      Uri.parse(
+        widget.item.videoUrl,
+      ),
+    )..initialize().then((_) {
+        // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
+        setState(() {});
+      });
+    for (var product in widget.items) {
+      if (product.supCategory == widget.item.supCategory) {
+        items.add(product);
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,8 +66,19 @@ class ProductDetailsScreen extends StatelessWidget {
         elevation: 0,
         actions: [
           IconButton(
-            icon: const Icon(Icons.favorite_border, color: Colors.red),
-            onPressed: () {},
+            icon: Icon(icon, color: Colors.red),
+            onPressed: () {
+              savedController.addItem(widget.item);
+              setState(() {
+                // for (var element in savedController.savedItems) {
+                //   if (element.itemId == widget.item.itemId) {
+                //     savedController.removed(widget.item);
+                //     icon = Icons.favorite_outlined;
+                //   }
+                // }
+                icon = Icons.favorite_outlined;
+              });
+            },
           ),
           IconButton(
             icon: const Icon(Icons.reply_rounded, color: Colors.black),
@@ -37,7 +92,7 @@ class ProductDetailsScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             // Product Image
-            const Center(
+            Center(
               // child: Image.asset(
               //   Images.gasCooker,
               //   height: 200,
@@ -48,33 +103,28 @@ class ProductDetailsScreen extends StatelessWidget {
                 width: 250,
                 child: ModelViewer(
                   backgroundColor: Color.fromARGB(0xFF, 0xEE, 0xEE, 0xEE),
-                  src: Images.gasCooker3D,
-                  alt: 'A 3D model of an astronaut',
-                  ar: true,
+                  src: srcGlb,
                   autoRotate: true,
-                  iosSrc:
-                      'https://modelviewer.dev/shared-assets/models/Astronaut.usdz',
-                  disableZoom: true,
                 ),
               ),
             ),
             const SizedBox(height: 10),
 
             // Product Title, Rating & Price
-            const Row(
+            Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      'Washing Machine',
-                      style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                      widget.item.itemName,
+                      style: const TextStyle(
+                          fontSize: 18, fontWeight: FontWeight.bold),
                     ),
                     Text(
-                      '(LG)',
-                      style: TextStyle(
+                      '(${widget.item.brandName})',
+                      style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
                         color: Colors.blue,
@@ -86,12 +136,13 @@ class ProductDetailsScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(Icons.star, color: Colors.orange, size: 16),
-                    Icon(Icons.star, color: Colors.orange, size: 16),
-                    Icon(Icons.star, color: Colors.orange, size: 16),
-                    Icon(Icons.star, color: Colors.orange, size: 16),
-                    Icon(Icons.star_half, color: Colors.orange, size: 16),
-                    Text('(4/5)', style: TextStyle(color: Colors.blue)),
+                    const Icon(Icons.star, color: Colors.orange, size: 16),
+                    const Icon(Icons.star, color: Colors.orange, size: 16),
+                    const Icon(Icons.star, color: Colors.orange, size: 16),
+                    const Icon(Icons.star, color: Colors.orange, size: 16),
+                    const Icon(Icons.star_half, color: Colors.orange, size: 16),
+                    Text('(${widget.item.rate}/5)',
+                        style: const TextStyle(color: Colors.blue)),
                   ],
                 ),
               ],
@@ -100,9 +151,9 @@ class ProductDetailsScreen extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child: Row(
                 children: [
-                  const Text(
-                    "13.335",
-                    style: TextStyle(
+                  Text(
+                    widget.item.price,
+                    style: const TextStyle(
                       fontSize: 10,
                       decoration: TextDecoration.lineThrough,
                       color: Colors.red,
@@ -111,8 +162,9 @@ class ProductDetailsScreen extends StatelessWidget {
                   SizedBox(
                     width: 2.w,
                   ),
-                  const Text('EGP 10.675',
-                      style: TextStyle(
+                  Text(
+                      'EGP ${double.parse(widget.item.price) * (1 - (double.parse(widget.item.discount) / 100.0))}',
+                      style: const TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.bold,
                           color: Colors.blue)),
@@ -120,6 +172,7 @@ class ProductDetailsScreen extends StatelessWidget {
               ),
             ),
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Row(
                   children: [
@@ -195,24 +248,22 @@ class ProductDetailsScreen extends StatelessWidget {
 
             // Video Player Section
             Stack(
-              alignment: Alignment.center,
+              alignment: AlignmentDirectional.center,
               children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(10),
-                  child: Image.asset(
-                    Images.gasCooker,
-                    height: 180,
-                    width: double.infinity,
-                    fit: BoxFit.cover,
-                  ),
+                AspectRatio(
+                  aspectRatio: _controller.value.aspectRatio,
+                  child: VideoPlayer(_controller),
                 ),
-                GestureDetector(
-                  onTap: () {},
-                  child: const Icon(
-                    Icons.play_circle_fill,
-                    color: Colors.white,
-                    size: 50,
-                  ),
+                FloatingActionButton(
+                  backgroundColor: Colors.transparent,
+                  onPressed: () {
+                    setState(() {
+                      _controller.value.isPlaying
+                          ? _controller.pause()
+                          : _controller.play();
+                    });
+                  },
+                  child: const Icon(Icons.play_arrow),
                 ),
               ],
             ),
@@ -220,11 +271,10 @@ class ProductDetailsScreen extends StatelessWidget {
             const SizedBox(height: 15),
 
             // Product Description
-            const Text(
-              "Use washing machines to easily clean your clothes. Featuring advanced technology, these machines "
-              "help save water, energy, and time. Designed for efficiency, they provide a powerful and smooth washing experience.",
+            Text(
+              widget.item.itemDescription,
               textAlign: TextAlign.start,
-              style: TextStyle(fontSize: 14, color: Colors.black54),
+              style: const TextStyle(fontSize: 14, color: Colors.black54),
             ),
 
             const SizedBox(height: 15),
@@ -234,63 +284,64 @@ class ProductDetailsScreen extends StatelessWidget {
               'Ratings & Reviews',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
-            const Row(
-              children: [
-                Icon(Icons.star, color: Colors.orange, size: 20),
-                Icon(Icons.star, color: Colors.orange, size: 20),
-                Icon(Icons.star, color: Colors.orange, size: 20),
-                Icon(Icons.star, color: Colors.orange, size: 20),
-                Icon(Icons.star_half, color: Colors.orange, size: 20),
-                SizedBox(width: 5),
-                Text('4/5',
-                    style: TextStyle(fontSize: 14, color: Colors.black54)),
-              ],
-            ),
+            // const Row(
+            //   children: [
+            //     Icon(Icons.star, color: Colors.orange, size: 20),
+            //     Icon(Icons.star, color: Colors.orange, size: 20),
+            //     Icon(Icons.star, color: Colors.orange, size: 20),
+            //     Icon(Icons.star, color: Colors.orange, size: 20),
+            //     Icon(Icons.star_half, color: Colors.orange, size: 20),
+            //     SizedBox(width: 5),
+            //     Text('4/5',
+            //         style: TextStyle(fontSize: 14, color: Colors.black54)),
+            //   ],
+            // ),
 
             const SizedBox(height: 10),
 
             // Review Card
             Container(
+              width: double.maxFinite, height: 100,
               padding: const EdgeInsets.all(10),
               decoration: BoxDecoration(
                 color: Colors.grey[100],
                 borderRadius: BorderRadius.circular(10),
               ),
-              child: const Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  CircleAvatar(
-                    radius: 20,
-                    child: Icon(Icons.person),
-                  ),
-                  SizedBox(width: 10),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Mohamed Ahmed',
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                        Row(
-                          children: [
-                            Icon(Icons.star, color: Colors.orange, size: 18),
-                            Icon(Icons.star, color: Colors.orange, size: 18),
-                            Icon(Icons.star, color: Colors.orange, size: 18),
-                            Icon(Icons.star, color: Colors.orange, size: 18),
-                            Icon(Icons.star_half,
-                                color: Colors.orange, size: 18),
-                          ],
-                        ),
-                        Text(
-                          "Great washing machine, easy to use and energy-efficient!",
-                          style: TextStyle(fontSize: 14),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
+              // child: const Row(
+              //   crossAxisAlignment: CrossAxisAlignment.start,
+              //   children: [
+              //     CircleAvatar(
+              //       radius: 20,
+              //       child: Icon(Icons.person),
+              //     ),
+              //     SizedBox(width: 10),
+              //     Expanded(
+              //       child: Column(
+              //         crossAxisAlignment: CrossAxisAlignment.start,
+              //         children: [
+              //           Text(
+              //             'Mohamed Ahmed',
+              //             style: TextStyle(fontWeight: FontWeight.bold),
+              //           ),
+              //           Row(
+              //             children: [
+              //               Icon(Icons.star, color: Colors.orange, size: 18),
+              //               Icon(Icons.star, color: Colors.orange, size: 18),
+              //               Icon(Icons.star, color: Colors.orange, size: 18),
+              //               Icon(Icons.star, color: Colors.orange, size: 18),
+              //               Icon(Icons.star_half,
+              //                   color: Colors.orange, size: 18),
+              //             ],
+              //           ),
+              //           Text(
+              //             "Great washing machine, easy to use and energy-efficient!",
+              //             style: TextStyle(fontSize: 14),
+              //           ),
+              //         ],
+              //       ),
+              //     ),
+              //   ],
+              // ),
             ),
 
             SizedBox(height: 20.h),
@@ -305,13 +356,16 @@ class ProductDetailsScreen extends StatelessWidget {
                 mainAxisSpacing: 10,
                 mainAxisExtent: 168.h,
               ),
-              itemCount: 4,
+              itemCount: items.length,
               itemBuilder: (context, index) {
                 return GestureDetector(
                   onTap: () => Get.toNamed(RouteHelper.productDetailsScreen),
-                  child: const ProductCard(
-                    name: 'Washing Machine',
-                    price: '10,675',
+                  child: ProductCard(
+                    name: items[index].itemName,
+                    price: items[index].price,
+                    image: items[index].imageIcon,
+                    rate: items[index].rate,
+                    item: items[index],
                   ),
                 );
               },
@@ -320,5 +374,11 @@ class ProductDetailsScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 }

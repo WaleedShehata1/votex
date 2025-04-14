@@ -1,21 +1,40 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
+import '../../../controller/saved/saved_controller.dart';
 import '../../../core/constants/colors.dart';
 import '../../../core/constants/dimensions.dart';
 import '../../../core/constants/images.dart';
+import '../../../core/model/item_model.dart';
 import '../../../core/widget/custom_button.dart';
+import '../../../core/widget/custom_image_widget.dart';
 
-class ProductCard extends StatelessWidget {
+class ProductCard extends StatefulWidget {
   const ProductCard({
     super.key,
     required this.name,
     required this.price,
+    required this.image,
+    required this.rate,
+    required this.item,
   });
-
+  final ItemModel item;
   final String name;
+  final String image;
   final String price;
+  final String rate;
 
+  @override
+  State<ProductCard> createState() => _ProductCardState();
+}
+
+class _ProductCardState extends State<ProductCard> {
+  IconData? icon = Icons.favorite_border_outlined;
+
+  final SavedControllerImp savedController = Get.put(
+    SavedControllerImp(),
+  );
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -33,18 +52,25 @@ class ProductCard extends StatelessWidget {
               mainAxisSize:
                   MainAxisSize.min, // Ensure it takes only necessary space
               children: [
-                Image.asset(
-                  Images.washing,
+                CustomImageWidget(
+                  image: widget.image,
                   height: 95,
                   width: 80,
                   fit: BoxFit.fitHeight,
                 ),
+                // Image.asset(
+                //   Images.washing,
+                //   height: 95,
+                //   width: 80,
+                //   fit: BoxFit.fitHeight,
+                // ),
                 const SizedBox(height: 5),
                 Padding(
                   padding: const EdgeInsetsDirectional.only(end: 5),
                   child: Align(
                     alignment: AlignmentDirectional.centerEnd,
-                    child: Text(name, style: const TextStyle(fontSize: 14)),
+                    child:
+                        Text(widget.name, style: const TextStyle(fontSize: 14)),
                   ),
                 ),
                 Row(
@@ -60,10 +86,10 @@ class ProductCard extends StatelessWidget {
                           bottomEnd: Radius.circular(15),
                         ),
                       ),
-                      child: const Row(
+                      child: Row(
                         children: [
                           Text(
-                            '4.2',
+                            widget.rate,
                             style: TextStyle(fontSize: 10, color: Colors.white),
                           ),
                           Icon(Icons.star, size: 15, color: Colors.white),
@@ -73,7 +99,7 @@ class ProductCard extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsetsDirectional.only(end: 5),
                       child: Text(
-                        'EGP $price',
+                        'EGP ${widget.price}',
                         style: const TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.bold,
@@ -95,10 +121,23 @@ class ProductCard extends StatelessWidget {
               ],
             ),
           ),
-          const Positioned(
+          Positioned(
             top: 8,
             left: 8,
-            child: Icon(Icons.favorite, color: Colors.red),
+            child: GestureDetector(
+                onTap: () {
+                  savedController.addItem(widget.item);
+                  setState(() {
+                    // for (var element in savedController.savedItems) {
+                    //   if (element.itemId == widget.item.itemId) {
+                    //     savedController.removed(widget.item);
+                    //     icon = Icons.favorite_outlined;
+                    //   }
+                    // }
+                    icon = Icons.favorite_outlined;
+                  });
+                },
+                child: Icon(Icons.favorite, color: Colors.red)),
           ),
         ],
       ),

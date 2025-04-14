@@ -15,7 +15,7 @@ class CustomImageWidget extends StatelessWidget {
       this.height,
       this.width,
       this.fit = BoxFit.cover,
-      this.placeholder = Images.logo});
+      this.placeholder = Images.logo2});
 
   @override
   Widget build(BuildContext context) {

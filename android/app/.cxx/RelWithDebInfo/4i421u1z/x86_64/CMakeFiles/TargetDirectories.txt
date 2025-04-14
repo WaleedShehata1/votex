@@ -1,2 +1,0 @@
-C:/Users/Waleed/Desktop/votex/votex/android/app/.cxx/RelWithDebInfo/4i421u1z/x86_64/CMakeFiles/edit_cache.dir
-C:/Users/Waleed/Desktop/votex/votex/android/app/.cxx/RelWithDebInfo/4i421u1z/x86_64/CMakeFiles/rebuild_cache.dir

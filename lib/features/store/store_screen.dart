@@ -1,23 +1,61 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:votex/core/constants/colors.dart';
 import 'package:votex/core/helper/route_helper.dart';
+import 'package:votex/core/model/item_model.dart';
+import 'package:votex/core/theme/light.dart';
+import 'package:votex/features/store/product_ditiles.dart';
 import '../../core/constants/images.dart';
 import '../../core/constants/styles.dart';
 import '../../core/widget/custom_text_field.dart';
 import '../../core/widget/drop_down.dart';
 import '../drawer/drawer.dart';
+import '../product/proudct_details_screen.dart';
 import 'widget/product_card.dart';
 
 class ProductListScreen extends StatefulWidget {
-  const ProductListScreen({super.key});
-
+  const ProductListScreen({super.key, this.brand});
+  final String? brand;
   @override
   State<ProductListScreen> createState() => _ProductListScreenState();
 }
 
 class _ProductListScreenState extends State<ProductListScreen> {
+  @override
+  void initState() {
+    getItems();
+    super.initState();
+  }
+
+  List<ItemModel> listItem = [];
+  // List<QueryDocumentSnapshot> listBrands2 = [];
+  getItems() async {
+    QuerySnapshot items =
+        await FirebaseFirestore.instance.collection("items").get();
+
+    for (var item in items.docs) {
+      if (widget.brand != null) {
+        if (item["brand_id"] == widget.brand) {
+          listItem.add(ItemModel.fromFirestore(item));
+          print(widget.brand);
+          print(item.id);
+          print(item["brand_id"]);
+          print((item["brand_id"] == widget.brand));
+          print(listItem[0]);
+        }
+      } else if (widget.brand == null) {
+        listItem.add(ItemModel.fromFirestore(item));
+        print(item.id);
+        print(item["brand_id"]);
+        print(listItem[0]);
+      }
+    }
+    // listBrands2.addAll(brads.docs);
+    print(listItem.length);
+  }
+
   String? selectType;
   List<String> selectTypeList = [
     "Refrigerator",
@@ -28,11 +66,10 @@ class _ProductListScreenState extends State<ProductListScreen> {
   ];
   String? filtter;
   List<String> filtterList = [
-    "Refrigerator",
-    "Freezer",
-    "Oven",
-    "Microwave",
-    "Washing Machine"
+    "high price",
+    "gbcvbvcbvb",
+    "lvbgnhn",
+    "zdffdfgf",
   ];
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -163,13 +200,19 @@ class _ProductListScreenState extends State<ProductListScreen> {
                 mainAxisSpacing: 10,
                 mainAxisExtent: 168.h,
               ),
-              itemCount: 6, // Sample items count
+              itemCount: listItem.length, // Sample items count
               itemBuilder: (context, index) {
                 return GestureDetector(
-                  onTap: () => Get.toNamed(RouteHelper.productDetailsScreen),
-                  child: const ProductCard(
-                    name: 'Washing Machine',
-                    price: '10,675',
+                  onTap: () => Get.to(() => ProductDetailsScreen(
+                        item: listItem[index],
+                        items: listItem,
+                      )),
+                  child: ProductCard(
+                    name: listItem[index].itemName,
+                    price: listItem[index].price,
+                    image: listItem[index].imageIcon,
+                    rate: listItem[index].rate,
+                    item: listItem[index],
                   ),
                 );
               },

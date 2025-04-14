@@ -5,13 +5,16 @@ import '../../../core/constants/colors.dart';
 import '../../../core/constants/dimensions.dart';
 import '../../../core/constants/images.dart';
 import '../../../core/constants/styles.dart';
+import '../../../core/widget/custom_image_widget.dart';
 
 class BrandCircle extends StatelessWidget {
   const BrandCircle({
     super.key,
     required this.brand,
+    required this.image,
   });
   final String brand;
+  final String image;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -25,10 +28,11 @@ class BrandCircle extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             CircleAvatar(
-              radius: 30,
-              backgroundColor: Colors.grey[300],
-              child: Image.asset(Images.refrigerators),
-            ),
+                radius: 30,
+                backgroundColor: Colors.grey[300],
+                child: CustomImageWidget(
+                  image: image,
+                )),
             const SizedBox(height: 5),
             Text(
               brand,

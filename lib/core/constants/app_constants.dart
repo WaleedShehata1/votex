@@ -9,10 +9,12 @@ String? shareLink;
 class AppConstants {
   static const String appName = 'Votex';
   static const double appVersion = 1.0;
-
+  static const String userId = 'userId';
+  static const String userName = 'userName';
   static const String fontFamily = 'Almarai';
   static const String FirstLog = 'FirstLog';
   static const String ISLOGIN = 'ISLOGIN';
+  static const String userEmail = 'userEmail';
 
   // Shared Key
   static const String THEME = 'votex_theme';

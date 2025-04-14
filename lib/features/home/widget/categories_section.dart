@@ -33,7 +33,7 @@ class CategoriesSection extends StatelessWidget {
                     width: 10,
                   ),
                   GestureDetector(
-                    onTap: () => Get.toNamed(RouteHelper.ratedBrandsScreen),
+                    // onTap: () => Get.toNamed(RouteHelper.ratedBrandsScreen),
                     child: const CircleAvatar(
                       maxRadius: 15,
                       backgroundColor: Colors.blue,
