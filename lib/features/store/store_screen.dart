@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:http/http.dart';
 import 'package:votex/core/constants/colors.dart';
 import 'package:votex/core/model/item_model.dart';
 import '../../controller/home/home_controller.dart';
@@ -14,18 +15,23 @@ import '../product/proudct_details_screen.dart';
 import 'widget/product_card.dart';
 
 class ProductListScreen extends StatelessWidget {
-  const ProductListScreen({super.key, this.brand});
-  final String? brand;
+  const ProductListScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
+    final HomeControllerImp homeController = Get.put(
+      HomeControllerImp(),
+    );
+    if (homeController.listItemAndFiltter.isEmpty &&
+        homeController.selectedIndex == 1) {
+      homeController.getItems();
+      homeController.update();
+    }
     return GetBuilder<HomeControllerImp>(builder: (controller) {
-      // print(controller.selectTypeList.length);
-      // for (var element in controller.selectTypeList) {
-      //   print("element==${element}");
-      // }
       return RefreshIndicator(
         onRefresh: () async {
           controller.load();
+          controller.selectType = 'الكل';
         },
         child: Scaffold(
           key: controller.scaffoldKey,
@@ -143,7 +149,7 @@ class ProductListScreen extends StatelessWidget {
 
               // Product Grid
               Expanded(
-                child: controller.listItem.isEmpty
+                child: controller.listItemAndFiltter.isEmpty
                     ? const Center(
                         child: CircularProgressIndicator(),
                       )
@@ -156,20 +162,22 @@ class ProductListScreen extends StatelessWidget {
                           mainAxisSpacing: 10,
                           mainAxisExtent: 168.h,
                         ),
-                        itemCount:
-                            controller.listItem.length, // Sample items count
+                        itemCount: controller
+                            .listItemAndFiltter.length, // Sample items count
                         itemBuilder: (context, index) {
                           return GestureDetector(
                             onTap: () => Get.to(() => ProductDetailsScreen(
-                                  item: controller.listItem[index],
-                                  items: controller.listItem,
+                                  item: controller.listItemAndFiltter[index],
+                                  items: controller.listItemAndFiltter,
                                 )),
                             child: ProductCard(
-                              name: controller.listItem[index].itemName,
-                              price: controller.listItem[index].price,
-                              image: controller.listItem[index].imageIcon,
-                              rate: controller.listItem[index].rate,
-                              item: controller.listItem[index],
+                              name:
+                                  controller.listItemAndFiltter[index].itemName,
+                              price: controller.listItemAndFiltter[index].price,
+                              image: controller
+                                  .listItemAndFiltter[index].imageIcon,
+                              rate: controller.listItemAndFiltter[index].rate,
+                              item: controller.listItemAndFiltter[index],
                             ),
                           );
                         },

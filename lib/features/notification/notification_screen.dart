@@ -68,7 +68,7 @@ class NotificationsScreen extends StatelessWidget {
                     time: notification['time']!,
                     price: notification['price']!,
                     oldPrice: notification['oldPrice']!,
-                    image: notification[Images.gasCooker]!,
+                    image: Images.gasCooker,
                   );
                 },
               ),

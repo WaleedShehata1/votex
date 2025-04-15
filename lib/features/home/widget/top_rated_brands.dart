@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:votex/core/model/brand_model.dart';
 import 'package:votex/features/store/store_screen.dart';
 
+import '../../../controller/home/home_controller.dart';
 import '../../rated brand/all_rated_brands.dart';
 import 'brand_circle.dart';
 
@@ -13,6 +14,8 @@ class TopRatedBrands extends StatelessWidget {
   List<BrandModel> listBrands;
   @override
   Widget build(BuildContext context) {
+    final HomeControllerImp homeControllerImp = Get.put(HomeControllerImp());
+
     print(listBrands.length);
     return Padding(
       padding:
@@ -64,9 +67,10 @@ class TopRatedBrands extends StatelessWidget {
                       crossAxisCount: 1, mainAxisExtent: 160),
                   itemBuilder: (context, i) {
                     return GestureDetector(
-                      onTap: () => Get.to(ProductListScreen(
-                        brand: listBrands[i].BrandId,
-                      )),
+                      onTap: () {
+                        homeControllerImp.brand = listBrands[i].BrandId;
+                        homeControllerImp.subOrBrand();
+                      },
                       child: BrandCircle(
                         brand: listBrands[i].brandName,
                         image: listBrands[i].imageUrl,

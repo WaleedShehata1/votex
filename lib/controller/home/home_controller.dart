@@ -9,6 +9,7 @@ import '../../core/functions/checkInternet.dart';
 import '../../core/model/brand_model.dart';
 import '../../core/model/subcategory_model.dart';
 import '../../core/widget/custom_snackbar.dart';
+import '../../features/store/store_screen.dart';
 
 abstract class HomeController extends GetxController {
   // getAllBrand();
@@ -17,6 +18,8 @@ abstract class HomeController extends GetxController {
 class HomeControllerImp extends HomeController {
   Rx<BrandModel>? brandModel;
   var isLoadingGetAllBrand = false.obs;
+  String? brand;
+  String? sub;
   @override
   void onInit() {
     load();
@@ -24,10 +27,30 @@ class HomeControllerImp extends HomeController {
     super.onInit();
   }
 
+  int selectedIndex = 0;
   load() {
     getSubCategores();
     getItems();
     getBrand();
+  }
+
+  subOrBrand() {
+    if (brand != null) {
+      listItemAndFiltter = [];
+      for (var item in listItem) {
+        if (item.brandId == brand) {
+          listItemAndFiltter.add(item);
+        }
+      }
+
+      Get.to(const ProductListScreen());
+    } else if (sub != null) {
+      for (var item in listItem) {
+        if (item.supCategory == sub) {
+          listItemAndFiltter.add(item);
+        }
+      }
+    }
   }
 
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
@@ -36,29 +59,67 @@ class HomeControllerImp extends HomeController {
   List<DropdownMenuItem<Object>>? selectTypeList;
   String? filtter;
   List<String> filtterList = [
-    "high price",
-    "gbcvbvcbvb",
-    "lvbgnhn",
-    "zdffdfgf",
+    'normal',
+    "price LowToHig",
+    "price HighToLow",
   ];
+
+  sortProducts(List<ItemModel> products, SortType sortType) {
+    final sortedList = listItemAndFiltter; // Copy to avoid modifying original
+
+    switch (sortType) {
+      case SortType.priceLowToHigh:
+        sortedList.sort((a, b) => a.price.compareTo(b.price));
+        break;
+      case SortType.priceHighToLow:
+        sortedList.sort((a, b) => b.price.compareTo(a.price));
+        break;
+      // case SortType.bestSelling:
+      //   sortedList.sort((a, b) => b.salesCount.compareTo(a.salesCount));
+      //   break;
+      // case SortType.newestFirst:
+      //   sortedList.sort((a, b) => b.dateAdded.compareTo(a.dateAdded));
+      //   break;
+      // case SortType.oldestFirst:
+      //   sortedList.sort((a, b) => a.dateAdded.compareTo(b.dateAdded));
+      //   break;
+    }
+
+    listItemAndFiltter = sortedList;
+    update();
+  }
+
   List<SubcategoryModel> listSubCategoryes = [];
 
   // List<QueryDocumentSnapshot> listBrands2 = [];
   List<ItemModel> filtterListItem = [];
   filtterToType(String typing) {
     filtterListItem = [];
-    for (var item in listItem) {
-      if (item.supCategory == typing) {
-        filtterListItem.add(item);
+
+    if (typing == 'الكل') {
+      listItemAndFiltter = listItem;
+    } else {
+      for (var item in listItem) {
+        if (item.supCategory == typing) {
+          filtterListItem.add(item);
+        }
       }
-    }
-    if (filtterListItem.isNotEmpty) {
-      listItem = filtterListItem;
+      if (filtterListItem.isNotEmpty) {
+        listItemAndFiltter = filtterListItem;
+      }
     }
   }
 
   getSubCategores() async {
-    selectTypeList = [];
+    selectTypeList = [
+      const DropdownMenuItem<String>(
+        value: 'الكل',
+        child: Center(
+            child: Text(
+          'الكل',
+        )),
+      )
+    ];
     listSubCategoryes = [];
     QuerySnapshot subCategores =
         await FirebaseFirestore.instance.collection("subCategores").get();
@@ -68,7 +129,7 @@ class HomeControllerImp extends HomeController {
       listSubCategoryes.add(sub);
       selectTypeList!.add(DropdownMenuItem<String>(
         value: sub.nameCategores,
-        child: Text(sub.nameCategores),
+        child: Center(child: Text(sub.nameCategores)),
       ));
       print(subCategory.id);
       print(sub.nameCategores);
@@ -82,6 +143,7 @@ class HomeControllerImp extends HomeController {
   }
 
   List<ItemModel> listItem = [];
+  List<ItemModel> listItemAndFiltter = [];
   List<ItemModel> listItemOffer = [];
   // List<QueryDocumentSnapshot> listBrands2 = [];
   getItems() async {
@@ -95,12 +157,14 @@ class HomeControllerImp extends HomeController {
       if (item["discount"] != '' || item["discount"] != null) {
         listItemOffer.add(ItemModel.fromFirestore(item));
       }
+
       print(item.id);
       print(item["brand_id"]);
       print(listItem[0]);
 
       update();
     }
+    listItemAndFiltter = listItem;
     // listBrands2.addAll(brads.docs);
     print(listItem.length);
   }
@@ -174,28 +238,4 @@ class HomeControllerImp extends HomeController {
       return [];
     }
   }
-
-  // @override
-  // getAllBrand() async {
-  //   if (await CheckInternet.checkInternet()) {
-  //     print("Bearer ${await AppUsageService.getToken()}");
-  //     try {
-  //       isLoadingGetAllBrand = true.obs;
-  //       brads.doc().get();
-
-  //       print("get ${brads.doc().get().toString()}");
-  //     } catch (e) {
-  //       showCustomSnackBar(
-  //         'An error occurred. Please try again.'.tr,
-  //         isError: true,
-  //       );
-  //       // print('Error during get Main Categores: $e');
-  //     } finally {
-  //       isLoadingGetAllBrand = false.obs;
-  //     }
-  //   } else {
-  //     isLoadingGetAllBrand = false.obs;
-  //     showCustomSnackBar('Check the internet connection'.tr, isError: true);
-  //   }
-  // }
 }

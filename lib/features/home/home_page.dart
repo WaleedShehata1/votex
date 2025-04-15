@@ -24,7 +24,7 @@ class _HomePageState extends State<HomePage> {
   final HomeControllerImp homeController = Get.put(
     HomeControllerImp(),
   );
-  int selectedIndex = 0;
+
   static List<Widget> _widgetOption = [
     const HomeScreen(),
     const ProductListScreen(),
@@ -33,7 +33,7 @@ class _HomePageState extends State<HomePage> {
   ];
   void onItemTapped(int index) {
     setState(() {
-      selectedIndex = index;
+      homeController.selectedIndex = index;
     });
   }
 
@@ -42,12 +42,12 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: Center(
-        child: _widgetOption.elementAt(selectedIndex),
+        child: _widgetOption.elementAt(homeController.selectedIndex),
       ),
       bottomNavigationBar: BottomNavigationBar(
         showUnselectedLabels: true,
         backgroundColor: const Color(0xffeeeeee),
-        currentIndex: selectedIndex,
+        currentIndex: homeController.selectedIndex,
         selectedItemColor: const Color.fromARGB(78, 9, 15, 71),
         unselectedItemColor: const Color.fromARGB(78, 9, 15, 71),
         onTap: onItemTapped,
@@ -59,11 +59,13 @@ class _HomePageState extends State<HomePage> {
               width: 25.w,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(Dimensions.radiusSmall),
-                color: selectedIndex == 0 ? AppColors.iconAppBar : Colors.white,
+                color: homeController.selectedIndex == 0
+                    ? AppColors.iconAppBar
+                    : Colors.white,
               ),
               child: Icon(
                 Icons.home_outlined,
-                color: selectedIndex == 0
+                color: homeController.selectedIndex == 0
                     ? Colors.white
                     : const Color.fromARGB(78, 9, 15, 71),
               ),
@@ -77,11 +79,12 @@ class _HomePageState extends State<HomePage> {
                 width: 25.w,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(Dimensions.radiusSmall),
-                  color:
-                      selectedIndex == 1 ? AppColors.iconAppBar : Colors.white,
+                  color: homeController.selectedIndex == 1
+                      ? AppColors.iconAppBar
+                      : Colors.white,
                 ),
                 child: Image.asset(
-                  selectedIndex == 1
+                  homeController.selectedIndex == 1
                       ? Images.iconShopping_cart2
                       : Images.iconShopping_cart,
                 ),
@@ -94,12 +97,13 @@ class _HomePageState extends State<HomePage> {
                 width: 25.w,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(Dimensions.radiusSmall),
-                  color:
-                      selectedIndex == 2 ? AppColors.iconAppBar : Colors.white,
+                  color: homeController.selectedIndex == 2
+                      ? AppColors.iconAppBar
+                      : Colors.white,
                 ),
                 child: Icon(
                   Icons.shopping_cart,
-                  color: selectedIndex == 2
+                  color: homeController.selectedIndex == 2
                       ? Colors.white
                       : const Color.fromARGB(78, 9, 15, 71),
                 ),
@@ -112,12 +116,13 @@ class _HomePageState extends State<HomePage> {
                 width: 25.w,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(Dimensions.radiusSmall),
-                  color:
-                      selectedIndex == 3 ? AppColors.iconAppBar : Colors.white,
+                  color: homeController.selectedIndex == 3
+                      ? AppColors.iconAppBar
+                      : Colors.white,
                 ),
                 child: Icon(
                   Icons.favorite,
-                  color: selectedIndex == 3
+                  color: homeController.selectedIndex == 3
                       ? Colors.white
                       : const Color.fromARGB(78, 9, 15, 71),
                 ),

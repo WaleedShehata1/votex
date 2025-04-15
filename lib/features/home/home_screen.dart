@@ -206,11 +206,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                               mainAxisExtent: 90),
                                       itemBuilder: (context, i) {
                                         return GestureDetector(
-                                          onTap: () =>
-                                              Get.to(() => ProductListScreen(
-                                                    brand: controller
-                                                        .listBrands[i].BrandId,
-                                                  )),
+                                          onTap: () {
+                                            controller.brand = controller
+                                                .listBrands[i].BrandId;
+                                            controller.subOrBrand();
+                                            controller.update();
+                                          },
                                           child: BrandCircle(
                                             brand: controller
                                                 .listBrands[i].brandName,

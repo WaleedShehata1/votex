@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../controller/home/home_controller.dart';
 import '../../core/model/brand_model.dart';
 import '../../core/widget/custom_image_widget.dart';
 import '../drawer/drawer.dart';
@@ -15,7 +16,7 @@ class RatedBrandsScreen extends StatefulWidget {
 
 class _RatedBrandsScreenState extends State<RatedBrandsScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-
+  final HomeControllerImp homeControllerImp = Get.put(HomeControllerImp());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -74,9 +75,12 @@ class _RatedBrandsScreenState extends State<RatedBrandsScreen> {
                   return Column(
                     children: [
                       GestureDetector(
-                        onTap: () => Get.to(ProductListScreen(
-                          brand: widget.brands[index].BrandId,
-                        )),
+                        onTap: () {
+                          homeControllerImp.brand =
+                              widget.brands[index].BrandId;
+                          homeControllerImp.subOrBrand();
+                          homeControllerImp.update();
+                        },
                         child: CircleAvatar(
                           backgroundColor: Colors.blue,
                           radius: 32,

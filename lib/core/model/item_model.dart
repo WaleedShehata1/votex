@@ -61,3 +61,11 @@ class ItemModel {
     );
   }
 }
+
+enum SortType {
+  priceLowToHigh,
+  priceHighToLow,
+  // bestSelling,
+  // newestFirst,
+  // oldestFirst,
+}
