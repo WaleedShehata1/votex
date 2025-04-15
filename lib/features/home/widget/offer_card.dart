@@ -18,7 +18,9 @@ class OfferCard extends StatelessWidget {
     required this.rate,
     required this.discount,
     required this.oldPrice,
+    required this.onPressed,
   });
+  final Function? onPressed;
   final String name;
   final String price;
   final String image;
@@ -104,7 +106,7 @@ class OfferCard extends StatelessWidget {
                     ],
                   ),
                   CustomButton(
-                    onPressed: () {},
+                    onPressed: onPressed,
                     buttonText: 'Add to cart',
                     boarderColor: AppColors.colorFont,
                     textColor: Colors.white,

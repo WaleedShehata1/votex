@@ -82,6 +82,24 @@ class AppUsageService {
     await prefs.remove(AppConstants.TOKEN);
   }
 
+  // Save token
+  static Future<void> saveTokenNotification(String tokenNotification) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString(AppConstants.Notification, tokenNotification);
+  }
+
+  // Get token
+  static Future<String?> getTokenNotification() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getString(AppConstants.Notification);
+  }
+
+  // Delete token
+  static Future<void> deleteTokenNotification() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove(AppConstants.Notification);
+  }
+
   // Save UserId
   static Future<void> saveUserId(String userId) async {
     final prefs = await SharedPreferences.getInstance();

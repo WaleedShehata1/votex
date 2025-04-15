@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-
+import '../../../controller/home/home_controller.dart';
 import '../../../core/helper/route_helper.dart';
 import '../../../core/model/subcategory_model.dart';
 import '../../store/store_screen.dart';
@@ -11,6 +12,9 @@ class CategoriesSection extends StatelessWidget {
   final List<SubcategoryModel> listSubCategoryes;
   @override
   Widget build(BuildContext context) {
+    final HomeControllerImp homeController = Get.put(
+      HomeControllerImp(),
+    );
     return Padding(
       padding: const EdgeInsetsDirectional.symmetric(horizontal: 15),
       child: Column(
@@ -36,7 +40,7 @@ class CategoriesSection extends StatelessWidget {
                   ),
                   GestureDetector(
                     onTap: () => Get.to(
-                      const ProductListScreen(),
+                      () => const ProductListScreen(),
                     ),
                     child: const CircleAvatar(
                       maxRadius: 15,
@@ -53,17 +57,24 @@ class CategoriesSection extends StatelessWidget {
             itemCount: listSubCategoryes.length,
             physics: const NeverScrollableScrollPhysics(),
             itemBuilder: (context, index) {
-              return CategoryCard(
-                category: listSubCategoryes[index].nameCategores,
-                image: listSubCategoryes[index].imageSubCategores,
+              return GestureDetector(
+                onTap: () {
+                  homeController.sub = listSubCategoryes[index].nameCategores;
+                  homeController.subOrBrand();
+                  homeController.update();
+                },
+                child: CategoryCard(
+                  category: listSubCategoryes[index].nameCategores,
+                  image: listSubCategoryes[index].imageSubCategores,
+                ),
               );
             },
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
               crossAxisSpacing: 5,
               mainAxisSpacing: 5,
               childAspectRatio: 1,
-              mainAxisExtent: 195,
+              mainAxisExtent: 181.h,
             ),
           ),
           const SizedBox(height: 10),

@@ -19,6 +19,7 @@ class AppConstants {
   // Shared Key
   static const String THEME = 'votex_theme';
   static const String TOKEN = 'votex_token';
+  static const String Notification = 'votex_tokenNotification';
   static const String COUNTRY_CODE = 'votexCountry_code';
   static const String LANGUAGE_CODE = 'votexLanguage_code';
 

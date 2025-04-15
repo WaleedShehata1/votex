@@ -61,6 +61,8 @@ dependencies:
   flutter_facebook_auth: ^7.1.1
   video_player: ^2.9.3
   flutter_3d_controller: ^2.2.0
+  flutter_local_notifications: ^19.0.0
+  firebase_messaging: ^15.2.4
   # intl: ^0.18.0
 
 dev_dependencies:

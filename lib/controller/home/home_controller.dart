@@ -42,14 +42,17 @@ class HomeControllerImp extends HomeController {
           listItemAndFiltter.add(item);
         }
       }
-
+      brand = null;
       Get.to(const ProductListScreen());
     } else if (sub != null) {
+      listItemAndFiltter = [];
       for (var item in listItem) {
         if (item.supCategory == sub) {
           listItemAndFiltter.add(item);
         }
       }
+      sub = null;
+      Get.to(const ProductListScreen());
     }
   }
 
@@ -62,30 +65,51 @@ class HomeControllerImp extends HomeController {
     'normal',
     "price LowToHig",
     "price HighToLow",
+    "oldest First",
+    "newest First",
+    "from A To Z",
+    "from Z To A",
   ];
 
-  sortProducts(List<ItemModel> products, SortType sortType) {
+  sortProducts(sortType) {
     final sortedList = listItemAndFiltter; // Copy to avoid modifying original
+    if (sortType != 'normal') {
+      switch (sortType) {
+        case SortType.priceLowToHigh:
+          sortedList.sort((a, b) => a.price.compareTo(b.price));
+          break;
+        case SortType.priceHighToLow:
+          sortedList.sort((a, b) => b.price.compareTo(a.price));
+          break;
+        case SortType.oldestFirst:
+          sortedList.sort((a, b) => b.dateAdd.compareTo(a.dateAdd));
+          break;
+        case SortType.newestFirst:
+          sortedList.sort((a, b) => a.dateAdd.compareTo(b.dateAdd));
+          break;
+        case SortType.fromAToZ:
+          sortedList.sort((a, b) => a.itemName.compareTo(b.itemName));
+          break;
+        case SortType.fromZToA:
+          sortedList.sort((a, b) => b.itemName.compareTo(a.itemName));
+          break;
 
-    switch (sortType) {
-      case SortType.priceLowToHigh:
-        sortedList.sort((a, b) => a.price.compareTo(b.price));
-        break;
-      case SortType.priceHighToLow:
-        sortedList.sort((a, b) => b.price.compareTo(a.price));
-        break;
-      // case SortType.bestSelling:
-      //   sortedList.sort((a, b) => b.salesCount.compareTo(a.salesCount));
-      //   break;
-      // case SortType.newestFirst:
-      //   sortedList.sort((a, b) => b.dateAdded.compareTo(a.dateAdded));
-      //   break;
-      // case SortType.oldestFirst:
-      //   sortedList.sort((a, b) => a.dateAdded.compareTo(b.dateAdded));
-      //   break;
+        // case SortType.bestSelling:
+        //   sortedList.sort((a, b) => b.salesCount.compareTo(a.salesCount));
+        //   break;
+        // case SortType.newestFirst:
+        //   sortedList.sort((a, b) => b.dateAdded.compareTo(a.dateAdded));
+        //   break;
+        // case SortType.oldestFirst:
+        //   sortedList.sort((a, b) => a.dateAdded.compareTo(b.dateAdded));
+        //   break;
+      }
+
+      listItemAndFiltter = sortedList;
+    } else {
+      listItemAndFiltter = sortedList;
     }
 
-    listItemAndFiltter = sortedList;
     update();
   }
 

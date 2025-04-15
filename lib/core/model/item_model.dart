@@ -66,6 +66,8 @@ enum SortType {
   priceLowToHigh,
   priceHighToLow,
   // bestSelling,
-  // newestFirst,
-  // oldestFirst,
+  newestFirst,
+  oldestFirst,
+  fromAToZ,
+  fromZToA,
 }

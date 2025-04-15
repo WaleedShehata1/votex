@@ -1,8 +1,8 @@
 import 'package:get/get.dart';
 
-import '../core/constants/images.dart';
-import '../core/model/item_model.dart';
-import '../core/widget/custom_snackbar.dart';
+import '../../core/constants/images.dart';
+import '../../core/model/item_model.dart';
+import '../../core/widget/custom_snackbar.dart';
 
 abstract class CartController extends GetxController {
   // getAllBrand();
@@ -16,11 +16,18 @@ class CartControllerImp extends CartController {
   double sensorCost = 0.0;
 
   call(sensorPrice) {
-    for (int i = 0; i < cartItems.length; i++) {
-      subtotal =
-          subtotal + (cartItems[i].count * cartItems[i].price) + sensorPrice;
+    sensorCost = sensorPrice;
+    if (cartItems.isNotEmpty) {
+      for (int i = 0; i < cartItems.length; i++) {
+        subtotal =
+            subtotal + (cartItems[i].count * cartItems[i].price) + sensorCost;
+      }
+      totalCost = subtotal + deliveryFee;
+    } else {
+      totalCost = sensorCost + deliveryFee;
     }
-    totalCost = subtotal + deliveryFee;
+
+    update();
   }
 
   addItem(ItemModel item) {

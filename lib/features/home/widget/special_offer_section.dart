@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:votex/core/helper/route_helper.dart';
 
+import '../../../controller/cart/cart_controller.dart';
 import '../../../core/model/item_model.dart';
 import '../../offers/offers_screen.dart';
 import '../../product/proudct_details_screen.dart';
@@ -16,8 +17,12 @@ class SpecialOfferSection extends StatelessWidget {
   });
   final List<ItemModel> listItemsOffer;
   final List<ItemModel> listItems;
+
   @override
   Widget build(BuildContext context) {
+    final CartControllerImp cartControllerImp = Get.put(
+      CartControllerImp(),
+    );
     return Padding(
       padding: const EdgeInsetsDirectional.symmetric(horizontal: 15),
       child: Column(
@@ -82,6 +87,10 @@ class SpecialOfferSection extends StatelessWidget {
                         image: listItemsOffer[i].imageIcon,
                         rate: listItemsOffer[i].rate,
                         discount: listItemsOffer[i].discount.toString(),
+                        onPressed: () {
+                          cartControllerImp.addItem(listItemsOffer[i]);
+                          cartControllerImp.update();
+                        },
                       ),
                     );
                   }),

@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:votex/controller/cart_controller.dart';
+import 'package:votex/controller/cart/cart_controller.dart';
 
 import '../../controller/auth/forgetpassword.controller.dart';
 import '../../controller/auth/login.controller.dart';

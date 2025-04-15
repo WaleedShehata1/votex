@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -10,7 +9,6 @@ import '../../core/constants/images.dart';
 import '../../core/constants/styles.dart';
 import '../../core/widget/custom_text_field.dart';
 import '../rated brand/all_rated_brands.dart';
-import '../store/store_screen.dart';
 import 'widget/brand_circle.dart';
 import 'widget/categories_section.dart';
 import 'widget/premium_home_banner.dart';
@@ -142,7 +140,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 height: 22.h,
               ),
               SizedBox(
-                height: MediaQuery.of(context).size.height * 0.602,
+                height: MediaQuery.of(context).size.height * 0.65,
                 child: SingleChildScrollView(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,

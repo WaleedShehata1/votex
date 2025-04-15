@@ -22,8 +22,7 @@ class ProductListScreen extends StatelessWidget {
     final HomeControllerImp homeController = Get.put(
       HomeControllerImp(),
     );
-    if (homeController.listItemAndFiltter.isEmpty &&
-        homeController.selectedIndex == 1) {
+    if (homeController.selectedIndex == 1) {
       homeController.getItems();
       homeController.update();
     }
@@ -138,6 +137,34 @@ class ProductListScreen extends StatelessWidget {
                                 );
                               }).toList(),
                               onChanged: (value) {
+                                switch (value) {
+                                  case "price LowToHig":
+                                    controller
+                                        .sortProducts(SortType.priceLowToHigh);
+                                    break;
+                                  case "price HighToLow":
+                                    controller
+                                        .sortProducts(SortType.priceHighToLow);
+                                    break;
+                                  case "oldest First":
+                                    controller
+                                        .sortProducts(SortType.oldestFirst);
+                                    break;
+                                  case "newest First":
+                                    controller
+                                        .sortProducts(SortType.newestFirst);
+                                    break;
+                                  case "from A To Z":
+                                    controller.sortProducts(SortType.fromAToZ);
+                                    break;
+                                  case "from Z To A":
+                                    controller.sortProducts(SortType.fromZToA);
+                                    break;
+                                  case 'normal':
+                                    controller.sortProducts('normal');
+                                    break;
+                                }
+
                                 controller.filtter = value.toString();
                                 controller.update();
                               },
