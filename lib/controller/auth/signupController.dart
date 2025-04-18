@@ -12,6 +12,7 @@ import '../../core/classes/status_request.dart';
 import '../../core/functions/checkInternet.dart';
 import '../../core/helper/route_helper.dart';
 import '../../core/widget/custom_snackbar.dart';
+import '../notification/notification_controller.dart';
 
 abstract class SignUpController extends GetxController {
   goToSignIn();
@@ -28,6 +29,9 @@ class SignUpControllerImp extends SignUpController {
   late PageController pageController;
   late TextEditingController searchController;
   var isLoadingSignUpWithEmail = false.obs;
+  final NotificationController notificationController = Get.put(
+    NotificationController(),
+  );
   // User? userAuth;
   List data = [];
   var googleSignIn = GoogleSignIn();
@@ -164,6 +168,7 @@ class SignUpControllerImp extends SignUpController {
     UserModel model = UserModel(
       userName: nameController.text,
       phone: phoneController.text,
+      tokenDevice: notificationController.fcmToken.value,
       email: emailController.text,
       uid: uid,
     );

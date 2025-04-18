@@ -92,7 +92,7 @@ class _CartScreenState extends State<CartScreen> {
                 children: [
                   SummaryRow(label: "Sensor", value: controller.sensorCost),
                   SummaryRow(label: "Subtotal", value: controller.subtotal),
-                  SummaryRow(label: "Delivery", value: controller.deliveryFee),
+                  // SummaryRow(label: "Delivery", value: controller.deliveryFee),
                   const Divider(thickness: 0.5),
                   SummaryRow(
                       label: "Total Cost",
@@ -103,14 +103,19 @@ class _CartScreenState extends State<CartScreen> {
               // const CheckoutButton(),
               CustomButton(
                 onPressed: () {
-                  if (controller.cartItems.isNotEmpty ||
-                      proposalItem["count"] != 0) {
-                    Get.to(() => const PaymentScreen());
-                  }
+                  // if (controller.cartItems.isNotEmpty ||
+                  //     proposalItem["count"] != 0) {
+                  //   Get.to(() => const PaymentScreen());
+                  // }
+                  Get.to(() => PaymentScreen());
+                  // controller.createOrder();
                 },
                 height: 30.h,
                 buttonText: "Checkout",
                 textColor: Colors.white,
+              ),
+              SizedBox(
+                height: 35.h,
               ),
             ],
           ),
@@ -203,40 +208,42 @@ class _CartItemCardState extends State<CartItemCard> {
                           SizedBox(
                             width: 10.w,
                           ),
-                          const QuantitySelector()
                         ],
                       ),
-                      CustomButton(
-                        height: 30.h,
-                        width: 100.w,
-                        isBold: false,
-                        buttonText: "Buy now",
-                        textColor: Colors.white,
-                        radius: 15.r,
-                        color: Colors.green,
-                      ),
+                      Align(
+                          alignment: AlignmentDirectional.center,
+                          child: const QuantitySelector()),
+                      // CustomButton(
+                      //   height: 30.h,
+                      //   width: 100.w,
+                      //   isBold: false,
+                      //   buttonText: "Buy now",
+                      //   textColor: Colors.white,
+                      //   radius: 15.r,
+                      //   color: Colors.green,
+                      // ),
                       const SizedBox(height: 6),
                     ],
                   ),
                 ),
               ],
             ),
-            GestureDetector(
-              onTap: () {
-                setState(() {
-                  add = !add;
-                });
-              },
-              child: Align(
-                  alignment: AlignmentDirectional.center,
-                  child: Row(
-                    children: [
-                      const Text("add sensor (optional)"),
-                      Icon(add ? Icons.expand_less : Icons.expand_more),
-                    ],
-                  )),
-            ),
-            add ? ProposalSection(widget.proposalItem) : const SizedBox(),
+            // GestureDetector(
+            //   onTap: () {
+            //     setState(() {
+            //       add = !add;
+            //     });
+            //   },
+            //   child: Align(
+            //       alignment: AlignmentDirectional.center,
+            //       child: Row(
+            //         children: [
+            //           const Text("add sensor (optional)"),
+            //           Icon(add ? Icons.expand_less : Icons.expand_more),
+            //         ],
+            //       )),
+            // ),
+            // add ? ProposalSection(widget.proposalItem) : const SizedBox(),
           ],
         ),
       ),
@@ -257,6 +264,7 @@ class _QuantitySelectorState extends State<QuantitySelector> {
   @override
   Widget build(BuildContext context) {
     return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         GestureDetector(
           onTap: () => setState(() {

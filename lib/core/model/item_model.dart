@@ -15,6 +15,7 @@ class ItemModel {
       supCategory,
       videoUrl;
   int count;
+  int itemSell;
   double price;
   double discount;
   bool isMoreSale;
@@ -36,6 +37,7 @@ class ItemModel {
     required this.supCategory,
     required this.videoUrl,
     required this.dateAdd,
+    required this.itemSell,
     this.count = 1,
   });
 
@@ -58,6 +60,7 @@ class ItemModel {
       supCategory: data['supCategory'],
       videoUrl: data['videoUrl'],
       dateAdd: data['dateAdd'],
+      itemSell: data['itemSell'],
     );
   }
 }

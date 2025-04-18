@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+import '../../controller/LocalizationController.dart';
+import '../../core/constants/app_constants.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -8,8 +12,9 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
-  String selectedLanguage = "English"; // Default Language
-  List<String> languages = ["English", "العربية"];
+  final LocalizationController localizationController = Get.put(
+    LocalizationController(sharedPreferences: Get.find()),
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -45,28 +50,41 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 borderRadius: BorderRadius.circular(10),
               ),
               child: ExpansionTile(
-                title: Text(selectedLanguage,
+                title: Text(
+                    localizationController.locale.languageCode == 'en'
+                        ? "English"
+                        : "العربية",
                     style: const TextStyle(fontSize: 14, color: Colors.black)),
                 children: [
                   ListTile(
                     title: const Text("English"),
-                    trailing: selectedLanguage == "English"
+                    trailing: localizationController.locale.languageCode == 'en'
                         ? const Icon(Icons.check_circle, color: Colors.blue)
                         : const Icon(Icons.circle_outlined, color: Colors.grey),
                     onTap: () {
                       setState(() {
-                        selectedLanguage = "English";
+                        localizationController.setLanguage(
+                          Locale(
+                            AppConstants.languages[1].languageCode!,
+                            AppConstants.languages[1].countryCode,
+                          ),
+                        );
                       });
                     },
                   ),
                   ListTile(
                     title: const Text("العربية"),
-                    trailing: selectedLanguage == "العربية"
+                    trailing: localizationController.locale.languageCode == 'ar'
                         ? const Icon(Icons.check_circle, color: Colors.blue)
                         : const Icon(Icons.circle_outlined, color: Colors.grey),
                     onTap: () {
                       setState(() {
-                        selectedLanguage = "العربية";
+                        localizationController.setLanguage(
+                          Locale(
+                            AppConstants.languages[0].languageCode!,
+                            AppConstants.languages[0].countryCode,
+                          ),
+                        );
                       });
                     },
                   ),

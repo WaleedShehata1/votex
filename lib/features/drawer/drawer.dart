@@ -35,6 +35,7 @@ class AppDrawer extends StatelessWidget {
                       fontWeight: FontWeight.bold)), // ),
               const Divider(),
               // Drawer Items
+
               DrawerItem(
                 icon: Icons.person_outlined,
                 title: "Profile",
@@ -113,10 +114,10 @@ class DrawerItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10),
-      child: InkWell(
-        onTap: onTap,
+    return InkWell(
+      onTap: onTap,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 10),
         child: Container(
           margin: const EdgeInsetsDirectional.symmetric(vertical: 10),
           padding: const EdgeInsetsDirectional.symmetric(

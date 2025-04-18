@@ -122,7 +122,12 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                   Transform.translate(
-                    offset: const Offset(-20, 95),
+                    offset: Offset(
+                        controller.localizationController.locale.languageCode ==
+                                'ar'
+                            ? -20
+                            : 20,
+                        95),
                     child: CustomTextField(
                       colorFill: Colors.white,
                       hintText: 'Search here',
@@ -140,7 +145,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 height: 22.h,
               ),
               SizedBox(
-                height: MediaQuery.of(context).size.height * 0.65,
+                height: (MediaQuery.of(context).size.height * 0.517).h,
                 child: SingleChildScrollView(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,

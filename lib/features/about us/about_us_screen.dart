@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
+import '../../controller/contact/contact_controller.dart';
 import '../../core/constants/images.dart';
 
 class AboutUsScreen extends StatelessWidget {
@@ -8,120 +10,129 @@ class AboutUsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
+    return GetBuilder<ContactController>(builder: (controller) {
+      return Scaffold(
         backgroundColor: Colors.white,
-        elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios, color: Colors.black),
-          onPressed: () => Navigator.pop(context),
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+          elevation: 0,
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back_ios, color: Colors.black),
+            onPressed: () => Get.back(),
+          ),
+          title: const Text(
+            "WHO WE ARE",
+            style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+          ),
         ),
-        title: const Text(
-          "WHO WE ARE",
-          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
-        ),
-      ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            // Logo
-            Center(
-              child: Column(
-                children: [
-                  Image.asset(
-                    Images.logo2,
-                    width: 141.w,
-                    height: 132.h,
+        body: SingleChildScrollView(
+          padding: const EdgeInsets.all(16),
+          child: Form(
+            key: controller.formstate,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                // Logo
+                Center(
+                  child: Column(
+                    children: [
+                      Image.asset(
+                        Images.logo2,
+                        width: 141.w,
+                        height: 132.h,
+                      ),
+                      const SizedBox(height: 10),
+                      RichText(
+                        textAlign: TextAlign.center,
+                        text: const TextSpan(
+                          style: TextStyle(fontSize: 14, color: Colors.black87),
+                          children: [
+                            TextSpan(
+                              text: "VOLTEX ",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.blue),
+                            ),
+                            TextSpan(
+                              text:
+                                  "offers a seamless shopping experience with a wide selection of top-brand electrical appliances at competitive prices, flexible payment options, and fast delivery services.",
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
-                  const SizedBox(height: 10),
-                  RichText(
-                    textAlign: TextAlign.center,
-                    text: const TextSpan(
-                      style: TextStyle(fontSize: 14, color: Colors.black87),
-                      children: [
-                        TextSpan(
-                          text: "VOLTEX ",
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, color: Colors.blue),
-                        ),
-                        TextSpan(
-                          text:
-                              "offers a seamless shopping experience with a wide selection of top-brand electrical appliances at competitive prices, flexible payment options, and fast delivery services.",
-                        ),
-                      ],
+                ),
+                const SizedBox(height: 20),
+
+                // Our Services Title
+                const Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    "Our Services",
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  ),
+                ),
+                const SizedBox(height: 10),
+
+                // Service Boxes
+                serviceBox(
+                    "A diverse range of appliances with detailed specifications."),
+                serviceBox(
+                    "Easy search, product comparison, and customer reviews."),
+                serviceBox(
+                    "Secure payment options, including installment plans and cash on delivery."),
+                serviceBox("Fast delivery with free installation service."),
+
+                const SizedBox(height: 30),
+
+                // Contact Us Title
+                const Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    "CONTACT US",
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  ),
+                ),
+                const SizedBox(height: 10),
+
+                // Contact Form
+                contactTextField("Name", controller: controller.userName),
+                contactTextField("Email", controller: controller.email),
+                contactTextField("Your Message",
+                    maxLines: 3, controller: controller.message),
+
+                const SizedBox(height: 20),
+
+                // Submit Button
+                SizedBox(
+                  width: double.infinity,
+                  height: 50,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      controller.sendService();
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.blue,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    ),
+                    child: const Text(
+                      "SUBMIT",
+                      style: TextStyle(color: Colors.white, fontSize: 16),
                     ),
                   ),
-                ],
-              ),
-            ),
-            const SizedBox(height: 20),
-
-            // Our Services Title
-            const Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                "Our Services",
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-              ),
-            ),
-            const SizedBox(height: 10),
-
-            // Service Boxes
-            serviceBox(
-                "A diverse range of appliances with detailed specifications."),
-            serviceBox(
-                "Easy search, product comparison, and customer reviews."),
-            serviceBox(
-                "Secure payment options, including installment plans and cash on delivery."),
-            serviceBox("Fast delivery with free installation service."),
-
-            const SizedBox(height: 30),
-
-            // Contact Us Title
-            const Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                "CONTACT US",
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-              ),
-            ),
-            const SizedBox(height: 10),
-
-            // Contact Form
-            contactTextField("Name"),
-            contactTextField("Email"),
-            contactTextField("Company"),
-            contactTextField("Your Message", maxLines: 3),
-
-            const SizedBox(height: 20),
-
-            // Submit Button
-            SizedBox(
-              width: double.infinity,
-              height: 50,
-              child: ElevatedButton(
-                onPressed: () {
-                  // Handle form submission
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.blue,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
                 ),
-                child: const Text(
-                  "SUBMIT",
-                  style: TextStyle(color: Colors.white, fontSize: 16),
+                SizedBox(
+                  height: 30.h,
                 ),
-              ),
+              ],
             ),
-          ],
+          ),
         ),
-      ),
-    );
+      );
+    });
   }
 
   // Widget for Service Box
@@ -150,10 +161,12 @@ class AboutUsScreen extends StatelessWidget {
   }
 
   // Widget for Contact Form Fields
-  Widget contactTextField(String hint, {int maxLines = 1}) {
+  Widget contactTextField(String hint,
+      {int maxLines = 1, TextEditingController? controller}) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 10),
       child: TextField(
+        controller: controller,
         maxLines: maxLines,
         decoration: InputDecoration(
           hintText: hint,

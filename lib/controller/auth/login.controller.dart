@@ -1,5 +1,6 @@
 // ignore_for_file: unused_local_variable
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
@@ -9,8 +10,10 @@ import 'package:votex/core/classes/app_usage_service.dart';
 import '../../core/classes/status_request.dart';
 import '../../core/functions/checkInternet.dart';
 import '../../core/helper/route_helper.dart';
+import '../../core/model/user_model.dart';
 import '../../core/widget/custom_snackbar.dart';
 import '../../features/auth/forget_password/forget_password.dart';
+import '../notification/notification_controller.dart';
 
 abstract class LoginController extends GetxController {
   // login();
@@ -26,9 +29,11 @@ class LoginControllerImp extends LoginController {
   late TextEditingController email;
   late TextEditingController password;
   LoginControllerImp();
-
+  UserModel? model;
   late StatusRequest statusRequest;
-
+  final NotificationController notificationController = Get.put(
+    NotificationController(),
+  );
   @override
   goToSignUp() {
     Get.offNamed(RouteHelper.signUp);
@@ -123,6 +128,27 @@ class LoginControllerImp extends LoginController {
           Get.toNamed(RouteHelper.homePage);
           print("object ${userCredential.user!.uid}");
           AppUsageService.saveUserId(userCredential.user!.uid);
+
+          await FirebaseFirestore.instance
+              .collection('users')
+              .doc(userCredential.user!.uid)
+              .get()
+              .then((DocumentSnapshot documentSnapshot) {
+            if (documentSnapshot.exists) {
+              model = UserModel.fromFirestore(documentSnapshot);
+              AppUsageService.saveUserName(model!.userName);
+            }
+            print(documentSnapshot.exists);
+          });
+          FirebaseFirestore.instance
+              .collection('users')
+              .doc(userCredential.user!.uid)
+              .update({
+                'tokenDevice': notificationController.fcmToken.value,
+              })
+              .then((value) => print('done'))
+              .catchError((error) => print("Failed to update user: $error"));
+
           print("Login successful!");
           showCustomSnackBar("Login successful!", isError: false);
         } on FirebaseAuthException catch (e) {

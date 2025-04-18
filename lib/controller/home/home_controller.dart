@@ -10,20 +10,60 @@ import '../../core/model/brand_model.dart';
 import '../../core/model/subcategory_model.dart';
 import '../../core/widget/custom_snackbar.dart';
 import '../../features/store/store_screen.dart';
+import '../LocalizationController.dart';
 
 abstract class HomeController extends GetxController {
   // getAllBrand();
 }
 
 class HomeControllerImp extends HomeController {
+  final LocalizationController localizationController = Get.put(
+    LocalizationController(sharedPreferences: Get.find()),
+  );
+  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+  String? selectType;
+  List<DropdownMenuItem<Object>>? selectTypeList;
+  String? filtter;
+  List<String> filtterList = [
+    'normal',
+    "price LowToHig",
+    "price HighToLow",
+    "oldest First",
+    "newest First",
+    "from A To Z",
+    "from Z To A",
+  ];
   Rx<BrandModel>? brandModel;
   var isLoadingGetAllBrand = false.obs;
   String? brand;
   String? sub;
+  List<SubcategoryModel> listSubCategoryes = [];
+  // List<QueryDocumentSnapshot> listBrands2 = [];
+  List<ItemModel> filtterListItem = [];
+  List<ItemModel> listItem = [];
+  List<ItemModel> listItemAndFiltter = [];
+  List<ItemModel> listItemOffer = [];
+  // List<QueryDocumentSnapshot> listBrands2 = [];
+  List<BrandModel> listBrands = [];
+  List<QueryDocumentSnapshot> listBrands2 = [];
+  final List<ItemModel> _products = [];
+  List<ItemModel> get getProducts {
+    return _products;
+  }
+
+  final List<BrandModel> _brands = [];
+  List<BrandModel> get getBrande {
+    return _brands;
+  }
+
+  final productDB = FirebaseFirestore.instance.collection("items");
+  final brandDB = FirebaseFirestore.instance.collection("brads");
+
   @override
   void onInit() {
     load();
     fetchBrand();
+
     super.onInit();
   }
 
@@ -55,21 +95,6 @@ class HomeControllerImp extends HomeController {
       Get.to(const ProductListScreen());
     }
   }
-
-  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
-
-  String? selectType;
-  List<DropdownMenuItem<Object>>? selectTypeList;
-  String? filtter;
-  List<String> filtterList = [
-    'normal',
-    "price LowToHig",
-    "price HighToLow",
-    "oldest First",
-    "newest First",
-    "from A To Z",
-    "from Z To A",
-  ];
 
   sortProducts(sortType) {
     final sortedList = listItemAndFiltter; // Copy to avoid modifying original
@@ -113,10 +138,6 @@ class HomeControllerImp extends HomeController {
     update();
   }
 
-  List<SubcategoryModel> listSubCategoryes = [];
-
-  // List<QueryDocumentSnapshot> listBrands2 = [];
-  List<ItemModel> filtterListItem = [];
   filtterToType(String typing) {
     filtterListItem = [];
 
@@ -166,10 +187,6 @@ class HomeControllerImp extends HomeController {
     print(listSubCategoryes.length);
   }
 
-  List<ItemModel> listItem = [];
-  List<ItemModel> listItemAndFiltter = [];
-  List<ItemModel> listItemOffer = [];
-  // List<QueryDocumentSnapshot> listBrands2 = [];
   getItems() async {
     listItem = [];
     listItemOffer = [];
@@ -193,8 +210,6 @@ class HomeControllerImp extends HomeController {
     print(listItem.length);
   }
 
-  List<BrandModel> listBrands = [];
-  List<QueryDocumentSnapshot> listBrands2 = [];
   getBrand() async {
     listBrands = [];
     listBrands2 = [];
@@ -213,17 +228,6 @@ class HomeControllerImp extends HomeController {
     print(listBrands.length);
   }
 
-  final List<ItemModel> _products = [];
-  List<ItemModel> get getProducts {
-    return _products;
-  }
-
-  final List<BrandModel> _brands = [];
-  List<BrandModel> get getBrande {
-    return _brands;
-  }
-
-  final productDB = FirebaseFirestore.instance.collection("items");
   Future<List<ItemModel>> fetchProducts() async {
     try {
       await productDB.get().then((productsSnapshot) {
@@ -238,7 +242,6 @@ class HomeControllerImp extends HomeController {
     }
   }
 
-  final brandDB = FirebaseFirestore.instance.collection("brads");
   Future<List<BrandModel>> fetchBrand() async {
     if (await CheckInternet.checkInternet()) {
       OverlayLoadingProgress.start();

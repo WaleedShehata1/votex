@@ -24,7 +24,6 @@ class ProductListScreen extends StatelessWidget {
     );
     if (homeController.selectedIndex == 1) {
       homeController.getItems();
-      homeController.update();
     }
     return GetBuilder<HomeControllerImp>(builder: (controller) {
       return RefreshIndicator(

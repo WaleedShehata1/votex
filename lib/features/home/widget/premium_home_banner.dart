@@ -2,7 +2,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
+import '../../../controller/home/home_controller.dart';
 import '../../../core/constants/colors.dart';
 import '../../../core/constants/dimensions.dart';
 import '../../../core/constants/images.dart';
@@ -13,6 +15,9 @@ class PremiumHomeBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final HomeControllerImp homeController = Get.put(
+      HomeControllerImp(),
+    );
     return Stack(
       alignment: AlignmentDirectional.centerStart,
       children: [
@@ -59,17 +64,33 @@ class PremiumHomeBanner extends StatelessWidget {
           alignment: AlignmentDirectional.center,
           children: [
             Transform.translate(
-              offset: const Offset(16, 0),
+              offset: Offset(
+                  homeController.localizationController.locale.languageCode ==
+                          'en'
+                      ? -16
+                      : 16,
+                  0),
               child: Image.asset(
-                Images.bubble1,
+                homeController.localizationController.locale.languageCode ==
+                        'en'
+                    ? Images.bubble3
+                    : Images.bubble1,
                 width: 165,
                 height: 130,
               ),
             ),
             Transform.translate(
-              offset: const Offset(32, 10),
+              offset: Offset(
+                  homeController.localizationController.locale.languageCode ==
+                          'en'
+                      ? -32
+                      : 32,
+                  10),
               child: Image.asset(
-                Images.bubble2,
+                homeController.localizationController.locale.languageCode ==
+                        'en'
+                    ? Images.bubble4
+                    : Images.bubble2,
                 width: 165,
                 height: 130,
               ),
