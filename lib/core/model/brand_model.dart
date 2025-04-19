@@ -23,7 +23,6 @@ class BrandModel {
   factory BrandModel.fromFirestore(DocumentSnapshot doc) {
     Map data = doc.data() as Map<String, dynamic>;
     return BrandModel(
-      BrandId: data['brand_id'], //doc.get("productId"),
       imageUrl: data['imageUrl'],
       brandName: data['brand_name'],
     );

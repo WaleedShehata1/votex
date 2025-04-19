@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
+import '../../../controller/saved/saved_controller.dart';
 import '../../../core/constants/colors.dart';
 import '../../../core/constants/dimensions.dart';
 import '../../../core/constants/images.dart';
@@ -19,8 +21,10 @@ class OfferCard extends StatelessWidget {
     required this.discount,
     required this.oldPrice,
     required this.onPressed,
+    this.save,
   });
   final Function? onPressed;
+  final void Function()? save;
   final String name;
   final String price;
   final String image;
@@ -121,11 +125,14 @@ class OfferCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Icon(
-                    Icons.favorite,
-                    color: Colors.red,
+                GestureDetector(
+                  onTap: save,
+                  child: const Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Icon(
+                      Icons.favorite,
+                      color: Colors.red,
+                    ),
                   ),
                 ), // Sale Ribbon
                 ClipPath(

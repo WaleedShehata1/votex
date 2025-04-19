@@ -215,15 +215,18 @@ class HomeControllerImp extends HomeController {
   }
 
   getBrand() async {
+    BrandModel? brandTest;
     listBrands = [];
     listBrands2 = [];
     QuerySnapshot brads =
         await FirebaseFirestore.instance.collection('brads').get();
 
     for (var brand in brads.docs) {
+      brandTest = BrandModel.fromFirestore(brand);
+      brandTest.BrandId = brand.id;
       print(brand.id);
 
-      listBrands.add(BrandModel.fromFirestore(brand));
+      listBrands.add(brandTest);
       update();
       print(listBrands[0]);
     }

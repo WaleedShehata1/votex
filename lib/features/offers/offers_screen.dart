@@ -1,13 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
+import '../../controller/cart/cart_controller.dart';
 import '../../core/constants/colors.dart';
 import '../../core/constants/dimensions.dart';
 import '../../core/constants/images.dart';
+import '../../core/model/item_model.dart';
 import '../../core/widget/custom_button.dart';
+import '../../core/widget/custom_image_widget.dart';
+
+final CartControllerImp cartController = Get.put(
+  CartControllerImp(),
+);
 
 class SpecialOfferScreen extends StatelessWidget {
-  const SpecialOfferScreen({super.key});
+  const SpecialOfferScreen({super.key, required this.listItemsOffer});
+  final List<ItemModel> listItemsOffer;
 
   @override
   Widget build(BuildContext context) {
@@ -28,44 +37,55 @@ class SpecialOfferScreen extends StatelessWidget {
             const SizedBox(height: 10),
 
             // Choose Discount Text
-            const Text(
-              'Choose Your Discount',
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 8),
+            // const Text(
+            //   'Choose Your Discount',
+            //   style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            // ),
+            // const SizedBox(height: 8),
 
-            // Discount Filter Bar
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                _discountButton('All', isSelected: true),
-                _discountButton('10%'),
-                _discountButton('20%', isSelected: false),
-                _discountButton('30%'),
-                _discountButton('40%'),
-              ],
-            ),
-            const SizedBox(height: 10),
+            // // Discount Filter Bar
+            // Row(
+            //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            //   children: [
+            //     _discountButton('All', isSelected: true),
+            //     _discountButton('10%'),
+            //     _discountButton('20%', isSelected: false),
+            //     _discountButton('30%'),
+            //     _discountButton('40%'),
+            //   ],
+            // ),
+            // const SizedBox(height: 10),
 
-            // Discount Label
-            const Text(
-              '20% Discount',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
+            // // Discount Label
+            // const Text(
+            //   '20% Discount',
+            //   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            // ),
             const SizedBox(height: 10),
 
             // Products Grid
             Expanded(
               child: GridView.builder(
-                itemCount: 8, // Number of washing machines
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                itemCount: listItemsOffer.length, // Number of washing machines
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2, // 2 products per row
                   crossAxisSpacing: 10,
                   mainAxisSpacing: 10,
+                  mainAxisExtent: 203.h,
                   childAspectRatio: 0.75, // Aspect ratio of items
                 ),
                 itemBuilder: (context, index) {
-                  return const ProductCardOffer();
+                  return ProductCardOffer(
+                    offer: listItemsOffer[index].discount,
+                    image: listItemsOffer[index].imageIcon,
+                    itemName: listItemsOffer[index].itemName,
+                    rate: listItemsOffer[index].rate,
+                    price: listItemsOffer[index].price,
+                    onPressed: () {
+                      cartController.addItem(listItemsOffer[index]);
+                      cartController.update();
+                    },
+                  );
                 },
               ),
             ),
@@ -96,8 +116,21 @@ class SpecialOfferScreen extends StatelessWidget {
 
 // Product Card Widget
 class ProductCardOffer extends StatelessWidget {
-  const ProductCardOffer({super.key});
-
+  const ProductCardOffer({
+    super.key,
+    this.onPressed,
+    required this.offer,
+    required this.itemName,
+    required this.rate,
+    required this.price,
+    required this.image,
+  });
+  final Function? onPressed;
+  final double offer;
+  final String itemName;
+  final String rate;
+  final String image;
+  final double price;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -112,12 +145,18 @@ class ProductCardOffer extends StatelessWidget {
           // Product Image
           Stack(
             children: [
-              Image.asset(
-                Images.refrigerators, // Change this to your actual image
+              CustomImageWidget(
                 height: 95.h,
                 width: double.infinity,
                 fit: BoxFit.fitHeight,
+                image: image,
               ),
+              // Image.asset(
+              //   Images.refrigerators, // Change this to your actual image
+              //   height: 95.h,
+              //   width: double.infinity,
+              //   fit: BoxFit.fitHeight,
+              // ),
               Positioned(
                 top: 5,
                 right: 5,
@@ -128,8 +167,8 @@ class ProductCardOffer extends StatelessWidget {
                     color: Colors.red,
                     borderRadius: BorderRadius.circular(5),
                   ),
-                  child: const Text(
-                    '20% OFF',
+                  child: Text(
+                    '$offer% OFF',
                     style: TextStyle(color: Colors.white, fontSize: 12),
                   ),
                 ),
@@ -138,9 +177,9 @@ class ProductCardOffer extends StatelessWidget {
           ),
           const SizedBox(height: 5),
 
-          const Align(
+          Align(
               alignment: AlignmentDirectional.centerEnd,
-              child: Text("washing machine", style: TextStyle(fontSize: 14))),
+              child: Text(itemName, style: TextStyle(fontSize: 14))),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -154,9 +193,9 @@ class ProductCardOffer extends StatelessWidget {
                     bottomEnd: Radius.circular(15),
                   ),
                 ),
-                child: const Row(
+                child: Row(
                   children: [
-                    Text('4.2',
+                    Text(rate,
                         style: TextStyle(
                           fontSize: 10,
                           color: Colors.white,
@@ -170,11 +209,11 @@ class ProductCardOffer extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: EdgeInsets.all(8.0),
                 child: Row(
                   children: [
-                    const Text(
-                      "12.566",
+                    Text(
+                      "${(price * (1 - (offer / 100)))}",
                       style: TextStyle(
                         fontSize: 10,
                         decoration: TextDecoration.lineThrough,
@@ -184,7 +223,7 @@ class ProductCardOffer extends StatelessWidget {
                     SizedBox(
                       width: 2.w,
                     ),
-                    const Text('EGP 10.675',
+                    Text(offer.toString(),
                         style: TextStyle(
                             fontSize: 12,
                             fontWeight: FontWeight.bold,
@@ -195,7 +234,7 @@ class ProductCardOffer extends StatelessWidget {
             ],
           ),
           CustomButton(
-            onPressed: () {},
+            onPressed: onPressed,
             buttonText: 'Add to cart',
             boarderColor: AppColors.colorFont,
             textColor: Colors.white,

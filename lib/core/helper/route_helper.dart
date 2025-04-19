@@ -49,7 +49,7 @@ class RouteHelper {
     GetPage(name: homeScreen, page: () => const HomeScreen()),
     GetPage(name: homePage, page: () => const HomePage()),
     GetPage(name: ordersScreen, page: () => const OrderScreen()),
-    GetPage(name: specialOfferScreen, page: () => const SpecialOfferScreen()),
+    // GetPage(name: specialOfferScreen, page: () => const SpecialOfferScreen()),
     // GetPage(name: ratedBrandsScreen, page: () => const RatedBrandsScreen()),
     // GetPage(name: specialOfferSection, page: () => const SpecialOfferSection()),
     GetPage(name: profileScreen, page: () => const ProfileScreen()),

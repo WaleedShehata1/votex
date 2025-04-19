@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../core/classes/app_usage_service.dart';
 import '../../core/model/item_model.dart';
@@ -11,6 +12,9 @@ abstract class CartController extends GetxController {
 }
 
 class CartControllerImp extends CartController {
+  late var address;
+  late var address2;
+  late var address3;
   CollectionReference bills = FirebaseFirestore.instance.collection('Bills');
   final List<ItemModel> cartItems = [];
   double subtotal = 0.0;
@@ -19,6 +23,22 @@ class CartControllerImp extends CartController {
   double totalCost = 0.0;
   double sensorCost = 0.0;
   double itemsCount = 0.0;
+  @override
+  void onInit() {
+    address = TextEditingController();
+    address2 = TextEditingController();
+    address3 = TextEditingController();
+
+    super.onInit();
+  }
+
+  @override
+  void dispose() {
+    address.dispose();
+    address2.dispose();
+    address3.dispose();
+    super.dispose();
+  }
 
   call(sensorPrice) {
     sensorCost = sensorPrice;
@@ -96,13 +116,14 @@ class CartControllerImp extends CartController {
   removed(ItemModel item) {
     cartItems.remove(item);
     showCustomSnackBar("Product removed".tr, isError: false);
+    update();
   }
 
   createOrder({address, phoneNumber}) async {
     String? id = await AppUsageService.getUserId();
     // List<DetiliesOrderModel> detiliesModel = [];
     OrderModel model = OrderModel(
-        address: address,
+        address: address.text,
         state: 'new',
         deliveryCost: deliveryFee.toString(),
         deliveryTime: deliveryTime,

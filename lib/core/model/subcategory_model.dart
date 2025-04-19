@@ -23,7 +23,6 @@ class SubcategoryModel {
   factory SubcategoryModel.fromFirestore(DocumentSnapshot doc) {
     Map data = doc.data() as Map<String, dynamic>;
     return SubcategoryModel(
-      idSubCategores: data['idSubCategores'], //doc.get("productId"),
       imageSubCategores: data['imageSubCategores'],
       nameCategores: data['nameCategores'],
     );

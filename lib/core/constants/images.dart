@@ -34,18 +34,18 @@ class Images {
   static const String brand4 = 'assets/images/brand4.png';
 
   //3D
-  static const String gasCooker3D = 'assets/3D/بوتجاز.glb';
-  static const String conditioning3D = 'assets/3D/تكييف.glb';
-  static const String refrigerator3D = 'assets/3D/ثلاجة.glb';
-  static const String deepFreezer3D = 'assets/3D/ديب فريزر.glb';
-  static const String blowDryer3D = 'assets/3D/سيشوار.glb';
-  static const String screen3D = 'assets/3D/شاشة.glb';
-  static const String washing3D = 'assets/3D/غسالة راسية.glb';
-  static const String coffee3D = 'assets/3D/ماكينة قهوة.glb';
-  static const String microwave3D = 'assets/3D/مايكروويف.glb';
-  static const String wallFan3D = 'assets/3D/مرواحة حائط.glb';
-  static const String pillarFan3D = 'assets/3D/مرواحة عمود.glb';
-  static const String vacuumCleaner3D = 'assets/3D/مكنسة كهربائية.glb';
-  static const String hairStraightener3D = 'assets/3D/مكواة شعر.glb';
-  static const String iron3D = 'assets/3D/مكواة.glb';
+  static const String gasCooker3D = 'assets/3D/ddd.glb';
+  static const String conditioning3D = 'assets/3D/aaa.glb';
+  static const String refrigerator3D = 'assets/3D/bbb.glb';
+  static const String deepFreezer3D = 'assets/3D/ccc.glb';
+  static const String blowDryer3D = 'assets/3D/eee.glb';
+  static const String screen3D = 'assets/3D/fff.glb';
+  static const String washing3D = 'assets/3D/hhh.glb';
+  static const String coffee3D = 'assets/3D/ggg.glb';
+  static const String microwave3D = 'assets/3D/aaa2.glb';
+  static const String wallFan3D = 'assets/3D/bbb2.glb';
+  static const String pillarFan3D = 'assets/3D/ccc2.glb';
+  static const String vacuumCleaner3D = 'assets/3D/ddd2.glb';
+  static const String hairStraightener3D = 'assets/3D/eee2.glb';
+  static const String iron3D = 'assets/3D/fff2.glb';
 }

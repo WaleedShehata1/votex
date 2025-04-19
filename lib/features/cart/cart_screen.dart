@@ -172,7 +172,9 @@ class _CartItemCardState extends State<CartItemCard> {
                           fit: BoxFit.fitHeight,
                         ),
                         GestureDetector(
-                          onTap: () {},
+                          onTap: () {
+                            cartController.removed(widget.item);
+                          },
                           child: Container(
                             padding: EdgeInsetsDirectional.all(4.w),
                             decoration: BoxDecoration(

@@ -4,10 +4,18 @@ import 'package:get/get.dart';
 import 'package:votex/core/helper/route_helper.dart';
 
 import '../../../controller/cart/cart_controller.dart';
+import '../../../controller/saved/saved_controller.dart';
 import '../../../core/model/item_model.dart';
 import '../../offers/offers_screen.dart';
 import '../../product/proudct_details_screen.dart';
 import 'offer_card.dart';
+
+final CartControllerImp cartControllerImp = Get.put(
+  CartControllerImp(),
+);
+final SavedControllerImp savedController = Get.put(
+  SavedControllerImp(),
+);
 
 class SpecialOfferSection extends StatelessWidget {
   const SpecialOfferSection({
@@ -36,7 +44,9 @@ class SpecialOfferSection extends StatelessWidget {
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
               GestureDetector(
-                onTap: () => Get.to(const SpecialOfferScreen()),
+                onTap: () => Get.to(SpecialOfferScreen(
+                  listItemsOffer: listItemsOffer,
+                )),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -49,7 +59,9 @@ class SpecialOfferSection extends StatelessWidget {
                       width: 10,
                     ),
                     GestureDetector(
-                      onTap: () => Get.toNamed(RouteHelper.specialOfferScreen),
+                      onTap: () => Get.to(SpecialOfferScreen(
+                        listItemsOffer: listItemsOffer,
+                      )),
                       child: const CircleAvatar(
                         maxRadius: 15,
                         backgroundColor: Colors.blue,
@@ -69,9 +81,9 @@ class SpecialOfferSection extends StatelessWidget {
               child: GridView.builder(
                   scrollDirection: Axis.horizontal,
                   itemCount: listItemsOffer.length,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 1,
-                      mainAxisExtent: 160,
+                      mainAxisExtent: 165,
                       mainAxisSpacing: 10),
                   itemBuilder: (context, i) {
                     return GestureDetector(
@@ -80,6 +92,10 @@ class SpecialOfferSection extends StatelessWidget {
                         item: listItemsOffer[i],
                       )),
                       child: OfferCard(
+                        save: () {
+                          savedController.addItem(listItemsOffer[i]);
+                          savedController.update();
+                        },
                         name: listItemsOffer[i].itemName,
                         price: listItemsOffer[i].price.toString(),
                         oldPrice: (listItemsOffer[i].price *

@@ -15,6 +15,10 @@ import '../../core/model/item_model.dart';
 import '../../core/widget/custom_button.dart';
 import '../store/widget/product_card.dart';
 
+final SavedControllerImp savedController = Get.put(
+  SavedControllerImp(),
+);
+
 class ProductDetailsScreen extends StatefulWidget {
   const ProductDetailsScreen(
       {super.key, required this.item, required this.items});
@@ -26,9 +30,6 @@ class ProductDetailsScreen extends StatefulWidget {
 }
 
 class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
-  final SavedControllerImp savedController = Get.put(
-    SavedControllerImp(),
-  );
   final ProductController productController = Get.put(
     ProductController(),
   );
@@ -42,14 +43,62 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   IconData? icon = Icons.favorite_border_outlined;
   String? chosenTexture;
   bool changeModel = false;
-  String srcGlb = 'assets/images/ddd.glb';
+  String srcGlb = Images.refrigerator3D;
   @override
   void initState() {
-    productController.selectImage3D(widget.item.supCategory);
+    switch (widget.item.supCategory) {
+      case 'بوتجازات':
+        srcGlb = Images.gasCooker3D;
+        break;
+      case 'ثلاجات':
+        srcGlb = Images.refrigerator3D;
+        break;
+      case 'تكييفات':
+        srcGlb = Images.conditioning3D;
+        break;
+      case 'ديب فريزر':
+        srcGlb = Images.deepFreezer3D;
+        break;
+      case 'سيشوار':
+        srcGlb = Images.blowDryer3D;
+        break;
+      case 'شاشة':
+        srcGlb = Images.screen3D;
+        break;
+      case 'غسالة راسية':
+        srcGlb = Images.washing3D;
+        break;
+      case 'ماكينة قهوة':
+        srcGlb = Images.coffee3D;
+        break;
+      case 'مايكروويف':
+        srcGlb = Images.microwave3D;
+        break;
+      case 'مرواحة حائط':
+        srcGlb = Images.wallFan3D;
+        break;
+      case 'مرواحة عمود.':
+        srcGlb = Images.pillarFan3D;
+        break;
+      case 'مكنسة كهربائية.':
+        srcGlb = Images.vacuumCleaner3D;
+        break;
+      case 'مكواة شعر.':
+        srcGlb = Images.hairStraightener3D;
+        break;
+      case 'مكواة':
+        srcGlb = Images.iron3D;
+        break;
+      // default:
+      //   srcGlb = Images.gasCooker3D;
+      //   break;
+    }
+
+    // productController.selectImage3D(widget.item.supCategory);
     controller.onModelLoaded.addListener(() {
       debugPrint('model is loaded : ${controller.onModelLoaded.value}');
     });
-    super.initState();
+
     print(widget.item.videoUrl);
     _controller = VideoPlayerController.networkUrl(
       Uri.parse(
@@ -64,6 +113,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
         items.add(product);
       }
     }
+    super.initState();
   }
 
   @override
@@ -112,7 +162,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                 width: 250,
                 child: ModelViewer(
                   backgroundColor: const Color.fromARGB(0xFF, 0xEE, 0xEE, 0xEE),
-                  src: productController.image3D,
+                  src: srcGlb,
                   autoRotate: true,
                 ),
               ),

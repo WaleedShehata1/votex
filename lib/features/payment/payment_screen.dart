@@ -9,10 +9,12 @@ import '../../core/constants/colors.dart';
 import '../../core/constants/dimensions.dart';
 import '../../core/constants/styles.dart';
 import '../../core/widget/custom_button.dart';
+import '../../core/widget/custom_text_field.dart';
 
 final CartControllerImp cartController = Get.put(
   CartControllerImp(),
 );
+
 final AccountControllerImp accountControllerImp = Get.put(
   AccountControllerImp(),
 );
@@ -28,6 +30,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
   bool isStandardShipping = true;
   @override
   void initState() {
+    cartController.onInit();
     accountControllerImp.getUserData();
     super.initState();
   }
@@ -419,10 +422,8 @@ class _PaymentScreenState extends State<PaymentScreen> {
 }
 
 class ShippingAddressScreen extends StatelessWidget {
-  ShippingAddressScreen({Key? key}) : super(key: key);
-  var address = TextEditingController();
-  var address2 = TextEditingController();
-  var address3 = TextEditingController();
+  const ShippingAddressScreen({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     final border = OutlineInputBorder(
@@ -441,130 +442,119 @@ class ShippingAddressScreen extends StatelessWidget {
       backgroundColor: const Color(0xFFF7F9FC),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Section Title
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Column(
-                  children: [
-                    const Text(
-                      'Country',
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                    const SizedBox(height: 6),
-                    const Text('Egypt', style: TextStyle(fontSize: 16)),
-                    const SizedBox(height: 16),
-                  ],
-                ),
-                GestureDetector(
-                  onTap: () => Get.back(),
-                  child: Container(
-                    padding: EdgeInsets.all(2.w),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20.r),
-                        color: Colors.grey.shade400),
-                    child: const Icon(
-                      Icons.arrow_forward,
-                      color: Colors.white,
-                    ),
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Section Title
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Column(
+                    children: [
+                      Text(
+                        'Country',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      SizedBox(height: 6),
+                      Text('Egypt', style: TextStyle(fontSize: 16)),
+                      SizedBox(height: 16),
+                    ],
                   ),
-                )
-              ],
-            ),
-
-            const Text(
-              'Address',
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 6),
-            SizedBox(
-              height: 30.h,
-              child: TextField(
-                controller: address,
-                decoration: InputDecoration(
-                  hintText: '42, River Street, Maple Heights, Sunrise Ward',
-                  filled: true,
-                  fillColor: Colors.white,
-                  border: border,
-                ),
+                  GestureDetector(
+                    onTap: () => Get.back(),
+                    child: Container(
+                      padding: EdgeInsets.all(2.w),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20.r),
+                          color: Colors.grey.shade400),
+                      child: const Icon(
+                        Icons.arrow_forward,
+                        color: Colors.white,
+                      ),
+                    ),
+                  )
+                ],
               ),
-            ),
-            const SizedBox(height: 10),
-
-            const Text(
-              'Town / City',
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 6),
-            SizedBox(
-              height: 30.h,
-              child: TextField(
-                controller: address2,
-                decoration: InputDecoration(
-                  hintText: 'Bengaluru, Karnataka 560023',
-                  filled: true,
-                  fillColor: Colors.white,
-                  border: border,
-                ),
+              CustomTextField(
+                hintText: 'Address',
+                borderRadius: 5,
+                colorBorder: Colors.transparent,
+                controller: cartController.address,
               ),
-            ),
-            const SizedBox(height: 16),
-
-            const Text(
-              'Postcode',
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 6),
-            SizedBox(
-              height: 30.h,
-              child: TextField(
-                controller: address3,
-                keyboardType: TextInputType.number,
-                decoration: InputDecoration(
-                  hintText: '70000',
-                  filled: true,
-                  fillColor: Colors.white,
-                  border: border,
-                ),
+              // const Text(
+              //   'Address',
+              //   style: TextStyle(fontWeight: FontWeight.bold),
+              // ),
+              // const SizedBox(height: 6),
+              // SizedBox(
+              //   height: 30.h,
+              //   child: TextField(
+              //     controller: cartController.address,
+              //     decoration: InputDecoration(
+              //       filled: true,
+              //       fillColor: Colors.white,
+              //       border: border,
+              //     ),
+              //   ),
+              // ),
+              const SizedBox(height: 10),
+              CustomTextField(
+                hintText: 'Town / City',
+                borderRadius: 5,
+                colorBorder: Colors.transparent,
+                controller: cartController.address2,
               ),
-            ),
-            const SizedBox(height: 24),
-            CustomButton(
-              onPressed: () {
-                accountControllerImp.address.text =
-                    address.text + address2.text + address3.text;
-              },
-              buttonText: 'Save Changes',
-              boarderColor: AppColors.colorFont,
-              textColor: Colors.white,
-              width: double.maxFinite,
-              height: 35.h,
-              color: Colors.blue,
-              radius: Dimensions.paddingSizeSmall,
-            ),
-            // SizedBox(
-            //   width: double.infinity,
-            //   child: ElevatedButton(
-            //     style: ElevatedButton.styleFrom(
-            //       backgroundColor: Colors.blue,
-            //       padding: const EdgeInsets.symmetric(vertical: 14),
-            //       shape: RoundedRectangleBorder(
-            //         borderRadius: BorderRadius.circular(10),
-            //       ),
-            //     ),
-            //     onPressed: () {
-            //       // Save logic here
-            //     },
-            //     child: const Text(
-            //       'Save Changes',
-            //       style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-            //     ),
-            //   ),
-            // )
-          ],
+
+              const SizedBox(height: 16),
+              CustomTextField(
+                hintText: 'Postcode',
+                borderRadius: 5,
+                colorBorder: Colors.transparent,
+                controller: cartController.address3,
+              ),
+
+              const SizedBox(height: 24),
+              CustomButton(
+                onPressed: () {
+                  accountControllerImp.address.text =
+                      cartController.address.text +
+                          ',' +
+                          cartController.address2.text +
+                          ',' +
+                          cartController.address3.text;
+                  accountControllerImp.update();
+                  Get.back();
+                },
+                buttonText: 'Save Changes',
+                boarderColor: AppColors.colorFont,
+                textColor: Colors.white,
+                width: double.maxFinite,
+                height: 35.h,
+                color: Colors.blue,
+                radius: Dimensions.paddingSizeSmall,
+              ),
+              // SizedBox(
+              //   width: double.infinity,
+              //   child: ElevatedButton(
+              //     style: ElevatedButton.styleFrom(
+              //       backgroundColor: Colors.blue,
+              //       padding: const EdgeInsets.symmetric(vertical: 14),
+              //       shape: RoundedRectangleBorder(
+              //         borderRadius: BorderRadius.circular(10),
+              //       ),
+              //     ),
+              //     onPressed: () {
+              //       // Save logic here
+              //     },
+              //     child: const Text(
+              //       'Save Changes',
+              //       style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+              //     ),
+              //   ),
+              // )
+            ],
+          ),
         ),
       ),
     );
