@@ -146,7 +146,7 @@ class SignUpControllerImp extends SignUpController {
               isError: false);
 
           OverlayLoadingProgress.stop();
-          // Get.offNamed(RouteHelper.signIn);
+          Get.back();
         } on FirebaseAuthException catch (e) {
           if (e.code == 'weak-password') {
             showCustomSnackBar('The password provided is too weak.',

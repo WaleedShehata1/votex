@@ -32,7 +32,7 @@ class _SplashScreenState extends State<SplashScreen> {
       print("object $first ");
     }
 
-    if (isLogin == null) {
+    if (isLogin != null) {
       await Future.delayed(const Duration(seconds: 3), () {
         Get.offAllNamed(RouteHelper.homePage);
       });
