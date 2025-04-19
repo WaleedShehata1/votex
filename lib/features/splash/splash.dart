@@ -31,24 +31,27 @@ class _SplashScreenState extends State<SplashScreen> {
     if (kDebugMode) {
       print("object $first ");
     }
-    // if (!first) {
-    if (isLogin) {
-      await Future.delayed(const Duration(seconds: 3), () {
-        Get.offAllNamed(RouteHelper.signIn);
-      });
+    if (!first) {
+      if (isLogin) {
+        await Future.delayed(const Duration(seconds: 3), () {
+          Get.offAllNamed(RouteHelper.homePage);
+        });
+      }
+      // else {
+      //   await Future.delayed(const Duration(seconds: 3), () {
+      //     Get.offAllNamed(RouteHelper.homePage);
+      //   });
+      // }
+      else {
+        await Future.delayed(const Duration(seconds: 3), () {
+          Get.offAllNamed(RouteHelper.signIn);
+        });
+      }
     } else {
       await Future.delayed(const Duration(seconds: 3), () {
-        Get.offAllNamed(RouteHelper.homePage);
+        Get.offAllNamed(RouteHelper.lang);
       });
     }
-    // else {
-    //   await Future.delayed(const Duration(seconds: 3), () {
-    //     Get.offAllNamed(RouteHelper.lang);
-    //   });
-    // }
-    // await Future.delayed(const Duration(seconds: 3), () {
-    //   Get.offAllNamed(RouteHelper.signIn);
-    // });
   }
 
   @override
