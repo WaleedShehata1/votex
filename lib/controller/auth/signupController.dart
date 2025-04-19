@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:overlay_kit/overlay_kit.dart';
 import 'package:votex/core/model/user_model.dart';
 import '../../core/classes/app_usage_service.dart';
 import '../../core/classes/status_request.dart';
@@ -131,6 +132,7 @@ class SignUpControllerImp extends SignUpController {
     if (formstate.currentState!.validate()) {
       isLoadingSignUpWithEmail = true.obs;
       if (await CheckInternet.checkInternet()) {
+        OverlayLoadingProgress.start();
         try {
           var response = await firebase
               .createUserWithEmailAndPassword(
@@ -142,7 +144,9 @@ class SignUpControllerImp extends SignUpController {
           });
           showCustomSnackBar('Account registration succeeded'.tr,
               isError: false);
-          Get.offNamed(RouteHelper.signIn);
+
+          OverlayLoadingProgress.stop();
+          // Get.offNamed(RouteHelper.signIn);
         } on FirebaseAuthException catch (e) {
           if (e.code == 'weak-password') {
             showCustomSnackBar('The password provided is too weak.',
@@ -157,7 +161,9 @@ class SignUpControllerImp extends SignUpController {
           print('The account $e.code}.');
           isLoadingSignUpWithEmail = false.obs;
         }
+        OverlayLoadingProgress.stop();
       } else {
+        OverlayLoadingProgress.stop();
         isLoadingSignUpWithEmail = false.obs;
         showCustomSnackBar('Check the internet connection'.tr, isError: true);
       }
@@ -171,6 +177,7 @@ class SignUpControllerImp extends SignUpController {
       tokenDevice: notificationController.fcmToken.value,
       email: emailController.text,
       uid: uid,
+      address: '',
     );
     users.doc(uid).set(model.toFireStore()).then((value) {
       AppUsageService.saveUserId(uid);

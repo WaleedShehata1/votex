@@ -27,29 +27,24 @@ class _SplashScreenState extends State<SplashScreen> {
   _navigatetohome() async {
     bool first = await AppUsageService.isFirstTime();
 
-    bool isLogin = await AppUsageService.getLogin();
+    String? isLogin = await AppUsageService.getUserId();
     if (kDebugMode) {
       print("object $first ");
     }
-    if (!first) {
-      if (isLogin) {
-        await Future.delayed(const Duration(seconds: 3), () {
-          Get.offAllNamed(RouteHelper.homePage);
-        });
-      }
-      // else {
-      //   await Future.delayed(const Duration(seconds: 3), () {
-      //     Get.offAllNamed(RouteHelper.homePage);
-      //   });
-      // }
-      else {
-        await Future.delayed(const Duration(seconds: 3), () {
-          Get.offAllNamed(RouteHelper.signIn);
-        });
-      }
-    } else {
+
+    if (isLogin == null) {
       await Future.delayed(const Duration(seconds: 3), () {
-        Get.offAllNamed(RouteHelper.lang);
+        Get.offAllNamed(RouteHelper.homePage);
+      });
+    }
+    // else {
+    //   await Future.delayed(const Duration(seconds: 3), () {
+    //     Get.offAllNamed(RouteHelper.homePage);
+    //   });
+    // }
+    else {
+      await Future.delayed(const Duration(seconds: 3), () {
+        Get.offAllNamed(RouteHelper.signIn);
       });
     }
   }
