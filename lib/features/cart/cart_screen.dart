@@ -17,7 +17,7 @@ Map<String, dynamic> proposalItem = {
   "name": "Sensor",
   "price": 900.0,
   "image": Images.sensor,
-  "count": 1,
+  "count": 0,
 };
 
 class CartScreen extends StatefulWidget {
@@ -34,7 +34,7 @@ class _CartScreenState extends State<CartScreen> {
 
   @override
   void initState() {
-    cartController.call(proposalItem['price'] * proposalItem['count']);
+    // cartController.call(proposalItem['price'] * proposalItem['count']);
 
     super.initState();
   }
@@ -42,82 +42,88 @@ class _CartScreenState extends State<CartScreen> {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<CartControllerImp>(builder: (controller) {
-      return Scaffold(
-        backgroundColor: Colors.white,
-        body: Padding(
-          padding: EdgeInsetsDirectional.symmetric(horizontal: 10.w),
-          child: Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Transform.translate(
-                    offset: const Offset(80, -30),
-                    child: Image.asset(
-                      Images.shape,
-                      width: 220,
-                      height: 200,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Text(
-                      "Cart",
-                      style: TextStyle(
-                        fontSize: 22,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
+      return RefreshIndicator(
+        onRefresh: () async {
+          // await cartController
+          //     .call(proposalItem['price'] * proposalItem['count']);
+        },
+        child: Scaffold(
+          backgroundColor: Colors.white,
+          body: Padding(
+            padding: EdgeInsetsDirectional.symmetric(horizontal: 10.w),
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Transform.translate(
+                      offset: const Offset(80, -30),
+                      child: Image.asset(
+                        Images.shape,
+                        width: 220,
+                        height: 200,
+                        fit: BoxFit.cover,
                       ),
                     ),
-                  ),
-                ],
-              ),
-              Expanded(
-                child: ListView.builder(
-                  itemCount: controller.cartItems.length,
-                  itemBuilder: (context, index) {
-                    return CartItemCard(
-                        controller.cartItems[index], proposalItem);
-                  },
+                    const Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Text(
+                        "Cart",
+                        style: TextStyle(
+                          fontSize: 22,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-              ),
-              ProposalSection(proposalItem),
-              // SummarySection(
-              //     subtotal: controller.subtotal,
-              //     sensorCost: controller.sensorCost,
-              //     delivery: controller.deliveryFee,
-              //     totalCost: controller.totalCost),
-              Column(
-                children: [
-                  SummaryRow(label: "Sensor", value: controller.sensorCost),
-                  SummaryRow(label: "Subtotal", value: controller.subtotal),
-                  // SummaryRow(label: "Delivery", value: controller.deliveryFee),
-                  const Divider(thickness: 0.5),
-                  SummaryRow(
-                      label: "Total Cost",
-                      value: controller.totalCost,
-                      isBold: true),
-                ],
-              ),
-              // const CheckoutButton(),
-              CustomButton(
-                onPressed: () {
-                  // if (controller.cartItems.isNotEmpty ||
-                  //     proposalItem["count"] != 0) {
-                  //   Get.to(() => const PaymentScreen());
-                  // }
-                  Get.to(() => PaymentScreen());
-                  // controller.createOrder();
-                },
-                height: 30.h,
-                buttonText: "Checkout",
-                textColor: Colors.white,
-              ),
-              SizedBox(
-                height: 35.h,
-              ),
-            ],
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: controller.cartItems.length,
+                    itemBuilder: (context, index) {
+                      return CartItemCard(
+                          controller.cartItems[index], proposalItem);
+                    },
+                  ),
+                ),
+                ProposalSection(proposalItem),
+                // SummarySection(
+                //     subtotal: controller.subtotal,
+                //     sensorCost: controller.sensorCost,
+                //     delivery: controller.deliveryFee,
+                //     totalCost: controller.totalCost),
+                Column(
+                  children: [
+                    SummaryRow(label: "Sensor", value: controller.sensorCost),
+                    SummaryRow(label: "Subtotal", value: controller.subtotal),
+                    // SummaryRow(label: "Delivery", value: controller.deliveryFee),
+                    const Divider(thickness: 0.5),
+                    SummaryRow(
+                        label: "Total Cost",
+                        value: controller.totalCost,
+                        isBold: true),
+                  ],
+                ),
+                // const CheckoutButton(),
+                CustomButton(
+                  onPressed: () {
+                    // if (controller.cartItems.isNotEmpty ||
+                    //     proposalItem["count"] != 0) {
+                    //   Get.to(() => const PaymentScreen());
+                    // }
+                    Get.to(() => PaymentScreen());
+                    // controller.createOrder();
+                  },
+                  height: 30.h,
+                  buttonText: "Checkout",
+                  textColor: Colors.white,
+                ),
+                SizedBox(
+                  height: 35.h,
+                ),
+              ],
+            ),
           ),
         ),
       );
@@ -212,7 +218,74 @@ class _CartItemCardState extends State<CartItemCard> {
                       ),
                       Align(
                           alignment: AlignmentDirectional.center,
-                          child: const QuantitySelector()),
+                          child:
+
+                              //  const QuantitySelector()
+
+                              Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              GestureDetector(
+                                onTap: () => setState(() {
+                                  for (var item in cartController.cartItems) {
+                                    if (widget.item.itemId == item.itemId) {
+                                      if (widget.item.count > 1) {
+                                        widget.item.count--;
+                                        cartController.call(
+                                            proposalItem['price'] *
+                                                proposalItem['count']);
+                                      }
+                                    }
+                                  }
+                                }),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                      color: Colors.blue,
+                                      width: 2,
+                                    ),
+                                    borderRadius: BorderRadius.circular(15),
+                                  ),
+                                  child: const Icon(
+                                    Icons.remove,
+                                    color: Colors.blue,
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsetsDirectional.symmetric(
+                                    horizontal: 7.w),
+                                child: Text(widget.item.count.toString(),
+                                    style: const TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold)),
+                              ),
+                              GestureDetector(
+                                onTap: () => setState(() {
+                                  for (var item in cartController.cartItems) {
+                                    if (widget.item.itemId == item.itemId) {
+                                      widget.item.count++;
+                                    }
+                                  }
+                                  cartController.call(proposalItem['price'] *
+                                      proposalItem['count']);
+                                }),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                      color: Colors.blue,
+                                      width: 2,
+                                    ),
+                                    borderRadius: BorderRadius.circular(15),
+                                  ),
+                                  child: const Icon(
+                                    Icons.add,
+                                    color: Colors.blue,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          )),
                       // CustomButton(
                       //   height: 30.h,
                       //   width: 100.w,

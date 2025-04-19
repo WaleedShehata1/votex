@@ -38,6 +38,23 @@ class AccountControllerImp extends AccountController {
     });
   }
 
+  Future<void> getNotifications() async {
+    String? id = await AppUsageService.getUserId();
+    await users
+        .doc(id)
+        .collection('notifications')
+        .get()
+        .then((QuerySnapshot<Map<String, dynamic>> documentSnapshot) {
+      // if (documentSnapshot.docs.isNotEmpty) {
+      //   model = UserModel.fromFirestore(documentSnapshot);
+      //   userName.text = model!.userName;
+      //   address.text = model!.address;
+      //   phoneNumber.text = model!.phone;
+      // }
+      // print(documentSnapshot.exists);
+    });
+  }
+
   Future<void> updateUserData() async {
     String? id = await AppUsageService.getUserId();
     if (formstate.currentState!.validate() && id != null) {

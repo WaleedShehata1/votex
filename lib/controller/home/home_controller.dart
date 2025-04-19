@@ -37,6 +37,7 @@ class HomeControllerImp extends HomeController {
   var isLoadingGetAllBrand = false.obs;
   String? brand;
   String? sub;
+
   List<SubcategoryModel> listSubCategoryes = [];
   // List<QueryDocumentSnapshot> listBrands2 = [];
   List<ItemModel> filtterListItem = [];
@@ -188,15 +189,18 @@ class HomeControllerImp extends HomeController {
   }
 
   getItems() async {
+    ItemModel? itemTest;
     listItem = [];
     listItemOffer = [];
     QuerySnapshot items =
         await FirebaseFirestore.instance.collection("items").get();
 
     for (var item in items.docs) {
-      listItem.add(ItemModel.fromFirestore(item));
-      if (item["discount"] != '' || item["discount"] != null) {
-        listItemOffer.add(ItemModel.fromFirestore(item));
+      itemTest = ItemModel.fromFirestore(item);
+      itemTest.itemId = item.id;
+      listItem.add(itemTest);
+      if (itemTest.discount != '') {
+        listItemOffer.add(itemTest);
       }
 
       print(item.id);

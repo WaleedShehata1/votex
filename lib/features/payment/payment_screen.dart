@@ -3,10 +3,19 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:votex/core/constants/images.dart';
 
+import '../../controller/account/account_controller.dart';
+import '../../controller/cart/cart_controller.dart';
 import '../../core/constants/colors.dart';
 import '../../core/constants/dimensions.dart';
 import '../../core/constants/styles.dart';
 import '../../core/widget/custom_button.dart';
+
+final CartControllerImp cartController = Get.put(
+  CartControllerImp(),
+);
+final AccountControllerImp accountControllerImp = Get.put(
+  AccountControllerImp(),
+);
 
 class PaymentScreen extends StatefulWidget {
   const PaymentScreen({super.key});
@@ -17,6 +26,12 @@ class PaymentScreen extends StatefulWidget {
 
 class _PaymentScreenState extends State<PaymentScreen> {
   bool isStandardShipping = true;
+  @override
+  void initState() {
+    accountControllerImp.getUserData();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -61,7 +76,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                 fontWeight: FontWeight.w600),
                           ),
                           Text(
-                            "42, River Street, Maple Heights, Sunrise Ward,Blue Valley,District 5, Emerald City",
+                            accountControllerImp.address.text,
                             style: TextStyle(
                                 color: Colors.black,
                                 fontSize: 12.sp,
@@ -123,14 +138,14 @@ class _PaymentScreenState extends State<PaymentScreen> {
                             fontWeight: FontWeight.w600),
                       ),
                       Text(
-                        "+84932000000",
+                        accountControllerImp.phoneNumber.text,
                         style: TextStyle(
                             color: Colors.black,
                             fontSize: 12.sp,
                             fontWeight: FontWeight.w500),
                       ),
                       Text(
-                        "Mohmed Ahmed @gmail.com",
+                        accountControllerImp.model?.email ?? '',
                         style: TextStyle(
                             color: Colors.black,
                             fontSize: 12.sp,
@@ -164,7 +179,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                         borderRadius: BorderRadius.circular(20.r),
                         color: const Color(0xffE5EBFC)),
                     child: Text(
-                      "2",
+                      cartController.cartItems.length.toString(),
                       style: TextStyle(
                           color: Colors.black,
                           fontSize: 18.sp,
@@ -177,9 +192,19 @@ class _PaymentScreenState extends State<PaymentScreen> {
                 height: 10.h,
               ),
               SizedBox(height: 10),
-              _buildItemRow('Gas Cooker', 'LG', Images.gasCooker, '16.675'),
-              _buildItemRow(
-                  'Washing Machine', 'fresh', Images.gasCooker, '10.675'),
+              Column(
+                children: cartController.cartItems.map((item) {
+                  return _buildItemRow(
+                      item.itemName,
+                      item.brandName,
+                      Images.gasCooker,
+                      item.price.toString(),
+                      item.count.toString());
+                }).toList(),
+              ),
+              // _buildItemRow('Gas Cooker', 'LG', Images.gasCooker, '16.675'),
+              // _buildItemRow(
+              //     'Washing Machine', 'fresh', Images.gasCooker, '10.675'),
               SizedBox(height: 20),
               Text('Shipping Options',
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
@@ -236,19 +261,27 @@ class _PaymentScreenState extends State<PaymentScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      Text('Total',
+                      Text('EGP ${cartController.totalCost}',
                           style: TextStyle(
                               fontSize: 18, fontWeight: FontWeight.bold)),
-                      Text('EGP 18.675',
+                      SizedBox(
+                        width: 15.w,
+                      ),
+                      Text('Total',
                           style: TextStyle(
                               fontSize: 18, fontWeight: FontWeight.bold)),
                     ],
                   ),
                   SizedBox(width: 10),
                   CustomButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      cartController.createOrder(
+                        address: accountControllerImp.address,
+                        phoneNumber: accountControllerImp.phoneNumber,
+                      );
+                    },
                     buttonText: 'pay',
                     boarderColor: Colors.black,
                     textColor: Colors.white,
@@ -259,7 +292,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                   ),
                 ],
               ),
-              SizedBox(height: 30.h),
+              SizedBox(height: 40.h),
             ],
           ),
         ),
@@ -268,7 +301,12 @@ class _PaymentScreenState extends State<PaymentScreen> {
   }
 
   Widget _buildItemRow(
-      String name, String type, String imageAsset, String price) {
+    String name,
+    String type,
+    String imageAsset,
+    String price,
+    String count,
+  ) {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 10),
       child: Row(
@@ -302,7 +340,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                     borderRadius: BorderRadius.circular(20.r),
                     color: const Color(0xffE5EBFC)),
                 child: Text(
-                  "2",
+                  count,
                   style: TextStyle(
                       color: Colors.black,
                       fontSize: 12.sp,
@@ -337,7 +375,10 @@ class _PaymentScreenState extends State<PaymentScreen> {
   Widget _buildShippingOption(
       bool standard, String label, String time, String cost) {
     return GestureDetector(
-      onTap: () => setState(() => isStandardShipping = standard),
+      onTap: () => setState(() {
+        isStandardShipping = standard;
+        cartController.deliveryFee = cost == 'FREE' ? 0 : 12;
+      }),
       child: Container(
         margin: EdgeInsets.only(bottom: 12),
         padding: EdgeInsets.all(14),
@@ -378,8 +419,10 @@ class _PaymentScreenState extends State<PaymentScreen> {
 }
 
 class ShippingAddressScreen extends StatelessWidget {
-  const ShippingAddressScreen({Key? key}) : super(key: key);
-
+  ShippingAddressScreen({Key? key}) : super(key: key);
+  var address = TextEditingController();
+  var address2 = TextEditingController();
+  var address3 = TextEditingController();
   @override
   Widget build(BuildContext context) {
     final border = OutlineInputBorder(
@@ -440,6 +483,7 @@ class ShippingAddressScreen extends StatelessWidget {
             SizedBox(
               height: 30.h,
               child: TextField(
+                controller: address,
                 decoration: InputDecoration(
                   hintText: '42, River Street, Maple Heights, Sunrise Ward',
                   filled: true,
@@ -458,6 +502,7 @@ class ShippingAddressScreen extends StatelessWidget {
             SizedBox(
               height: 30.h,
               child: TextField(
+                controller: address2,
                 decoration: InputDecoration(
                   hintText: 'Bengaluru, Karnataka 560023',
                   filled: true,
@@ -476,6 +521,7 @@ class ShippingAddressScreen extends StatelessWidget {
             SizedBox(
               height: 30.h,
               child: TextField(
+                controller: address3,
                 keyboardType: TextInputType.number,
                 decoration: InputDecoration(
                   hintText: '70000',
@@ -488,7 +534,8 @@ class ShippingAddressScreen extends StatelessWidget {
             const SizedBox(height: 24),
             CustomButton(
               onPressed: () {
-                // Save logic here
+                accountControllerImp.address.text =
+                    address.text + address2.text + address3.text;
               },
               buttonText: 'Save Changes',
               boarderColor: AppColors.colorFont,

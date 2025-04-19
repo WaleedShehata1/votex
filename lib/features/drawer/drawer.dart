@@ -55,7 +55,7 @@ class AppDrawer extends StatelessWidget {
                   title: "Orders"),
               DrawerItem(
                   onTap: () {
-                    Get.toNamed(RouteHelper.notificationsScreen);
+                    // Get.toNamed(RouteHelper.notificationsScreen);
                   },
                   icon: Icons.notifications_none,
                   title: "Notifications"),
@@ -132,7 +132,7 @@ class DrawerItem extends StatelessWidget {
                 )
               : null,
           child: GestureDetector(
-            onTap: () {},
+            onTap: onTap,
             child: Row(
               children: [
                 Icon(

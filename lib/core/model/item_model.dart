@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ItemModel {
-  final String itemId,
-      brandName,
+  String? itemId;
+  final String brandName,
       brandId,
       imageUrl,
       itemDescription,
@@ -21,7 +21,7 @@ class ItemModel {
   bool isMoreSale;
 
   ItemModel({
-    required this.itemId,
+    this.itemId,
     required this.brandName,
     required this.brandId,
     required this.isMoreSale,
@@ -44,14 +44,14 @@ class ItemModel {
   factory ItemModel.fromFirestore(DocumentSnapshot doc) {
     Map data = doc.data() as Map<String, dynamic>;
     return ItemModel(
-      itemId: data['item_id'], //doc.get("productId"),
+      //doc.get("productId"),
       brandName: data['brand'],
       brandId: data['brand_id'],
       isMoreSale: data['isMoreSale'],
       imageUrl: data['imageUrl'],
       itemDescription: data['description'],
       itemName: data['name'],
-      discount: double.parse(data['discount']),
+      discount: double.parse(data['discount'] ?? ''),
       imageIcon: data['imageIcon'],
       idSubCategory: data['idSubCategory'],
       price: double.parse(data['price']),

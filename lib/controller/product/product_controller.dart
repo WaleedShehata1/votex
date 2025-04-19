@@ -7,13 +7,13 @@ class ProductController extends GetxController {
 
   selectImage3D(String image) {
     switch (image) {
-      case 'بوتجاز':
+      case 'بوتجازات':
         image3D = Images.gasCooker3D;
         break;
-      case 'ثلاجة':
+      case 'ثلاجات':
         image3D = Images.refrigerator3D;
         break;
-      case 'تكييف':
+      case 'تكييفات':
         image3D = Images.conditioning3D;
         break;
       case 'ديب فريزر':

@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
+import '../../core/classes/app_usage_service.dart';
 import '../../core/model/item_model.dart';
 import '../../core/model/order_model.dart';
 import '../../core/widget/custom_snackbar.dart';
@@ -13,13 +14,15 @@ class CartControllerImp extends CartController {
   CollectionReference bills = FirebaseFirestore.instance.collection('Bills');
   final List<ItemModel> cartItems = [];
   double subtotal = 0.0;
-  double deliveryFee = 60.20;
+  double deliveryFee = 0.0;
+  String deliveryTime = '';
   double totalCost = 0.0;
   double sensorCost = 0.0;
   double itemsCount = 0.0;
 
   call(sensorPrice) {
     sensorCost = sensorPrice;
+    subtotal = 0;
     if (cartItems.isNotEmpty) {
       for (int i = 0; i < cartItems.length; i++) {
         itemsCount = itemsCount + cartItems[i].count;
@@ -95,18 +98,19 @@ class CartControllerImp extends CartController {
     showCustomSnackBar("Product removed".tr, isError: false);
   }
 
-  createOrder() async {
+  createOrder({address, phoneNumber}) async {
+    String? id = await AppUsageService.getUserId();
     // List<DetiliesOrderModel> detiliesModel = [];
     OrderModel model = OrderModel(
-        address: 'fsdfsdfdf',
+        address: address,
         state: 'new',
         deliveryCost: deliveryFee.toString(),
-        deliveryTime: 'fdf',
+        deliveryTime: deliveryTime,
         itemCount: itemsCount.toString(),
-        payment: 'dfdd',
+        payment: 'visa',
         totlePrice: totalCost.toString(),
-        phoneNumber: 'dfd',
-        userId: 'df');
+        phoneNumber: phoneNumber,
+        userId: id!);
 
     bills.add(model.toFireStore()).then((value) {
       if (cartItems.isNotEmpty) {
@@ -117,7 +121,7 @@ class CartControllerImp extends CartController {
           DetiliesOrderModel detiliesModel = DetiliesOrderModel(
             discount: item.discount.toString(),
             idBills: value.id,
-            idItem: item.itemId,
+            idItem: item.itemId!,
             itemCount: item.count.toString(),
             itemPrice: item.price.toString(),
             nameItem: item.itemName,

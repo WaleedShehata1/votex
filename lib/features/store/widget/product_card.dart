@@ -18,13 +18,14 @@ class ProductCard extends StatefulWidget {
     required this.image,
     required this.rate,
     required this.item,
+    required this.onPressed,
   });
   final ItemModel item;
   final String name;
   final String image;
   final double price;
   final String rate;
-
+  final Function? onPressed;
   @override
   State<ProductCard> createState() => _ProductCardState();
 }
@@ -111,7 +112,7 @@ class _ProductCardState extends State<ProductCard> {
                   ],
                 ),
                 CustomButton(
-                  onPressed: () {},
+                  onPressed: widget.onPressed,
                   buttonText: 'Add to cart',
                   boarderColor: AppColors.colorFont,
                   textColor: Colors.white,

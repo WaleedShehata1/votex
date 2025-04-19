@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:http/http.dart';
 import 'package:votex/core/constants/colors.dart';
 import 'package:votex/core/model/item_model.dart';
+import '../../controller/cart/cart_controller.dart';
 import '../../controller/home/home_controller.dart';
 import '../../core/constants/images.dart';
 import '../../core/constants/styles.dart';
@@ -21,6 +22,9 @@ class ProductListScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final HomeControllerImp homeController = Get.put(
       HomeControllerImp(),
+    );
+    final CartControllerImp cartControllerImp = Get.put(
+      CartControllerImp(),
     );
     if (homeController.selectedIndex == 1) {
       homeController.getItems();
@@ -204,6 +208,11 @@ class ProductListScreen extends StatelessWidget {
                                   .listItemAndFiltter[index].imageIcon,
                               rate: controller.listItemAndFiltter[index].rate,
                               item: controller.listItemAndFiltter[index],
+                              onPressed: () {
+                                cartControllerImp.addItem(
+                                    controller.listItemAndFiltter[index]);
+                                cartControllerImp.update();
+                              },
                             ),
                           );
                         },
