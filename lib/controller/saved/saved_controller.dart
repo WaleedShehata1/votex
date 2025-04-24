@@ -40,5 +40,6 @@ class SavedControllerImp extends SavedController {
   removed(ItemModel item) {
     savedItems.remove(item);
     showCustomSnackBar("Product removed".tr, isError: false);
+    update();
   }
 }

@@ -1,7 +1,23 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
-class AddSensorScreen extends StatelessWidget {
+import 'sensor_screen.dart';
+
+class AddSensorScreen extends StatefulWidget {
   const AddSensorScreen({super.key});
+
+  @override
+  State<AddSensorScreen> createState() => _AddSensorScreenState();
+}
+
+class _AddSensorScreenState extends State<AddSensorScreen> {
+  @override
+  void initState() {
+    FirebaseDatabase.instance.databaseURL =
+        'https://refmonitor-92db2-default-rtdb.asia-southeast1.firebasedatabase.app/';
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +28,7 @@ class AddSensorScreen extends StatelessWidget {
         elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios, color: Colors.black),
-          onPressed: () => Navigator.pop(context),
+          onPressed: () => Get.to(const SensorScreen()),
         ),
         title: const Text(
           "Add Sensor",
@@ -107,6 +123,7 @@ class AddSensorScreen extends StatelessWidget {
               height: 50,
               child: ElevatedButton(
                 onPressed: () {
+                  Get.to(() => const ControlPage());
                   // Implement sensor addition logic
                 },
                 style: ElevatedButton.styleFrom(

@@ -35,7 +35,7 @@ class _CartScreenState extends State<CartScreen> {
   @override
   void initState() {
     // cartController.call(proposalItem['price'] * proposalItem['count']);
-
+    cartController.call();
     super.initState();
   }
 
@@ -233,9 +233,11 @@ class _CartItemCardState extends State<CartItemCard> {
                                     if (widget.item.itemId == item.itemId) {
                                       if (widget.item.count > 1) {
                                         widget.item.count--;
-                                        cartController.call(
-                                            proposalItem['price'] *
-                                                proposalItem['count']);
+                                        cartController.sensorcount =
+                                            proposalItem['count'];
+                                        cartController.sensorprice =
+                                            proposalItem['price'];
+                                        cartController.call();
                                       }
                                     }
                                   }
@@ -267,10 +269,13 @@ class _CartItemCardState extends State<CartItemCard> {
                                   for (var item in cartController.cartItems) {
                                     if (widget.item.itemId == item.itemId) {
                                       widget.item.count++;
+                                      cartController.sensorcount =
+                                          proposalItem['count'];
+                                      cartController.sensorprice =
+                                          proposalItem['price'];
                                     }
                                   }
-                                  cartController.call(proposalItem['price'] *
-                                      proposalItem['count']);
+                                  cartController.call();
                                 }),
                                 child: Container(
                                   decoration: BoxDecoration(
@@ -445,10 +450,10 @@ class _ProposalSectionState extends State<ProposalSection> {
                         if (widget.proposal["count"] >= 1)
                           widget.proposal["count"] =
                               widget.proposal["count"] - 1;
-                        cartController.sensorCost =
-                            widget.proposal['price'] * widget.proposal['count'];
-                        cartController.call(widget.proposal['price'] *
-                            widget.proposal['count']);
+                        cartController.sensorcount = proposalItem['count'];
+                        cartController.sensorprice = proposalItem['price'];
+
+                        cartController.call();
                       }),
                       child: Container(
                         decoration: BoxDecoration(
@@ -475,8 +480,9 @@ class _ProposalSectionState extends State<ProposalSection> {
                         widget.proposal["count"] = widget.proposal["count"] + 1;
                         cartController.sensorCost =
                             widget.proposal['price'] * widget.proposal['count'];
-                        cartController.call(widget.proposal['price'] *
-                            widget.proposal['count']);
+                        cartController.sensorcount = proposalItem['count'];
+                        cartController.sensorprice = proposalItem['price'];
+                        cartController.call();
                       }),
                       child: Container(
                         decoration: BoxDecoration(

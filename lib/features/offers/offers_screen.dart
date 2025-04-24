@@ -168,7 +168,7 @@ class ProductCardOffer extends StatelessWidget {
                     borderRadius: BorderRadius.circular(5),
                   ),
                   child: Text(
-                    '$offer% OFF',
+                    '${offer.toStringAsFixed(0)}% OFF',
                     style: TextStyle(color: Colors.white, fontSize: 12),
                   ),
                 ),
@@ -213,7 +213,7 @@ class ProductCardOffer extends StatelessWidget {
                 child: Row(
                   children: [
                     Text(
-                      "${(price * (1 - (offer / 100)))}",
+                      price.toString(),
                       style: TextStyle(
                         fontSize: 10,
                         decoration: TextDecoration.lineThrough,
@@ -223,7 +223,7 @@ class ProductCardOffer extends StatelessWidget {
                     SizedBox(
                       width: 2.w,
                     ),
-                    Text(offer.toString(),
+                    Text(((price * (1 - (offer / 100))).toStringAsFixed(2)),
                         style: TextStyle(
                             fontSize: 12,
                             fontWeight: FontWeight.bold,

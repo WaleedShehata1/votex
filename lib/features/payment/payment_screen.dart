@@ -9,6 +9,8 @@ import '../../core/constants/colors.dart';
 import '../../core/constants/dimensions.dart';
 import '../../core/constants/styles.dart';
 import '../../core/widget/custom_button.dart';
+import '../../core/widget/custom_image_widget.dart';
+import '../../core/widget/custom_snackbar.dart';
 import '../../core/widget/custom_text_field.dart';
 
 final CartControllerImp cartController = Get.put(
@@ -200,7 +202,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                   return _buildItemRow(
                       item.itemName,
                       item.brandName,
-                      Images.gasCooker,
+                      item.imageIcon,
                       item.price.toString(),
                       item.count.toString());
                 }).toList(),
@@ -225,33 +227,21 @@ class _PaymentScreenState extends State<PaymentScreen> {
                   Text('Payment Method',
                       style:
                           TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-                  GestureDetector(
-                    onTap: () {
-                      showModalBottomSheet(
-                        barrierColor: const Color(0xffd9d9d9).withOpacity(0.45),
-                        backgroundColor: Colors.transparent,
-                        context: context,
-                        shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.vertical(
-                            top: Radius.circular(20),
-                          ),
-                        ),
-                        builder: (context) {
-                          return VisaCard();
-                        },
-                      );
-                    },
-                    child: Container(
-                      padding: EdgeInsets.all(3.w),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20.r),
-                          color: const Color(0xff248ECF)),
-                      child: const Icon(
-                        Icons.edit,
-                        color: Colors.white,
-                      ),
-                    ),
-                  )
+                  // GestureDetector(
+                  //   onTap: () {
+
+                  //   },
+                  //   child: Container(
+                  //     padding: EdgeInsets.all(3.w),
+                  //     decoration: BoxDecoration(
+                  //         borderRadius: BorderRadius.circular(20.r),
+                  //         color: const Color(0xff248ECF)),
+                  //     child: const Icon(
+                  //       Icons.edit,
+                  //       color: Colors.white,
+                  //     ),
+                  //   ),
+                  // )
                 ],
               ),
               SizedBox(height: 10),
@@ -280,10 +270,30 @@ class _PaymentScreenState extends State<PaymentScreen> {
                   SizedBox(width: 10),
                   CustomButton(
                     onPressed: () {
-                      cartController.createOrder(
-                        address: accountControllerImp.address,
-                        phoneNumber: accountControllerImp.phoneNumber,
-                      );
+                      if (accountControllerImp.address.text.isNotEmpty) {
+                        showModalBottomSheet(
+                          barrierColor:
+                              const Color(0xffd9d9d9).withOpacity(0.45),
+                          backgroundColor: Colors.transparent,
+                          context: context,
+                          shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.vertical(
+                              top: Radius.circular(20),
+                            ),
+                          ),
+                          builder: (context) {
+                            return VisaCard();
+                          },
+                        );
+                      } else {
+                        showCustomSnackBar('enter your address'.tr,
+                            isError: true);
+                      }
+
+                      // cartController.createOrder(
+                      //   address: accountControllerImp.address,
+                      //   phoneNumber: accountControllerImp.phoneNumber,
+                      // );
                     },
                     buttonText: 'pay',
                     boarderColor: Colors.black,
@@ -329,10 +339,11 @@ class _PaymentScreenState extends State<PaymentScreen> {
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(50.r),
                 ),
-                child: Image.asset(
-                  imageAsset,
+                child: CustomImageWidget(
+                  image: imageAsset,
                   width: 40,
                   height: 40,
+                  fit: BoxFit.fitWidth,
                 ),
               ),
               Container(
@@ -381,6 +392,8 @@ class _PaymentScreenState extends State<PaymentScreen> {
       onTap: () => setState(() {
         isStandardShipping = standard;
         cartController.deliveryFee = cost == 'FREE' ? 0 : 12;
+        cartController.deliveryTime = time;
+        cartController.call();
       }),
       child: Container(
         margin: EdgeInsets.only(bottom: 12),
@@ -534,25 +547,6 @@ class ShippingAddressScreen extends StatelessWidget {
                 color: Colors.blue,
                 radius: Dimensions.paddingSizeSmall,
               ),
-              // SizedBox(
-              //   width: double.infinity,
-              //   child: ElevatedButton(
-              //     style: ElevatedButton.styleFrom(
-              //       backgroundColor: Colors.blue,
-              //       padding: const EdgeInsets.symmetric(vertical: 14),
-              //       shape: RoundedRectangleBorder(
-              //         borderRadius: BorderRadius.circular(10),
-              //       ),
-              //     ),
-              //     onPressed: () {
-              //       // Save logic here
-              //     },
-              //     child: const Text(
-              //       'Save Changes',
-              //       style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-              //     ),
-              //   ),
-              // )
             ],
           ),
         ),
@@ -571,127 +565,68 @@ class VisaCard extends StatelessWidget {
       borderSide: BorderSide.none,
     );
 
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Payment Methods'),
-        backgroundColor: Colors.white,
-        foregroundColor: Colors.black,
-        elevation: 0,
-        leading: SizedBox(),
-      ),
-      backgroundColor: const Color(0xFFF7F9FC),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text(
-              'Card Name',
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 6),
-            SizedBox(
-              height: 30.h,
-              child: TextField(
-                decoration: InputDecoration(
-                  hintText: 'KAREEM ALI MOHAMED',
-                  filled: true,
-                  fillColor: Colors.white,
-                  border: border,
-                ),
-              ),
-            ),
-            const SizedBox(height: 10),
-
-            const Text(
-              'Card Number',
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 6),
-            SizedBox(
-              height: 30.h,
-              child: TextField(
-                decoration: InputDecoration(
-                  hintText: '2458 2546 2356 2458',
-                  filled: true,
-                  fillColor: Colors.white,
-                  border: border,
-                ),
-              ),
-            ),
-            const SizedBox(height: 16),
-
-            const Text(
-              'data',
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 6),
-            SizedBox(
-              height: 30.h,
-              child: TextField(
-                keyboardType: TextInputType.number,
-                decoration: InputDecoration(
-                  hintText: '06/31',
-                  filled: true,
-                  fillColor: Colors.white,
-                  border: border,
-                ),
-              ),
-            ),
-            const SizedBox(height: 16),
-
-            const Text(
-              'cvv',
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 6),
-            SizedBox(
-              height: 30.h,
-              child: TextField(
-                keyboardType: TextInputType.number,
-                decoration: InputDecoration(
-                  hintText: '123',
-                  filled: true,
-                  fillColor: Colors.white,
-                  border: border,
-                ),
-              ),
-            ),
-            const SizedBox(height: 24),
-            CustomButton(
-              onPressed: () {
-                // Save logic here
-              },
-              buttonText: 'next',
-              boarderColor: AppColors.colorFont,
-              textColor: Colors.white,
-              width: double.maxFinite,
-              height: 35.h,
-              color: Colors.blue,
-              radius: Dimensions.paddingSizeSmall,
-            ),
-            // SizedBox(
-            //   width: double.infinity,
-            //   child: ElevatedButton(
-            //     style: ElevatedButton.styleFrom(
-            //       backgroundColor: Colors.blue,
-            //       padding: const EdgeInsets.symmetric(vertical: 14),
-            //       shape: RoundedRectangleBorder(
-            //         borderRadius: BorderRadius.circular(10),
-            //       ),
-            //     ),
-            //     onPressed: () {
-            //       // Save logic here
-            //     },
-            //     child: const Text(
-            //       'Save Changes',
-            //       style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-            //     ),
-            //   ),
-            // )
-          ],
+    return GetBuilder<CartControllerImp>(builder: (controller) {
+      return Scaffold(
+        appBar: AppBar(
+          title: const Text('Payment Methods'),
+          backgroundColor: Colors.white,
+          foregroundColor: Colors.black,
+          elevation: 0,
+          leading: SizedBox(),
         ),
-      ),
-    );
+        backgroundColor: const Color(0xFFF7F9FC),
+        body: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                CustomTextField(
+                  hintText: 'Card Number',
+                  inputType: TextInputType.emailAddress,
+                  borderRadius: Dimensions.radiusLarge,
+                  controller: controller.cardNumber,
+                ),
+                const SizedBox(height: 10),
+                CustomTextField(
+                  hintText: 'Card Name',
+                  inputType: TextInputType.emailAddress,
+                  borderRadius: Dimensions.radiusLarge,
+                  controller: controller.cardName,
+                ),
+                const SizedBox(height: 6),
+                CustomTextField(
+                  hintText: 'date Exp',
+                  inputType: TextInputType.emailAddress,
+                  borderRadius: Dimensions.radiusLarge,
+                  controller: controller.cardExp,
+                ),
+                const SizedBox(height: 16),
+                CustomTextField(
+                  hintText: 'cvv',
+                  inputType: TextInputType.emailAddress,
+                  borderRadius: Dimensions.radiusLarge,
+                  controller: controller.cvv,
+                ),
+                const SizedBox(height: 6),
+                const SizedBox(height: 24),
+                CustomButton(
+                  onPressed: () {
+                    cartController.getVisa();
+                  },
+                  buttonText: 'next',
+                  boarderColor: AppColors.colorFont,
+                  textColor: Colors.white,
+                  width: double.maxFinite,
+                  height: 35.h,
+                  color: Colors.blue,
+                  radius: Dimensions.paddingSizeSmall,
+                ),
+              ],
+            ),
+          ),
+        ),
+      );
+    });
   }
 }

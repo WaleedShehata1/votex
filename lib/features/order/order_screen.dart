@@ -1,82 +1,47 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+import '../../controller/order/order_controller.dart';
+import '../../core/widget/custom_image_widget.dart';
 
 class OrderScreen extends StatelessWidget {
   const OrderScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    List<Map<String, String>> orders = [
-      {
-        'title': 'washing machine (LG)',
-        'description':
-            'Refers to the amount of laundry the washing machine can handle in kilograms (e.g. 10kg, 15kg).',
-        'orderNumber': '#92875157',
-        'date': 'April 06',
-        'image':
-            'https://cdn-icons-png.flaticon.com/512/2903/2903976.png' // Replace with actual image URL
-      },
-      {
-        'title': 'washing machine (LG)',
-        'description':
-            'Refers to the amount of laundry the washing machine can handle in kilograms (e.g. 10kg, 15kg).',
-        'orderNumber': '#92875157',
-        'date': 'April 06',
-        'image':
-            'https://cdn-icons-png.flaticon.com/512/2903/2903976.png' // Replace with actual image URL
-      },
-      {
-        'title': 'washing machine (LG)',
-        'description':
-            'Refers to the amount of laundry the washing machine can handle in kilograms (e.g. 10kg, 15kg).',
-        'orderNumber': '#92875157',
-        'date': 'April 06',
-        'image':
-            'https://cdn-icons-png.flaticon.com/512/2903/2903976.png' // Replace with actual image URL
-      }
-    ];
-
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
+    return GetBuilder<OrderController>(builder: (controller) {
+      return Scaffold(
         backgroundColor: Colors.white,
-        elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios, color: Colors.black),
-          onPressed: () => Navigator.pop(context),
-        ),
-        title: const Text(
-          "History",
-          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
-        ),
-        centerTitle: true,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.filter_list, color: Colors.blue),
-            onPressed: () {},
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+          elevation: 0,
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back_ios, color: Colors.black),
+            onPressed: () => Navigator.pop(context),
           ),
-          IconButton(
-            icon: const Icon(Icons.sort, color: Colors.blue),
-            onPressed: () {},
+          title: const Text(
+            "History",
+            style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
           ),
-        ],
-      ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-        child: ListView.builder(
-          itemCount: orders.length,
-          itemBuilder: (context, index) {
-            var order = orders[index];
-            return OrderCard(
-              title: order['title']!,
-              description: order['description']!,
-              orderNumber: order['orderNumber']!,
-              date: order['date']!,
-              image: order['image']!,
-            );
-          },
+          centerTitle: true,
         ),
-      ),
-    );
+        body: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+          child: ListView.builder(
+            itemCount: controller.listOrder.length,
+            itemBuilder: (context, index) {
+              return OrderCard(
+                title: controller.listOrder[index].title,
+                description: controller.listOrder[index].description,
+                orderNumber: controller.listOrder[index].orderNumber,
+                date: controller.formatDate(controller.listOrder[index].date),
+                image: controller.listOrder[index].image,
+              );
+            },
+          ),
+        ),
+      );
+    });
   }
 }
 
@@ -109,12 +74,18 @@ class OrderCard extends StatelessWidget {
             // Product Image
             ClipRRect(
               borderRadius: BorderRadius.circular(8),
-              child: Image.network(
-                image,
+              child: CustomImageWidget(
                 height: 60,
                 width: 60,
+                image: image,
                 fit: BoxFit.cover,
               ),
+              //  Image.network(
+              //   image,
+              //   height: 60,
+              //   width: 60,
+              //   fit: BoxFit.cover,
+              // ),
             ),
             const SizedBox(width: 10),
 
@@ -137,7 +108,7 @@ class OrderCard extends StatelessWidget {
                   ),
                   const SizedBox(height: 5),
                   Text(
-                    "Order $orderNumber",
+                    "Order #$orderNumber",
                     style: const TextStyle(
                       fontSize: 12,
                       fontWeight: FontWeight.bold,
@@ -154,21 +125,21 @@ class OrderCard extends StatelessWidget {
             ),
 
             // Review Button
-            TextButton(
-              onPressed: () {
-                // Handle review action
-              },
-              style: TextButton.styleFrom(
-                backgroundColor: Colors.white,
-                side: const BorderSide(color: Colors.blue),
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8)),
-              ),
-              child: const Text(
-                "Review",
-                style: TextStyle(color: Colors.blue),
-              ),
-            ),
+            // TextButton(
+            //   onPressed: () {
+            //     // Handle review action
+            //   },
+            //   style: TextButton.styleFrom(
+            //     backgroundColor: Colors.white,
+            //     side: const BorderSide(color: Colors.blue),
+            //     shape: RoundedRectangleBorder(
+            //         borderRadius: BorderRadius.circular(8)),
+            //   ),
+            //   child: const Text(
+            //     "Review",
+            //     style: TextStyle(color: Colors.blue),
+            //   ),
+            // ),
           ],
         ),
       ),

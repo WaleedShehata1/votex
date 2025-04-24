@@ -19,7 +19,7 @@ class OfferCard extends StatelessWidget {
     required this.image,
     required this.rate,
     required this.discount,
-    required this.oldPrice,
+    required this.newPrice,
     required this.onPressed,
     this.save,
   });
@@ -30,7 +30,7 @@ class OfferCard extends StatelessWidget {
   final String image;
   final String discount;
   final String rate;
-  final double oldPrice;
+  final double newPrice;
   @override
   Widget build(BuildContext context) {
     return Expanded(
@@ -49,7 +49,7 @@ class OfferCard extends StatelessWidget {
                   CustomImageWidget(
                     height: 100,
                     width: 80,
-                    fit: BoxFit.fitHeight,
+                    fit: BoxFit.fitWidth,
                     image: image,
                   ),
                   const SizedBox(height: 5),
@@ -89,7 +89,7 @@ class OfferCard extends StatelessWidget {
                         child: Row(
                           children: [
                             Text(
-                              oldPrice.toString(),
+                              price,
                               style: const TextStyle(
                                 fontSize: 10,
                                 decoration: TextDecoration.lineThrough,
@@ -99,7 +99,7 @@ class OfferCard extends StatelessWidget {
                             SizedBox(
                               width: 2.w,
                             ),
-                            Text('EGP $price',
+                            Text('EGP ${newPrice.toStringAsFixed(2)}',
                                 style: const TextStyle(
                                     fontSize: 12,
                                     fontWeight: FontWeight.bold,
@@ -152,7 +152,7 @@ class OfferCard extends StatelessWidget {
                         child: Transform.rotate(
                           angle: 0.7,
                           child: Text(
-                            "${discount}%",
+                            "${discount.substring(0, 2)}%",
                             style: const TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,

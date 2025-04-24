@@ -8,6 +8,7 @@ class OrderModel {
   String phoneNumber;
   String totlePrice;
   String userId;
+  String dataAdd;
   OrderModel({
     required this.address,
     required this.deliveryCost,
@@ -18,6 +19,7 @@ class OrderModel {
     required this.phoneNumber,
     required this.totlePrice,
     required this.userId,
+    required this.dataAdd,
   });
 
   OrderModel.fromFireStore(Map<String, dynamic> data)
@@ -31,6 +33,7 @@ class OrderModel {
           phoneNumber: data['phoneNumber'],
           totlePrice: data['totlePrice'],
           userId: data['userId'],
+          dataAdd: data['dataAdd'],
         );
 
   Map<String, dynamic> toFireStore() {
@@ -44,6 +47,7 @@ class OrderModel {
       'phoneNumber': phoneNumber,
       'totlePrice': totlePrice,
       'userId': userId,
+      'dataAdd': dataAdd,
     };
   }
 }

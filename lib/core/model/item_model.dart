@@ -51,10 +51,10 @@ class ItemModel {
       imageUrl: data['imageUrl'],
       itemDescription: data['description'],
       itemName: data['name'],
-      discount: double.parse(data['discount'] ?? ''),
+      discount: double.parse(data['discount'].toString()),
       imageIcon: data['imageIcon'],
       idSubCategory: data['idSubCategory'],
-      price: double.parse(data['price']),
+      price: double.parse(data['price'].toString()),
       rate: data['rate'],
       stock: data['stock'],
       supCategory: data['supCategory'],
@@ -62,6 +62,26 @@ class ItemModel {
       dateAdd: data['dateAdd'],
       itemSell: data['itemSell'],
     );
+  }
+  Map<String, dynamic> toFireStore() {
+    return {
+      'brand': brandName,
+      'brand_id': brandId,
+      'isMoreSale': isMoreSale,
+      'imageUrl': imageUrl,
+      'description': itemDescription,
+      'name': itemName,
+      'discount': discount,
+      'imageIcon': imageIcon,
+      'idSubCategory': idSubCategory,
+      'price': price,
+      'rate': rate,
+      'stock': stock,
+      'supCategory': supCategory,
+      'videoUrl': videoUrl,
+      'dateAdd': dateAdd,
+      'itemSell': itemSell,
+    };
   }
 }
 

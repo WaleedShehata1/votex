@@ -98,7 +98,7 @@ class SpecialOfferSection extends StatelessWidget {
                         },
                         name: listItemsOffer[i].itemName,
                         price: listItemsOffer[i].price.toString(),
-                        oldPrice: (listItemsOffer[i].price *
+                        newPrice: (listItemsOffer[i].price *
                             (1 - (listItemsOffer[i].discount / 100))),
                         image: listItemsOffer[i].imageIcon,
                         rate: listItemsOffer[i].rate,

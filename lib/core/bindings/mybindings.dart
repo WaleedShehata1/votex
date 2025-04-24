@@ -9,6 +9,8 @@ import '../../controller/auth/resetpassword.controller.dart';
 import '../../controller/auth/signupController.dart';
 import '../../controller/contact/contact_controller.dart';
 import '../../controller/home/home_controller.dart';
+import '../../controller/notification/notification_controller.dart';
+import '../../controller/order/order_controller.dart';
 import '../../controller/product/product_controller.dart';
 import '../../controller/saved/saved_controller.dart';
 
@@ -29,5 +31,7 @@ class Mybinding extends Bindings {
     Get.lazyPut(() => AccountControllerImp(), fenix: true);
     Get.lazyPut(() => ContactController(), fenix: true);
     Get.lazyPut(() => ProductController(), fenix: true);
+    Get.lazyPut(() => OrderController(), fenix: true);
+    Get.lazyPut(() => NotificationController(), fenix: true);
   }
 }

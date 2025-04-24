@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import '../../controller/home/home_controller.dart';
 import '../../core/model/brand_model.dart';
@@ -17,8 +18,10 @@ class RatedBrandsScreen extends StatefulWidget {
 class _RatedBrandsScreenState extends State<RatedBrandsScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final HomeControllerImp homeControllerImp = Get.put(HomeControllerImp());
+
   @override
   Widget build(BuildContext context) {
+    print(widget.brands.length);
     return Scaffold(
       key: _scaffoldKey,
       backgroundColor: Colors.white,
@@ -68,9 +71,7 @@ class _RatedBrandsScreenState extends State<RatedBrandsScreen> {
             // Brand Grid
             Expanded(
               child: GridView.builder(
-                shrinkWrap: true,
-                itemCount: widget.brands.length,
-                physics: const NeverScrollableScrollPhysics(),
+                itemCount: homeControllerImp.listBrands.length,
                 itemBuilder: (context, index) {
                   return Column(
                     children: [
@@ -81,28 +82,39 @@ class _RatedBrandsScreenState extends State<RatedBrandsScreen> {
                           homeControllerImp.subOrBrand();
                           homeControllerImp.update();
                         },
-                        child: CircleAvatar(
-                          backgroundColor: Colors.blue,
-                          radius: 32,
-                          child: CustomImageWidget(
-                            image: widget.brands[index].imageUrl,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            border: Border.all(width: 0.2),
+                            borderRadius: BorderRadius.circular(80),
+                          ),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(80),
+                            child: CustomImageWidget(
+                              width: 80.w,
+                              height: 70.h,
+                              fit: BoxFit.fitWidth,
+                              image:
+                                  homeControllerImp.listBrands[index].imageUrl,
+                            ),
                           ),
                         ),
                       ),
                       const SizedBox(height: 5),
                       Text(
-                        widget.brands[index].brandName,
-                        style: const TextStyle(fontSize: 14),
+                        homeControllerImp.listBrands[index].brandName,
+                        style: TextStyle(fontSize: 12.sp),
+                        textAlign: TextAlign.center,
                       ),
                     ],
                   );
                 },
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 4,
-                  crossAxisSpacing: 5,
-                  mainAxisSpacing: 5,
-                  childAspectRatio: 0.1,
-                ),
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 4,
+                    crossAxisSpacing: 5,
+                    mainAxisSpacing: 5,
+                    childAspectRatio: 0.1,
+                    mainAxisExtent: 120.h),
               ),
             ),
           ],

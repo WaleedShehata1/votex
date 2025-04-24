@@ -8,6 +8,7 @@ import '../../core/constants/dimensions.dart';
 import '../../core/constants/images.dart';
 import '../../core/constants/styles.dart';
 import '../../core/widget/custom_text_field.dart';
+import '../drawer/drawer.dart';
 import '../rated brand/all_rated_brands.dart';
 import 'widget/brand_circle.dart';
 import 'widget/categories_section.dart';
@@ -31,6 +32,7 @@ class _HomeScreenState extends State<HomeScreen> {
           controller.update();
         },
         child: Scaffold(
+          key: controller.scaffoldKey,
           backgroundColor: Colors.white,
           body: Column(
             children: [
@@ -64,27 +66,37 @@ class _HomeScreenState extends State<HomeScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         SizedBox(
-                          height: 10.h,
+                          height: 5.h,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            SvgPicture.asset(Images.userIcon),
-                            const Row(
+                            IconButton(
+                              icon: const Icon(Icons.menu_outlined,
+                                  color: Colors.black),
+                              onPressed: () {
+                                controller.scaffoldKey.currentState
+                                    ?.openDrawer();
+                                controller.update();
+                              },
+                            ),
+                            Row(
                               children: [
-                                Icon(
-                                  Icons.notifications_outlined,
-                                  color: Colors.white,
+                                InkWell(
+                                  onTap: () {
+                                    // controller.printRandomProductData();
+                                  },
+                                  child: Icon(
+                                    Icons.notifications_outlined,
+                                    color: Colors.white,
+                                  ),
                                 ),
                               ],
                             )
                           ],
                         ),
-                        SizedBox(
-                          height: 20.h,
-                        ),
                         Text(
-                          'Hi, Mohamed',
+                          'Hi, ${controller.model?.userName}',
                           style: robotoBold.copyWith(
                             color: Colors.white,
                             fontSize: Dimensions.fontSizeOverLarge,
@@ -255,6 +267,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ],
           ),
+          drawer: const AppDrawer(),
         ),
       );
     });

@@ -57,7 +57,7 @@ class _ProductCardState extends State<ProductCard> {
                   image: widget.image,
                   height: 95,
                   width: 80,
-                  fit: BoxFit.fitHeight,
+                  fit: BoxFit.fitWidth,
                 ),
                 // Image.asset(
                 //   Images.washing,

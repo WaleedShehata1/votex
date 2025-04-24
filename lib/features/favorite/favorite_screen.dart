@@ -158,6 +158,9 @@ class SavedItemCard extends StatelessWidget {
   }
 
   void _showLogoutDialog(BuildContext context) {
+    final SavedControllerImp savedController = Get.put(
+      SavedControllerImp(),
+    );
     showDialog(
       barrierColor: const Color.fromARGB(255, 160, 160, 160).withOpacity(0.45),
       context: context,
@@ -185,6 +188,7 @@ class SavedItemCard extends StatelessWidget {
               children: [
                 CustomButton(
                   onPressed: () {
+                    savedController.removed(item);
                     Get.back();
                   },
                   buttonText: 'Yes',

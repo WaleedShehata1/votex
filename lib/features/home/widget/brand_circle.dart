@@ -28,19 +28,29 @@ class BrandCircle extends StatelessWidget {
           children: [
             CircleAvatar(
                 radius: 30,
-                backgroundColor: Colors.grey[300],
-                child: CustomImageWidget(
-                  image: image,
+                backgroundColor: Colors.white,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(30),
+                  child: CustomImageWidget(
+                    width: 80.w,
+                    height: 80.h,
+                    image: image,
+                    fit: BoxFit.fitWidth,
+                  ),
                 )),
-            const SizedBox(height: 5),
-            Text(
-              brand,
-              style: robotoMedium.copyWith(
-                fontSize: Dimensions.fontSizeSmall,
+            const SizedBox(height: 0),
+            SizedBox(
+              width: 100.w,
+              child: Text(
+                brand,
+                style: robotoMedium.copyWith(
+                  fontSize: Dimensions.fontSizeExtraSmall,
+                ),
+                textAlign: TextAlign.center,
               ),
             ),
             SizedBox(
-              height: 10.h,
+              height: 5.h,
             ),
           ],
         ),

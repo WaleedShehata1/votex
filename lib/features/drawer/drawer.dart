@@ -3,12 +3,19 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:votex/core/helper/route_helper.dart';
 
+import '../../controller/home/home_controller.dart';
+import '../sensor/sensor_screen.dart';
+
 class AppDrawer extends StatelessWidget {
   const AppDrawer({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final HomeControllerImp homeController = Get.put(
+      HomeControllerImp(),
+    );
     return Drawer(
+      width: 190.w,
       child: SafeArea(
         child: Padding(
           padding: const EdgeInsetsDirectional.symmetric(horizontal: 10),
@@ -28,7 +35,7 @@ class AppDrawer extends StatelessWidget {
                   color: Colors.black,
                 ),
               ),
-              const Text("Mohmed Ahmed",
+              Text((homeController.model?.userName).toString(),
                   style: TextStyle(
                       fontSize: 18,
                       color: Colors.black,
@@ -55,7 +62,7 @@ class AppDrawer extends StatelessWidget {
                   title: "Orders"),
               DrawerItem(
                   onTap: () {
-                    // Get.toNamed(RouteHelper.notificationsScreen);
+                    Get.toNamed(RouteHelper.notificationsScreen);
                   },
                   icon: Icons.notifications_none,
                   title: "Notifications"),
@@ -65,6 +72,7 @@ class AppDrawer extends StatelessWidget {
                   title: "Chat Bot"),
               DrawerItem(
                   onTap: () {
+                    // Get.to(const SensorScreen());
                     Get.toNamed(RouteHelper.addSensorScreen);
                   },
                   icon: Icons.sensors,

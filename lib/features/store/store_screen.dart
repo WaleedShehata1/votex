@@ -33,7 +33,7 @@ class ProductListScreen extends StatelessWidget {
       return RefreshIndicator(
         onRefresh: () async {
           controller.load();
-          controller.selectType = 'الكل';
+          controller.selectType = 'All';
         },
         child: Scaffold(
           key: controller.scaffoldKey,

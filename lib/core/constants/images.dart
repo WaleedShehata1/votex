@@ -33,6 +33,9 @@ class Images {
   static const String brand3 = 'assets/images/brand3.png';
   static const String brand4 = 'assets/images/brand4.png';
 
+  //svg
+  static const String iconSend = 'assets/svg/send.svg';
+
   //3D
   static const String gasCooker3D = 'assets/3D/ddd.glb';
   static const String conditioning3D = 'assets/3D/aaa.glb';

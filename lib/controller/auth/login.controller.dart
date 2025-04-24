@@ -171,7 +171,6 @@ class LoginControllerImp extends LoginController {
     }
   }
 
-  @override
   signOut() async {
     GoogleSignIn? googleSignIn = GoogleSignIn();
     googleSignIn.disconnect();
