@@ -248,13 +248,13 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                       Text(
                         widget.item.itemName,
                         style: const TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold),
+                            fontSize: 15, fontWeight: FontWeight.w700),
                       ),
                       Text(
                         '(${widget.item.brandName})',
                         style: const TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
+                          fontSize: 12,
+                          fontWeight: FontWeight.w500,
                           color: Colors.blue,
                         ),
                       ),
@@ -265,54 +265,58 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Icon(
-                          (double.parse(widget.item.rate)) <= 5 &&
-                                  (double.parse(widget.item.rate)) >= 1
+                          (double.parse(productController2.rate)) <= 5 &&
+                                  (double.parse(productController2.rate)) >= 1
                               ? Icons.star
-                              : (double.parse(widget.item.rate)) < 1 &&
-                                      (double.parse(widget.item.rate)) > 0
+                              : (double.parse(productController2.rate)) < 1 &&
+                                      (double.parse(productController2.rate)) >
+                                          0
                                   ? Icons.star_half
                                   : Icons.star_border,
                           color: Colors.orange,
                           size: 16),
                       Icon(
-                          (double.parse(widget.item.rate)) <= 5 &&
-                                  (double.parse(widget.item.rate)) >= 2
+                          (double.parse(productController2.rate)) <= 5 &&
+                                  (double.parse(productController2.rate)) >= 2
                               ? Icons.star
-                              : (double.parse(widget.item.rate)) < 2 &&
-                                      (double.parse(widget.item.rate)) > 1
+                              : (double.parse(productController2.rate)) < 2 &&
+                                      (double.parse(productController2.rate)) >
+                                          1
                                   ? Icons.star_half
                                   : Icons.star_border,
                           color: Colors.orange,
                           size: 16),
                       Icon(
-                          (double.parse(widget.item.rate)) <= 5 &&
-                                  (double.parse(widget.item.rate)) >= 3
+                          (double.parse(productController2.rate)) <= 5 &&
+                                  (double.parse(productController2.rate)) >= 3
                               ? Icons.star
-                              : (double.parse(widget.item.rate)) < 3 &&
-                                      (double.parse(widget.item.rate)) > 2
+                              : (double.parse(productController2.rate)) < 3 &&
+                                      (double.parse(productController2.rate)) >
+                                          2
                                   ? Icons.star_half
                                   : Icons.star_border,
                           color: Colors.orange,
                           size: 16),
                       Icon(
-                          (double.parse(widget.item.rate)) <= 5 &&
-                                  (double.parse(widget.item.rate)) >= 4
+                          (double.parse(productController2.rate)) <= 5 &&
+                                  (double.parse(productController2.rate)) >= 4
                               ? Icons.star
-                              : (double.parse(widget.item.rate)) < 4 &&
-                                      (double.parse(widget.item.rate)) > 3
+                              : (double.parse(productController2.rate)) < 4 &&
+                                      (double.parse(productController2.rate)) >
+                                          3
                                   ? Icons.star_half
                                   : Icons.star_border,
                           color: Colors.orange,
                           size: 16),
                       Icon(
-                          (double.parse(widget.item.rate)) == 5
+                          (double.parse(productController2.rate)) == 5
                               ? Icons.star
-                              : double.parse(widget.item.rate) > 4
+                              : double.parse(productController2.rate) > 4
                                   ? Icons.star_half
                                   : Icons.star_border,
                           color: Colors.orange,
                           size: 16),
-                      Text('(${widget.item.rate}/5)',
+                      Text('(${productController2.rate}/5)',
                           style: const TextStyle(color: Colors.blue)),
                     ],
                   ),
@@ -334,7 +338,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                       width: 2.w,
                     ),
                     Text(
-                        'EGP ${widget.item.price * (1 - (widget.item.discount / 100.0))}',
+                        'EGP ${(widget.item.price * (1 - (widget.item.discount / 100.0))).toStringAsFixed(2)}',
                         style: const TextStyle(
                             fontSize: 12,
                             fontWeight: FontWeight.bold,
@@ -440,54 +444,54 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Icon(
-                      (double.parse(widget.item.rate)) <= 5 &&
-                              (double.parse(widget.item.rate)) >= 1
+                      (double.parse(productController2.rate)) <= 5 &&
+                              (double.parse(productController2.rate)) >= 1
                           ? Icons.star
-                          : (double.parse(widget.item.rate)) < 1 &&
-                                  (double.parse(widget.item.rate)) > 0
+                          : (double.parse(productController2.rate)) < 1 &&
+                                  (double.parse(productController2.rate)) > 0
                               ? Icons.star_half
                               : Icons.star_border,
                       color: Colors.orange,
                       size: 16),
                   Icon(
-                      (double.parse(widget.item.rate)) <= 5 &&
-                              (double.parse(widget.item.rate)) >= 2
+                      (double.parse(productController2.rate)) <= 5 &&
+                              (double.parse(productController2.rate)) >= 2
                           ? Icons.star
-                          : (double.parse(widget.item.rate)) < 2 &&
-                                  (double.parse(widget.item.rate)) > 1
+                          : (double.parse(productController2.rate)) < 2 &&
+                                  (double.parse(productController2.rate)) > 1
                               ? Icons.star_half
                               : Icons.star_border,
                       color: Colors.orange,
                       size: 16),
                   Icon(
-                      (double.parse(widget.item.rate)) <= 5 &&
-                              (double.parse(widget.item.rate)) >= 3
+                      (double.parse(productController2.rate)) <= 5 &&
+                              (double.parse(productController2.rate)) >= 3
                           ? Icons.star
-                          : (double.parse(widget.item.rate)) < 3 &&
-                                  (double.parse(widget.item.rate)) > 2
+                          : (double.parse(productController2.rate)) < 3 &&
+                                  (double.parse(productController2.rate)) > 2
                               ? Icons.star_half
                               : Icons.star_border,
                       color: Colors.orange,
                       size: 16),
                   Icon(
-                      (double.parse(widget.item.rate)) <= 5 &&
-                              (double.parse(widget.item.rate)) >= 4
+                      (double.parse(productController2.rate)) <= 5 &&
+                              (double.parse(productController2.rate)) >= 4
                           ? Icons.star
-                          : (double.parse(widget.item.rate)) < 4 &&
-                                  (double.parse(widget.item.rate)) > 3
+                          : (double.parse(productController2.rate)) < 4 &&
+                                  (double.parse(productController2.rate)) > 3
                               ? Icons.star_half
                               : Icons.star_border,
                       color: Colors.orange,
                       size: 16),
                   Icon(
-                      (double.parse(widget.item.rate)) == 5
+                      (double.parse(productController2.rate)) == 5
                           ? Icons.star
-                          : double.parse(widget.item.rate) > 4
+                          : double.parse(productController2.rate) > 4
                               ? Icons.star_half
                               : Icons.star_border,
                       color: Colors.orange,
                       size: 16),
-                  Text('(${widget.item.rate}/5)',
+                  Text('(${productController2.rate}/5)',
                       style: const TextStyle(color: Colors.blue)),
                 ],
               ),
@@ -495,64 +499,199 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
               const SizedBox(height: 10),
 
               // Review Card
-              Container(
-                width: double.maxFinite,
-                height: 160,
-                padding: const EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                  color: Colors.grey[100],
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Column(
-                  children: [
-                    const Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        CircleAvatar(
-                          radius: 20,
-                          child: Icon(Icons.person),
-                        ),
-                        SizedBox(width: 10),
-                        Expanded(
+              Column(
+                children: [
+                  SizedBox(
+                    height: 100,
+                    width: double.maxFinite,
+                    child: GridView.builder(
+                      shrinkWrap: true,
+                      scrollDirection: Axis.horizontal,
+                      // physics: const NeverScrollableScrollPhysics(),
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 1,
+                        crossAxisSpacing: 5,
+                        mainAxisSpacing: 10,
+                        mainAxisExtent: 200.h,
+                      ),
+                      itemCount: productController2.listCommints.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return Container(
+                          width: double.maxFinite,
+                          height: 120,
+                          padding: const EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            color: Colors.grey[100],
+                            borderRadius: BorderRadius.circular(10),
+                          ),
                           child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                'Mohamed Ahmed',
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              ),
                               Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Icon(Icons.star,
-                                      color: Colors.orange, size: 18),
-                                  Icon(Icons.star,
-                                      color: Colors.orange, size: 18),
-                                  Icon(Icons.star,
-                                      color: Colors.orange, size: 18),
-                                  Icon(Icons.star,
-                                      color: Colors.orange, size: 18),
-                                  Icon(Icons.star_half,
-                                      color: Colors.orange, size: 18),
+                                  CircleAvatar(
+                                    radius: 20,
+                                    child: Icon(Icons.person),
+                                  ),
+                                  SizedBox(width: 10),
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          productController2
+                                              .listCommints[index].userName,
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        Row(
+                                          children: [
+                                            Icon(
+                                                (double.parse(widget
+                                                                .item.rate)) <=
+                                                            5 &&
+                                                        (double.parse(widget
+                                                                .item.rate)) >=
+                                                            1
+                                                    ? Icons.star
+                                                    : (double.parse(widget.item
+                                                                    .rate)) <
+                                                                1 &&
+                                                            (double.parse(widget
+                                                                    .item
+                                                                    .rate)) >
+                                                                0
+                                                        ? Icons.star_half
+                                                        : Icons.star_border,
+                                                color: Colors.orange,
+                                                size: 16),
+                                            Icon(
+                                                (double.parse(productController2
+                                                                .listCommints[
+                                                                    index]
+                                                                .rate)) <=
+                                                            5 &&
+                                                        (double.parse(
+                                                                productController2
+                                                                    .listCommints[
+                                                                        index]
+                                                                    .rate)) >=
+                                                            2
+                                                    ? Icons.star
+                                                    : (double.parse(productController2
+                                                                    .listCommints[
+                                                                        index]
+                                                                    .rate)) <
+                                                                2 &&
+                                                            (double.parse(productController2
+                                                                    .listCommints[
+                                                                        index]
+                                                                    .rate)) >
+                                                                1
+                                                        ? Icons.star_half
+                                                        : Icons.star_border,
+                                                color: Colors.orange,
+                                                size: 16),
+                                            Icon(
+                                                (double.parse(productController2
+                                                                .listCommints[
+                                                                    index]
+                                                                .rate)) <=
+                                                            5 &&
+                                                        (double.parse(
+                                                                productController2
+                                                                    .listCommints[
+                                                                        index]
+                                                                    .rate)) >=
+                                                            3
+                                                    ? Icons.star
+                                                    : (double.parse(productController2
+                                                                    .listCommints[
+                                                                        index]
+                                                                    .rate)) <
+                                                                3 &&
+                                                            (double.parse(productController2
+                                                                    .listCommints[
+                                                                        index]
+                                                                    .rate)) >
+                                                                2
+                                                        ? Icons.star_half
+                                                        : Icons.star_border,
+                                                color: Colors.orange,
+                                                size: 16),
+                                            Icon(
+                                                (double.parse(productController2
+                                                                .listCommints[
+                                                                    index]
+                                                                .rate)) <=
+                                                            5 &&
+                                                        (double.parse(
+                                                                productController2
+                                                                    .listCommints[
+                                                                        index]
+                                                                    .rate)) >=
+                                                            4
+                                                    ? Icons.star
+                                                    : (double.parse(productController2
+                                                                    .listCommints[
+                                                                        index]
+                                                                    .rate)) <
+                                                                4 &&
+                                                            (double.parse(widget
+                                                                    .item
+                                                                    .rate)) >
+                                                                3
+                                                        ? Icons.star_half
+                                                        : Icons.star_border,
+                                                color: Colors.orange,
+                                                size: 16),
+                                            Icon(
+                                                (double.parse(productController2
+                                                            .listCommints[index]
+                                                            .rate)) ==
+                                                        5
+                                                    ? Icons.star
+                                                    : double.parse(
+                                                                productController2
+                                                                    .listCommints[
+                                                                        index]
+                                                                    .rate) >
+                                                            4
+                                                        ? Icons.star_half
+                                                        : Icons.star_border,
+                                                color: Colors.orange,
+                                                size: 16),
+                                          ],
+                                        ),
+                                        Text(
+                                          productController2
+                                              .listCommints[index].commint,
+                                          style: TextStyle(fontSize: 14),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
                                 ],
-                              ),
-                              Text(
-                                "Great washing machine, easy to use and energy-efficient!",
-                                style: TextStyle(fontSize: 14),
                               ),
                             ],
                           ),
-                        ),
-                      ],
+                        );
+                      },
                     ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    CustomTextFieldChat(
-                      controller: productController2.controller,
-                      onPress: () {},
-                    ),
-                  ],
-                ),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  CustomTextFieldChat(
+                    controller: productController2.controller,
+                    onPress: () {
+                      if (productController2.controller.text.isNotEmpty) {
+                        productController2.addCommints(id: widget.item.itemId!);
+                      }
+                    },
+                  ),
+                ],
               ),
 
               SizedBox(height: 20.h),
@@ -575,8 +714,16 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                     itemCount: items.length,
                     itemBuilder: (context, index) {
                       return GestureDetector(
-                        onTap: () =>
-                            Get.toNamed(RouteHelper.productDetailsScreen),
+                        onTap: () {
+                          productController2.rate = items[index].rate;
+                          productController2.getCommints(
+                              id: items[index].itemId!);
+
+                          Get.to(ProductDetailsScreen(
+                            item: items[index],
+                            items: items,
+                          ));
+                        },
                         child: ProductCard(
                           name: items[index].itemName,
                           price: items[index].price,

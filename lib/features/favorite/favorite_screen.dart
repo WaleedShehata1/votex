@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:votex/core/constants/images.dart' show Images;
 import 'package:votex/core/model/item_model.dart';
 
+import '../../controller/product/product_controller.dart';
 import '../../controller/saved/saved_controller.dart';
 import '../../core/constants/dimensions.dart';
 import '../../core/constants/styles.dart';
@@ -62,8 +63,9 @@ class SavedItemsScreen extends StatelessWidget {
                     itemCount: controller.savedItems.length,
                     itemBuilder: (context, index) {
                       return GestureDetector(
-                          onTap: () =>
-                              Get.toNamed(RouteHelper.productDetailsScreen),
+                          // onTap: () {productController.getCommints(id: id)
+                          //   Get.toNamed(RouteHelper.productDetailsScreen);
+                          // },
                           child: SavedItemCard(controller.savedItems[index]));
                     },
                   ),

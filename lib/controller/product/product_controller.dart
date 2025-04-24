@@ -1,6 +1,13 @@
+import 'dart:math';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import 'package:votex/core/model/commint_model.dart';
+import 'package:intl/intl.dart';
+import '../../core/classes/app_usage_service.dart';
 import '../../core/constants/images.dart';
 
 class ProductController extends GetxController {
@@ -67,11 +74,17 @@ class ProductController extends GetxController {
     }
   }
 
+  String rate = '';
+  bool isNewCommint = false;
+  List<CommintModel> listCommints = [];
+  final productDB = FirebaseFirestore.instance.collection("items");
   @override
   void onInit() {
     controller = TextEditingController();
     super.onInit();
   }
+
+  final random = Random();
 // addCommint({
 //     required int itemId,
 //     required String itemName,
@@ -116,6 +129,63 @@ class ProductController extends GetxController {
 //       showCustomSnackBar('Check the internet connection'.tr, isError: true);
 //     }
 //   }
+
+  addCommints({required String id}) async {
+    DateTime now = DateTime.now().toUtc();
+    String formattedDate = DateFormat(
+      "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'",
+    ).format(now);
+    String? user = await AppUsageService.getUserName();
+    productDB.doc(id).collection('commints').add({
+      'userName': user,
+      'commint': controller.text,
+      'rate': (random.nextInt(5) + 1).toString(),
+      'dateAdd': formattedDate
+    }).then((DocumentReference docs) {
+      print("object==> ${docs.id}");
+    });
+    controller.clear();
+    isNewCommint = true;
+    getCommints(id: id);
+  }
+
+  getCommints({required String id}) async {
+    double totaleRate = 0.0;
+    int countRates = 0;
+    double newRate = 0.0;
+    listCommints = [];
+    QuerySnapshot commints = await FirebaseFirestore.instance
+        .collection("items")
+        .doc(id)
+        .collection('commints')
+        .get();
+    for (var com in commints.docs) {
+      listCommints.add(CommintModel(
+        commint: com['commint'],
+        userName: com['userName'],
+        rate: com['rate'],
+      ));
+      if (isNewCommint) {
+        countRates++;
+        totaleRate = totaleRate + double.parse(com['rate']);
+      }
+    }
+    newRate = totaleRate / countRates;
+    if (isNewCommint) {
+      FirebaseFirestore.instance.collection("items").doc(id).update({
+        'rate': newRate.toString(),
+      }).then((value) {
+        isNewCommint = false;
+        print(" to update rate: value");
+      }).catchError((error) => print("Failed to update rate: $error"));
+    }
+    DocumentSnapshot data =
+        await FirebaseFirestore.instance.collection("items").doc(id).get();
+    rate = double.parse(data['rate']).toStringAsFixed(1);
+    print('rate==${rate}');
+    update();
+  }
+
   @override
   void dispose() {
     // item2 = <Item>[].obs;

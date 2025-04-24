@@ -7,12 +7,14 @@ import 'package:votex/core/constants/colors.dart';
 import 'package:votex/core/model/item_model.dart';
 import '../../controller/cart/cart_controller.dart';
 import '../../controller/home/home_controller.dart';
+import '../../controller/product/product_controller.dart';
 import '../../core/constants/images.dart';
 import '../../core/constants/styles.dart';
 import '../../core/widget/custom_text_field.dart';
 import '../../core/widget/drop_down.dart';
 import '../drawer/drawer.dart';
 import '../product/proudct_details_screen.dart';
+import '../search/search_screen.dart';
 import 'widget/product_card.dart';
 
 class ProductListScreen extends StatelessWidget {
@@ -25,6 +27,9 @@ class ProductListScreen extends StatelessWidget {
     );
     final CartControllerImp cartControllerImp = Get.put(
       CartControllerImp(),
+    );
+    final ProductController productController = Get.put(
+      ProductController(),
     );
     if (homeController.selectedIndex == 1) {
       homeController.getItems();
@@ -84,18 +89,48 @@ class ProductListScreen extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    CustomTextField(
-                      colorFill: Colors.white,
-                      hintText: 'Search here',
-                      width: 110.w,
-                      height: 20.h,
-                      prefixIcon: Icon(
-                        Icons.search,
-                        size: 15.w,
-                        color: AppColors.colorFont3,
+                    GestureDetector(
+                      onTap: () => Get.to(() => SearchScreen()),
+                      child: Container(
+                        width: 110.w,
+                        height: 20.h,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5.r),
+                          color: Colors.white,
+                          border: Border.all(
+                            width: 0.5,
+                            color: AppColors.colorFont,
+                          ),
+                        ),
+                        child: Row(
+                          children: [
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 2),
+                              child: Image.asset(
+                                Images.searchIcon,
+                                width: 15.w,
+                                fit: BoxFit.fill,
+                                color: const Color(0xff7f7f7f),
+                              ),
+                            ),
+                            Text(
+                              'Search here',
+                              style: TextStyle(color: Colors.grey),
+                            ),
+                          ],
+                        ),
+                        //  CustomTextField(
+                        //   isEnabled: false,
+                        //   colorFill: Colors.white,
+                        //   hintText: 'Search here',
+                        //   prefixIcon: Icon(
+                        //     Icons.search,
+                        //     size: 25.w,
+                        //     color: AppColors.colorFont3,
+                        //   ),
+                        //   borderRadius: Dimensions.radiusExtraLarge,
                       ),
-                      borderRadius: 3.r,
-                      colorBorder: AppColors.colorFont,
                     ),
                     SizedBox(
                       width: 111.w,
@@ -196,10 +231,17 @@ class ProductListScreen extends StatelessWidget {
                             .listItemAndFiltter.length, // Sample items count
                         itemBuilder: (context, index) {
                           return GestureDetector(
-                            onTap: () => Get.to(() => ProductDetailsScreen(
-                                  item: controller.listItemAndFiltter[index],
-                                  items: controller.listItemAndFiltter,
-                                )),
+                            onTap: () {
+                              productController.rate =
+                                  controller.listItemAndFiltter[index].rate;
+                              productController.getCommints(
+                                  id: controller
+                                      .listItemAndFiltter[index].itemId!);
+                              Get.to(() => ProductDetailsScreen(
+                                    item: controller.listItemAndFiltter[index],
+                                    items: controller.listItemAndFiltter,
+                                  ));
+                            },
                             child: ProductCard(
                               name:
                                   controller.listItemAndFiltter[index].itemName,

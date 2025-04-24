@@ -10,6 +10,7 @@ import '../../core/constants/styles.dart';
 import '../../core/widget/custom_text_field.dart';
 import '../drawer/drawer.dart';
 import '../rated brand/all_rated_brands.dart';
+import '../search/search_screen.dart';
 import 'widget/brand_circle.dart';
 import 'widget/categories_section.dart';
 import 'widget/premium_home_banner.dart';
@@ -32,7 +33,7 @@ class _HomeScreenState extends State<HomeScreen> {
           controller.update();
         },
         child: Scaffold(
-          key: controller.scaffoldKey,
+          key: controller.scaffoldKey2,
           backgroundColor: Colors.white,
           body: Column(
             children: [
@@ -140,18 +141,46 @@ class _HomeScreenState extends State<HomeScreen> {
                     offset: Offset(
                         controller.localizationController.locale.languageCode ==
                                 'ar'
-                            ? -20
-                            : 20,
+                            ? -10
+                            : 10,
                         95),
-                    child: CustomTextField(
-                      colorFill: Colors.white,
-                      hintText: 'Search here',
-                      prefixIcon: Icon(
-                        Icons.search,
-                        size: 25.w,
-                        color: AppColors.colorFont3,
+                    child: GestureDetector(
+                      onTap: () => Get.to(() => SearchScreen()),
+                      child: Container(
+                        width: 270.w,
+                        height: 40.h,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(17.r),
+                          color: Colors.white,
+                          border: Border.all(
+                            width: 1,
+                            color: AppColors.colorFont3,
+                          ),
+                        ),
+                        child: Row(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Image.asset(
+                                Images.searchIcon,
+                                width: 25.w,
+                                fit: BoxFit.fill,
+                                color: const Color(0xff7f7f7f),
+                              ),
+                            ),
+                          ],
+                        ),
+                        //  CustomTextField(
+                        //   isEnabled: false,
+                        //   colorFill: Colors.white,
+                        //   hintText: 'Search here',
+                        //   prefixIcon: Icon(
+                        //     Icons.search,
+                        //     size: 25.w,
+                        //     color: AppColors.colorFont3,
+                        //   ),
+                        //   borderRadius: Dimensions.radiusExtraLarge,
                       ),
-                      borderRadius: Dimensions.radiusExtraLarge,
                     ),
                   ),
                 ],

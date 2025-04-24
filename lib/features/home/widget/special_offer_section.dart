@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:votex/core/helper/route_helper.dart';
 
 import '../../../controller/cart/cart_controller.dart';
+import '../../../controller/product/product_controller.dart';
 import '../../../controller/saved/saved_controller.dart';
 import '../../../core/model/item_model.dart';
 import '../../offers/offers_screen.dart';
@@ -15,6 +16,9 @@ final CartControllerImp cartControllerImp = Get.put(
 );
 final SavedControllerImp savedController = Get.put(
   SavedControllerImp(),
+);
+final ProductController productController = Get.put(
+  ProductController(),
 );
 
 class SpecialOfferSection extends StatelessWidget {
@@ -87,10 +91,16 @@ class SpecialOfferSection extends StatelessWidget {
                       mainAxisSpacing: 10),
                   itemBuilder: (context, i) {
                     return GestureDetector(
-                      onTap: () => Get.to(ProductDetailsScreen(
-                        items: listItems,
-                        item: listItemsOffer[i],
-                      )),
+                      onTap: () {
+                        productController.getCommints(
+                            id: listItemsOffer[i].itemId!);
+
+                        productController.rate = listItemsOffer[i].rate;
+                        Get.to(ProductDetailsScreen(
+                          items: listItems,
+                          item: listItemsOffer[i],
+                        ));
+                      },
                       child: OfferCard(
                         save: () {
                           savedController.addItem(listItemsOffer[i]);

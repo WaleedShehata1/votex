@@ -37,6 +37,8 @@ class HomeControllerImp extends HomeController {
     "from A To Z",
     "from Z To A",
   ];
+  final itemListSearch = <ItemModel>[].obs;
+  var isLoadingSearch = false.obs;
   Rx<BrandModel>? brandModel;
   var isLoadingGetAllBrand = false.obs;
   String? brand;
@@ -455,6 +457,21 @@ class HomeControllerImp extends HomeController {
       }
       print(documentSnapshot.exists);
     });
+  }
+
+  searchProductsByPartialName(String searchTerm) async {
+    itemListSearch.clear();
+    isLoadingSearch = true.obs;
+    final QuerySnapshot snapshot = await FirebaseFirestore.instance
+        .collection('items')
+        .where('name',
+            whereNotIn: [searchTerm]) // Firestore field must be indexed
+        .get();
+    for (var ser in snapshot.docs) {
+      itemListSearch.add(ItemModel.fromFirestore(ser));
+    }
+    isLoadingSearch = false.obs;
+    update();
   }
 
   subOrBrand() {
