@@ -5,7 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'package:votex/core/model/commint_model.dart';
+import 'package:voltex/core/model/commint_model.dart';
 import 'package:intl/intl.dart';
 import '../../core/classes/app_usage_service.dart';
 import '../../core/constants/images.dart';

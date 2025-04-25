@@ -3,8 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:votex/core/constants/images.dart' show Images;
-import 'package:votex/core/model/item_model.dart';
+import 'package:voltex/core/constants/images.dart' show Images;
+import 'package:voltex/core/model/item_model.dart';
 
 import '../../controller/product/product_controller.dart';
 import '../../controller/saved/saved_controller.dart';

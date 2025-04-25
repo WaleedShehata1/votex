@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:votex/core/constants/images.dart';
+import 'package:voltex/core/constants/images.dart';
 
 import '../../controller/account/account_controller.dart';
 import '../../controller/cart/cart_controller.dart';

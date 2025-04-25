@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:votex/core/constants/images.dart';
-import 'package:votex/core/model/item_model.dart';
+import 'package:voltex/core/constants/images.dart';
+import 'package:voltex/core/model/item_model.dart';
 
 import '../../core/widget/custom_image_widget.dart';
 import 'widget/product_card.dart';

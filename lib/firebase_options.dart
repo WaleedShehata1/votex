@@ -42,18 +42,18 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions web = FirebaseOptions(
     apiKey: 'AIzaSyDYiBGhUb1vaMxR8dCQj7Pkl3ynRNVkq74',
-    appId: '1:940242670367:web:86abca1561cac8c4ac162a',
+    appId: '1:940242670367:web:d162fa589e1a3d7eac162a',
     messagingSenderId: '940242670367',
     projectId: 'chat-app-d86a7',
     authDomain: 'chat-app-d86a7.firebaseapp.com',
     databaseURL: 'https://chat-app-d86a7-default-rtdb.firebaseio.com',
     storageBucket: 'chat-app-d86a7.appspot.com',
-    measurementId: 'G-N0MVZG6JYS',
+    measurementId: 'G-DK58VV4293',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyDfmMVht41CBwgZJFNGM1dPW4jJp_pAbJI',
-    appId: '1:940242670367:android:2549faec03b0f6c1ac162a',
+    appId: '1:940242670367:android:2ae3213f1feff186ac162a',
     messagingSenderId: '940242670367',
     projectId: 'chat-app-d86a7',
     databaseURL: 'https://chat-app-d86a7-default-rtdb.firebaseio.com',
@@ -62,32 +62,34 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyDmAvBp5wMbVgGteQSUpFB9KQG1egvErwc',
-    appId: '1:940242670367:ios:b195c8d7536b6351ac162a',
+    appId: '1:940242670367:ios:75bac6ccc8eacf3aac162a',
     messagingSenderId: '940242670367',
     projectId: 'chat-app-d86a7',
     databaseURL: 'https://chat-app-d86a7-default-rtdb.firebaseio.com',
     storageBucket: 'chat-app-d86a7.appspot.com',
-    iosBundleId: 'com.example.votex',
+    iosClientId: '940242670367-u7b5hf6nrdhh75asdk0u05gfiu50so5m.apps.googleusercontent.com',
+    iosBundleId: 'com.example.voltex',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
     apiKey: 'AIzaSyDmAvBp5wMbVgGteQSUpFB9KQG1egvErwc',
-    appId: '1:940242670367:ios:b195c8d7536b6351ac162a',
+    appId: '1:940242670367:ios:75bac6ccc8eacf3aac162a',
     messagingSenderId: '940242670367',
     projectId: 'chat-app-d86a7',
     databaseURL: 'https://chat-app-d86a7-default-rtdb.firebaseio.com',
     storageBucket: 'chat-app-d86a7.appspot.com',
-    iosBundleId: 'com.example.votex',
+    iosClientId: '940242670367-u7b5hf6nrdhh75asdk0u05gfiu50so5m.apps.googleusercontent.com',
+    iosBundleId: 'com.example.voltex',
   );
 
   static const FirebaseOptions windows = FirebaseOptions(
     apiKey: 'AIzaSyDYiBGhUb1vaMxR8dCQj7Pkl3ynRNVkq74',
-    appId: '1:940242670367:web:ae5cf16aa6a71fa5ac162a',
+    appId: '1:940242670367:web:829361b037121dd4ac162a',
     messagingSenderId: '940242670367',
     projectId: 'chat-app-d86a7',
     authDomain: 'chat-app-d86a7.firebaseapp.com',
     databaseURL: 'https://chat-app-d86a7-default-rtdb.firebaseio.com',
     storageBucket: 'chat-app-d86a7.appspot.com',
-    measurementId: 'G-PCM8TT5BSR',
+    measurementId: 'G-F3KM49TSYY',
   );
 }

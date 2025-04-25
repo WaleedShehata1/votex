@@ -8,9 +8,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:940242670367:android:2549faec03b0f6c1ac162a",
+        "mobilesdk_app_id": "1:940242670367:android:2ae3213f1feff186ac162a",
         "android_client_info": {
-          "package_name": "com.example.votex"
+          "package_name": "com.example.voltex"
         }
       },
       "oauth_client": [

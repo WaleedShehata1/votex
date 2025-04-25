@@ -76,7 +76,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               icon: const Icon(Icons.menu_outlined,
                                   color: Colors.black),
                               onPressed: () {
-                                controller.scaffoldKey.currentState
+                                controller.scaffoldKey2.currentState
                                     ?.openDrawer();
                                 controller.update();
                               },

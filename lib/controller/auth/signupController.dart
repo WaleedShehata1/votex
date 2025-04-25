@@ -7,7 +7,7 @@ import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:overlay_kit/overlay_kit.dart';
-import 'package:votex/core/model/user_model.dart';
+import 'package:voltex/core/model/user_model.dart';
 import '../../core/classes/app_usage_service.dart';
 import '../../core/classes/status_request.dart';
 import '../../core/functions/checkInternet.dart';

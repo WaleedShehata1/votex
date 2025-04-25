@@ -5,7 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:model_viewer_plus/model_viewer_plus.dart';
 import 'package:video_player/video_player.dart';
-import 'package:votex/core/constants/images.dart';
+import 'package:voltex/core/constants/images.dart';
 import '../../controller/cart/cart_controller.dart';
 import '../../controller/product/product_controller.dart';
 import '../../controller/saved/saved_controller.dart';

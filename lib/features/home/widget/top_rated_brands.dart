@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:votex/core/model/brand_model.dart';
-import 'package:votex/features/store/store_screen.dart';
+import 'package:voltex/core/model/brand_model.dart';
+import 'package:voltex/features/store/store_screen.dart';
 
 import '../../../controller/home/home_controller.dart';
 import '../../rated brand/all_rated_brands.dart';

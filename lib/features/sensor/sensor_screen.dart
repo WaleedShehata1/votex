@@ -3,28 +3,28 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class Sensor extends StatefulWidget {
-  const Sensor({super.key});
+// class Sensor extends StatefulWidget {
+//   const Sensor({super.key});
 
-  @override
-  State<Sensor> createState() => _SensorState();
-}
+//   @override
+//   State<Sensor> createState() => _SensorState();
+// }
 
-class _SensorState extends State<Sensor> {
-  @override
-  Widget build(BuildContext context) {
-    return const Placeholder();
-  }
-}
+// class _SensorState extends State<Sensor> {
+//   @override
+//   Widget build(BuildContext context) {
+//     return const ControlPage();
+//   }
+// }
 
 class SensorScreen extends StatefulWidget {
   const SensorScreen({super.key});
 
   @override
-  State<SensorScreen> createState() => _SplashScreenState();
+  State<SensorScreen> createState() => _SensorScreenState();
 }
 
-class _SplashScreenState extends State<SensorScreen>
+class _SensorScreenState extends State<SensorScreen>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _animation;
@@ -33,7 +33,7 @@ class _SplashScreenState extends State<SensorScreen>
   void initState() {
     super.initState();
     FirebaseDatabase.instance.databaseURL =
-        'https://refmonitor-92db2-default-rtdb.asia-southeast1.firebasedatabase.app/';
+        'https://chat-app-d86a7-default-rtdb.firebaseio.com/';
     // Initialize animation controller
     _controller = AnimationController(
       vsync: this,
@@ -65,7 +65,7 @@ class _SplashScreenState extends State<SensorScreen>
 
   @override
   Widget build(BuildContext context) {
-    return const ControlPage();
+    return ControlPage();
   }
 }
 
@@ -77,9 +77,15 @@ class ControlPage extends StatefulWidget {
 }
 
 class _ControlPageState extends State<ControlPage> {
+  // @override
+  // void initState() {
+  //   FirebaseDatabase.instance.databaseURL =
+  //       'https://refmonitor-92db2-default-rtdb.asia-southeast1.firebasedatabase.app/';
+  //   super.initState();
+  // }
+
   final DatabaseReference dbRef = FirebaseDatabase.instance
       .ref('System'); // Firebase reference for 'System'
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

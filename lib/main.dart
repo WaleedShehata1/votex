@@ -2,8 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:votex/firebase_options.dart';
-
+import 'package:voltex/firebase_options.dart';
 import 'core/functions/notification_api.dart';
 import 'core/helper/get_di.dart';
 import 'my_app.dart';

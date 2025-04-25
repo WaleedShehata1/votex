@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
-import 'package:votex/core/constants/images.dart';
+import 'package:voltex/core/constants/images.dart';
 
 import '../../controller/notification/notification_controller.dart';
 import '../../core/widget/custom_image_widget.dart';

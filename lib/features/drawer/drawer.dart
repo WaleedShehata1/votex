@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:votex/core/helper/route_helper.dart';
+import 'package:voltex/core/helper/route_helper.dart';
 
 import '../../controller/home/home_controller.dart';
 import '../sensor/sensor_screen.dart';

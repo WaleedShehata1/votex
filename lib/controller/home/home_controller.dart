@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:overlay_kit/overlay_kit.dart';
-import 'package:votex/core/model/item_model.dart';
+import 'package:voltex/core/model/item_model.dart';
 import 'dart:math';
 import 'package:faker/faker.dart';
 import '../../core/classes/app_usage_service.dart';
