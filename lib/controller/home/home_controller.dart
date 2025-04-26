@@ -462,13 +462,16 @@ class HomeControllerImp extends HomeController {
   searchProductsByPartialName(String searchTerm) async {
     itemListSearch.clear();
     isLoadingSearch = true.obs;
-    final QuerySnapshot snapshot = await FirebaseFirestore.instance
-        .collection('items')
-        .where('name',
-            whereNotIn: [searchTerm]) // Firestore field must be indexed
-        .get();
-    for (var ser in snapshot.docs) {
-      itemListSearch.add(ItemModel.fromFirestore(ser));
+
+    for (var ser in listItemAndFiltter) {
+      if (ser.itemName.toLowerCase() == searchTerm.toLowerCase()) {
+        print(ser.itemName.toLowerCase());
+        print(itemListSearch.length);
+        print(ser.discount);
+        print(ser.itemId);
+        print(ser.itemSell);
+        itemListSearch.add(ser);
+      }
     }
     isLoadingSearch = false.obs;
     update();
@@ -559,11 +562,8 @@ class HomeControllerImp extends HomeController {
     selectTypeList = [
       const DropdownMenuItem<String>(
         value: 'الكل',
-        child: Center(
-            child: Text(
-          'الكل',
-        )),
-      )
+        child: Center(child: Text('الكل')),
+      ),
     ];
     listSubCategoryes = [];
     QuerySnapshot subCategores =
@@ -572,10 +572,12 @@ class HomeControllerImp extends HomeController {
     for (var subCategory in subCategores.docs) {
       var sub = SubcategoryModel.fromFirestore(subCategory);
       listSubCategoryes.add(sub);
-      selectTypeList!.add(DropdownMenuItem<String>(
-        value: sub.nameCategores,
-        child: Center(child: Text(sub.nameCategores)),
-      ));
+      selectTypeList!.add(
+        DropdownMenuItem<String>(
+          value: sub.nameCategores,
+          child: Center(child: Text(sub.nameCategores)),
+        ),
+      );
       print(subCategory.id);
       print(sub.nameCategores);
       print(subCategory);

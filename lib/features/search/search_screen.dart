@@ -20,12 +20,8 @@ class SearchScreen extends StatefulWidget {
 
 class _SearchScreenState extends State<SearchScreen> {
   bool isEnabl = true;
-  final CartControllerImp cartControllerImp = Get.put(
-    CartControllerImp(),
-  );
-  final ProductController productController = Get.put(
-    ProductController(),
-  );
+  final CartControllerImp cartControllerImp = Get.put(CartControllerImp());
+  final ProductController productController = Get.put(ProductController());
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -80,60 +76,60 @@ class _SearchScreenState extends State<SearchScreen> {
                   },
                 ),
               ),
-              body: controller.isLoadingSearch.value
-                  ? Center(child: CircularProgressIndicator())
-                  : controller.itemListSearch.isEmpty
+              body:
+                  controller.isLoadingSearch.value
+                      ? Center(child: CircularProgressIndicator())
+                      : controller.itemListSearch.isEmpty
                       ? Center(
-                          child: Text(
-                            'No Item Found',
-                            style:
-                                TextStyle(color: Theme.of(context).hintColor),
-                          ),
-                        )
-                      : Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 15),
-                          child: GridView.builder(
-                            itemCount: controller.itemListSearch.length,
-                            itemBuilder: (ctx, index) {
-                              return GestureDetector(
-                                onTap: () {
-                                  productController.getCommints(
-                                      id: controller
-                                          .listItemAndFiltter[index].itemId!);
-                                  productController.rate =
-                                      controller.listItemAndFiltter[index].rate;
-                                  Get.to(() => ProductDetailsScreen(
-                                        item: controller
-                                            .listItemAndFiltter[index],
-                                        items: controller.listItemAndFiltter,
-                                      ));
-                                },
-                                child: ProductCard(
-                                  name: controller
-                                      .listItemAndFiltter[index].itemName,
-                                  price: controller
-                                      .listItemAndFiltter[index].price,
-                                  image: controller
-                                      .listItemAndFiltter[index].imageIcon,
-                                  rate:
-                                      controller.listItemAndFiltter[index].rate,
-                                  item: controller.listItemAndFiltter[index],
-                                  onPressed: () {
-                                    cartControllerImp.addItem(
-                                        controller.listItemAndFiltter[index]);
-                                    cartControllerImp.update();
-                                  },
-                                ),
-                              );
-                            },
-                            gridDelegate:
-                                SliverGridDelegateWithFixedCrossAxisCount(
-                                    crossAxisSpacing: 5,
-                                    mainAxisSpacing: 5,
-                                    crossAxisCount: 2,
-                                    mainAxisExtent: 190.h),
-                          ),
+                        child: Text(
+                          'No Item Found',
+                          style: TextStyle(color: Theme.of(context).hintColor),
                         ),
+                      )
+                      : Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 15),
+                        child: GridView.builder(
+                          itemCount: controller.itemListSearch.length,
+                          itemBuilder: (ctx, index) {
+                            return GestureDetector(
+                              onTap: () {
+                                productController.getCommints(
+                                  id: controller.itemListSearch[index].itemId!,
+                                );
+                                productController.rate =
+                                    controller.itemListSearch[index].rate;
+                                Get.to(
+                                  () => ProductDetailsScreen(
+                                    item: controller.itemListSearch[index],
+                                    items: controller.itemListSearch,
+                                  ),
+                                );
+                              },
+                              child: ProductCard(
+                                name: controller.itemListSearch[index].itemName,
+                                price: controller.itemListSearch[index].price,
+                                image:
+                                    controller.itemListSearch[index].imageIcon,
+                                rate: controller.itemListSearch[index].rate,
+                                item: controller.itemListSearch[index],
+                                onPressed: () {
+                                  cartControllerImp.addItem(
+                                    controller.itemListSearch[index],
+                                  );
+                                  cartControllerImp.update();
+                                },
+                              ),
+                            );
+                          },
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisSpacing: 5,
+                                mainAxisSpacing: 5,
+                                crossAxisCount: 2,
+                                mainAxisExtent: 190.h,
+                              ),
+                        ),
+                      ),
             ),
           );
         },

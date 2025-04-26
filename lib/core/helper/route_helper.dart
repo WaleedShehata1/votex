@@ -43,9 +43,11 @@ class RouteHelper {
     GetPage(name: signIn, page: () => const LoginScreen()),
     GetPage(name: signUp, page: () => const SignupScreen()),
     GetPage(name: forgetPassword, page: () => const ForgetPassword()),
-    GetPage(name: checkYourEmail, page: () => const CheckYourEmail()),
+    GetPage(name: checkYourEmail, page: () => CheckYourEmail()),
     GetPage(
-        name: passwordUpdatedScreen, page: () => const PasswordUpdatedScreen()),
+      name: passwordUpdatedScreen,
+      page: () => const PasswordUpdatedScreen(),
+    ),
     GetPage(name: homeScreen, page: () => const HomeScreen()),
     GetPage(name: homePage, page: () => const HomePage()),
     GetPage(name: ordersScreen, page: () => const OrderScreen()),

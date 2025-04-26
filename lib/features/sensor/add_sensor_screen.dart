@@ -13,13 +13,6 @@ class AddSensorScreen extends StatefulWidget {
 
 class _AddSensorScreenState extends State<AddSensorScreen> {
   @override
-  void initState() {
-    FirebaseDatabase.instance.databaseURL =
-        'https://refmonitor-92db2-default-rtdb.asia-southeast1.firebasedatabase.app/';
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
@@ -28,7 +21,7 @@ class _AddSensorScreenState extends State<AddSensorScreen> {
         elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios, color: Colors.black),
-          onPressed: () => Get.to(const SensorScreen()),
+          onPressed: () => Get.back(),
         ),
         title: const Text(
           "Add Sensor",

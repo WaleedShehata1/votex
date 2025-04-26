@@ -1,7 +1,9 @@
 import 'dart:async';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import '../../core/classes/status_request.dart';
+import '../../core/helper/route_helper.dart';
 
 abstract class ForgetPasswordController extends GetxController {}
 
@@ -40,6 +42,19 @@ class ForgetPasswordControllerImp extends ForgetPasswordController {
     email = TextEditingController();
     startTimer();
     super.onInit();
+  }
+
+  Future<void> sendEmailVerificationLink() async {
+    try {
+      var data = await FirebaseAuth.instance
+          .sendPasswordResetEmail(email: email.text)
+          .then((val) {
+            Get.toNamed(RouteHelper.checkYourEmail);
+          });
+      print(data.hashCode);
+    } catch (e) {
+      print(e.toString());
+    }
   }
 
   @override

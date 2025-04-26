@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:voltex/core/classes/app_usage_service.dart';
 import 'package:voltex/core/helper/route_helper.dart';
 
 import '../../controller/home/home_controller.dart';
@@ -11,9 +12,7 @@ class AppDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final HomeControllerImp homeController = Get.put(
-      HomeControllerImp(),
-    );
+    final HomeControllerImp homeController = Get.put(HomeControllerImp());
     return Drawer(
       width: 190.w,
       child: SafeArea(
@@ -26,23 +25,22 @@ class AppDrawer extends StatelessWidget {
                 margin: const EdgeInsets.only(top: 10),
                 padding: const EdgeInsets.all(5),
                 decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(25),
-                    border: Border.all(
-                      width: 0.7,
-                    )),
-                child: const Icon(
-                  Icons.person_outline,
-                  color: Colors.black,
+                  borderRadius: BorderRadius.circular(25),
+                  border: Border.all(width: 0.7),
                 ),
+                child: const Icon(Icons.person_outline, color: Colors.black),
               ),
-              Text((homeController.model?.userName).toString(),
-                  style: TextStyle(
-                      fontSize: 18,
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold)), // ),
+              Text(
+                (homeController.model?.userName).toString(),
+                style: TextStyle(
+                  fontSize: 18,
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                ),
+              ), // ),
               const Divider(),
-              // Drawer Items
 
+              // Drawer Items
               DrawerItem(
                 icon: Icons.person_outlined,
                 title: "Profile",
@@ -55,28 +53,31 @@ class AppDrawer extends StatelessWidget {
               //   },
               //     icon: Icons.shopping_cart_outlined, title: "My Cart"),
               DrawerItem(
-                  onTap: () {
-                    Get.toNamed(RouteHelper.ordersScreen);
-                  },
-                  icon: Icons.local_shipping_outlined,
-                  title: "Orders"),
+                onTap: () {
+                  Get.toNamed(RouteHelper.ordersScreen);
+                },
+                icon: Icons.local_shipping_outlined,
+                title: "Orders",
+              ),
               DrawerItem(
-                  onTap: () {
-                    Get.toNamed(RouteHelper.notificationsScreen);
-                  },
-                  icon: Icons.notifications_none,
-                  title: "Notifications"),
+                onTap: () {
+                  Get.toNamed(RouteHelper.notificationsScreen);
+                },
+                icon: Icons.notifications_none,
+                title: "Notifications",
+              ),
+              // DrawerItem(
+              //     onTap: () {},
+              //     icon: Icons.chat_bubble_outline,
+              //     title: "Chat Bot"),
               DrawerItem(
-                  onTap: () {},
-                  icon: Icons.chat_bubble_outline,
-                  title: "Chat Bot"),
-              DrawerItem(
-                  onTap: () {
-                    // Get.to(const SensorScreen());
-                    Get.toNamed(RouteHelper.addSensorScreen);
-                  },
-                  icon: Icons.sensors,
-                  title: "Sensors"),
+                onTap: () {
+                  // Get.to(const SensorScreen());
+                  Get.toNamed(RouteHelper.addSensorScreen);
+                },
+                icon: Icons.sensors,
+                title: "Sensors",
+              ),
 
               // Highlighted "About Us" Item
               DrawerItem(
@@ -87,16 +88,28 @@ class AppDrawer extends StatelessWidget {
                 title: "About us",
               ),
               DrawerItem(
-                  onTap: () {
-                    Get.toNamed(RouteHelper.settingsScreen);
-                  },
-                  icon: Icons.settings,
-                  title: "Settings"),
+                onTap: () {
+                  Get.toNamed(RouteHelper.settingsScreen);
+                },
+                icon: Icons.settings,
+                title: "Settings",
+              ),
               const SizedBox(height: 15),
               const Divider(color: Colors.grey, height: 2, thickness: 0.5),
               const SizedBox(height: 15),
               // Sign Out
-              DrawerItem(onTap: () {}, icon: Icons.logout, title: "Sign Out"),
+              DrawerItem(
+                onTap: () {
+                  AppUsageService.deleteToken();
+                  AppUsageService.deleteUserEmail();
+                  AppUsageService.deleteUserId();
+                  AppUsageService.deleteUserName();
+                  AppUsageService.deleteLogin();
+                  Get.offAllNamed(RouteHelper.signIn);
+                },
+                icon: Icons.logout,
+                title: "Sign Out",
+              ),
             ],
           ),
         ),
@@ -129,32 +142,31 @@ class DrawerItem extends StatelessWidget {
         child: Container(
           margin: const EdgeInsetsDirectional.symmetric(vertical: 10),
           padding: const EdgeInsetsDirectional.symmetric(
-              horizontal: 10, vertical: 5),
-          decoration: isSelected
-              ? const BoxDecoration(
-                  color: Colors.blue,
-                  borderRadius: BorderRadiusDirectional.only(
-                    topEnd: Radius.circular(25),
-                    bottomEnd: Radius.circular(25),
-                  ),
-                )
-              : null,
+            horizontal: 10,
+            vertical: 5,
+          ),
+          decoration:
+              isSelected
+                  ? const BoxDecoration(
+                    color: Colors.blue,
+                    borderRadius: BorderRadiusDirectional.only(
+                      topEnd: Radius.circular(25),
+                      bottomEnd: Radius.circular(25),
+                    ),
+                  )
+                  : null,
           child: GestureDetector(
             onTap: onTap,
             child: Row(
               children: [
-                Icon(
-                  icon,
-                  color: isSelected ? Colors.white : Colors.black,
-                ),
-                SizedBox(
-                  width: 10.w,
-                ),
+                Icon(icon, color: isSelected ? Colors.white : Colors.black),
+                SizedBox(width: 10.w),
                 Text(
                   title,
                   style: TextStyle(
-                      color: isSelected ? Colors.white : Colors.black,
-                      fontSize: 16.sp),
+                    color: isSelected ? Colors.white : Colors.black,
+                    fontSize: 16.sp,
+                  ),
                 ),
               ],
             ),

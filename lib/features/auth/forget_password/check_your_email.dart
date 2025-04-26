@@ -2,15 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
+import '../../../controller/auth/forgetpassword.controller.dart';
 import '../../../core/constants/colors.dart';
 import '../../../core/constants/dimensions.dart';
 import '../../../core/constants/images.dart';
 import '../../../core/constants/styles.dart';
 import '../../../core/helper/route_helper.dart';
+import '../signin/sign_in_screen.dart';
 
 class CheckYourEmail extends StatelessWidget {
-  const CheckYourEmail({super.key});
-
+  CheckYourEmail({super.key});
+  final ForgetPasswordControllerImp controller = Get.put(
+    ForgetPasswordControllerImp(),
+  );
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,7 +40,7 @@ class CheckYourEmail extends StatelessWidget {
               ),
             ),
             Text(
-              "VOLTEXT@gmail.com",
+              controller.email.text,
               textAlign: TextAlign.center,
               style: robotoRegular.copyWith(
                 fontSize: Dimensions.fontSizeSmall,
@@ -49,30 +53,31 @@ class CheckYourEmail extends StatelessWidget {
               height: 150,
             ),
             const SizedBox(height: 30),
-            ElevatedButton(
-              onPressed: () {
-                Get.toNamed(RouteHelper.passwordUpdatedScreen);
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.colorFont,
-                minimumSize: const Size(double.infinity, 50),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
-              ),
-              child: const Text(
-                "OPEN YOUR EMAIL",
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),
-              ),
-            ),
+            Text(""),
+            // ElevatedButton(
+            //   onPressed: () {
+            //     Get.toNamed(RouteHelper.passwordUpdatedScreen);
+            //   },
+            //   style: ElevatedButton.styleFrom(
+            //     backgroundColor: AppColors.colorFont,
+            //     minimumSize: const Size(double.infinity, 50),
+            //     shape: RoundedRectangleBorder(
+            //       borderRadius: BorderRadius.circular(8),
+            //     ),
+            //   ),
+            //   child: const Text(
+            //     "OPEN YOUR EMAIL",
+            //     style: TextStyle(
+            //       fontSize: 16,
+            //       fontWeight: FontWeight.bold,
+            //       color: Colors.white,
+            //     ),
+            //   ),
+            // ),
             const SizedBox(height: 10),
             ElevatedButton(
               onPressed: () {
-                Get.toNamed(RouteHelper.signIn);
+                Get.to(LoginScreen());
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: const Color.fromARGB(255, 168, 216, 255),
@@ -95,7 +100,10 @@ class CheckYourEmail extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    controller.sendEmailVerificationLink();
+                    controller.update();
+                  },
                   child: const Text(
                     "Resend",
                     style: TextStyle(
@@ -106,7 +114,9 @@ class CheckYourEmail extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  "?" " You have not received the email".tr,
+                  "?"
+                          " You have not received the email"
+                      .tr,
                   style: robotoRegular.copyWith(
                     color: AppColors.colorFont3,
                     fontSize: Dimensions.fontSizeSmall,

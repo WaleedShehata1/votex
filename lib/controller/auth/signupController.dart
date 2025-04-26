@@ -86,23 +86,56 @@ class SignUpControllerImp extends SignUpController {
   // }
 
   @override
-  Future<UserCredential> signInWithGoogle() async {
-    print('object');
+  Future signInWithGoogle() async {
     // Trigger the authentication flow
-    final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
-    print('object');
+    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+
     // Obtain the auth details from the request
     final GoogleSignInAuthentication? googleAuth =
         await googleUser?.authentication;
-    print('object0');
+
     // Create a new credential
     final credential = GoogleAuthProvider.credential(
       accessToken: googleAuth?.accessToken,
       idToken: googleAuth?.idToken,
     );
-    print('object1');
-    // Once signed in, return the UserCredential
-    return await FirebaseAuth.instance.signInWithCredential(credential);
+
+    UserCredential userCredential = await FirebaseAuth.instance
+        .signInWithCredential(credential);
+
+    if (googleUser != null) {
+      await AppUsageService.saveToken(googleAuth?.accessToken.toString() ?? '');
+      String userId = userCredential.user!.uid;
+      String userName = googleUser.displayName!;
+      String userEmail = googleUser.email;
+      UserCreate2(
+        uid: UserModel(
+          uid: userId,
+          tokenDevice: notificationController.fcmToken.value,
+          userName: userName,
+          phone: '',
+          email: userEmail,
+        ),
+      );
+      // if (userId.length <= 10) {
+      //   await AppUsageService.saveUserId(userId);
+      // } else {
+      //   await AppUsageService.saveUserId('0');
+      // }
+      // await AppUsageService.saveUserName(googleUser.displayName ?? '');
+      // await AppUsageService.saveUserEmail(googleUser.email);
+      // await AppUsageService.saveLogin(true);
+    }
+
+    print('googleUser.id ${googleUser!.id}');
+    print(
+      'googleAuth?.accessToken.toString() ${googleAuth?.accessToken.toString()}',
+    );
+    print('googleUser.displayName ${googleUser.displayName}');
+    print('googleUser.email ${googleUser.email}');
+    print('googleUser.displayName ${googleUser.photoUrl}');
+    print('googleUser.displayName ${googleUser}');
+    // Get.toNamed(RouteHelper.dashboard);
   }
 
   Future<void> signInWithFacebook() async {
@@ -114,8 +147,9 @@ class SignUpControllerImp extends SignUpController {
         final OAuthCredential facebookAuthCredential =
             FacebookAuthProvider.credential(accessToken.tokenString);
 
-        await FirebaseAuth.instance
-            .signInWithCredential(facebookAuthCredential);
+        await FirebaseAuth.instance.signInWithCredential(
+          facebookAuthCredential,
+        );
 
         // Get.toNamed(RouteHelper.dashboard);
       } else {
@@ -136,25 +170,31 @@ class SignUpControllerImp extends SignUpController {
         try {
           var response = await firebase
               .createUserWithEmailAndPassword(
-            email: emailController.text,
-            password: passwordController.text,
-          )
+                email: emailController.text,
+                password: passwordController.text,
+              )
               .then((value) async {
-            UserCreate(uid: value.user!.uid);
-          });
-          showCustomSnackBar('Account registration succeeded'.tr,
-              isError: false);
+                UserCreate(uid: value.user!.uid);
+              });
+          showCustomSnackBar(
+            'Account registration succeeded'.tr,
+            isError: false,
+          );
 
           OverlayLoadingProgress.stop();
           Get.back();
         } on FirebaseAuthException catch (e) {
           if (e.code == 'weak-password') {
-            showCustomSnackBar('The password provided is too weak.',
-                isError: true);
+            showCustomSnackBar(
+              'The password provided is too weak.',
+              isError: true,
+            );
             print('The password provided is too weak.');
           } else if (e.code == 'email-already-in-use') {
-            showCustomSnackBar('The account already exists for that email.',
-                isError: true);
+            showCustomSnackBar(
+              'The account already exists for that email.',
+              isError: true,
+            );
             print('The account already exists for that email.');
           }
           showCustomSnackBar(e.toString(), isError: true);
@@ -179,12 +219,36 @@ class SignUpControllerImp extends SignUpController {
       uid: uid,
       address: '',
     );
-    users.doc(uid).set(model.toFireStore()).then((value) {
-      AppUsageService.saveUserId(uid);
-      update();
-    }).catchError((error) {
-      showCustomSnackBar(error, isError: true);
-    });
+    users
+        .doc(uid)
+        .set(model.toFireStore())
+        .then((value) {
+          AppUsageService.saveUserId(uid);
+          update();
+        })
+        .catchError((error) {
+          showCustomSnackBar(error, isError: true);
+        });
+  }
+
+  UserCreate2({required UserModel uid}) async {
+    users
+        .doc(uid.uid)
+        .set(uid.toFireStore())
+        .then((value) {
+          AppUsageService.saveUserId(uid.uid);
+          AppUsageService.saveUserEmail(uid.email);
+          AppUsageService.saveUserName(uid.userName);
+          showCustomSnackBar(
+            'Account registration succeeded'.tr,
+            isError: false,
+          );
+          Get.back();
+          update();
+        })
+        .catchError((error) {
+          showCustomSnackBar(error, isError: true);
+        });
   }
 
   @override

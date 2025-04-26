@@ -41,10 +41,7 @@ class _SensorScreenState extends State<SensorScreen>
     );
 
     // Initialize animation
-    _animation = CurvedAnimation(
-      parent: _controller,
-      curve: Curves.easeInOut,
-    );
+    _animation = CurvedAnimation(parent: _controller, curve: Curves.easeInOut);
 
     // Start animation
     _controller.forward();
@@ -84,8 +81,9 @@ class _ControlPageState extends State<ControlPage> {
   //   super.initState();
   // }
 
-  final DatabaseReference dbRef = FirebaseDatabase.instance
-      .ref('System'); // Firebase reference for 'System'
+  final DatabaseReference dbRef = FirebaseDatabase.instance.ref(
+    'System',
+  ); // Firebase reference for 'System'
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -102,8 +100,8 @@ class _ControlPageState extends State<ControlPage> {
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(
-                  child:
-                      CircularProgressIndicator()); // Show loading while waiting
+                child: CircularProgressIndicator(),
+              ); // Show loading while waiting
             }
             if (snapshot.hasError) {
               return Center(child: Text("Error: ${snapshot.error}"));
@@ -125,12 +123,14 @@ class _ControlPageState extends State<ControlPage> {
                   _buildGadget(
                     title: "Light",
                     value: sensorData['Light'] ?? false ? 'On' : 'Off',
-                    icon: sensorData['Light'] ?? false
-                        ? Icons.lightbulb
-                        : Icons.lightbulb_outline,
-                    color: sensorData['Light'] ?? false
-                        ? Colors.amber
-                        : Colors.grey,
+                    icon:
+                        sensorData['Light'] ?? false
+                            ? Icons.lightbulb
+                            : Icons.lightbulb_outline,
+                    color:
+                        sensorData['Light'] ?? false
+                            ? Colors.amber
+                            : Colors.grey,
                   ),
                   _buildGadget(
                     title: "Temperature",
@@ -147,12 +147,14 @@ class _ControlPageState extends State<ControlPage> {
                   _buildGadget(
                     title: "Door",
                     value: sensorData['door'] ?? false ? 'Open' : 'Closed',
-                    icon: sensorData['door'] ?? false
-                        ? Icons.meeting_room
-                        : Icons.door_sliding,
-                    color: sensorData['door'] ?? false
-                        ? Colors.orange
-                        : Colors.green,
+                    icon:
+                        sensorData['door'] ?? false
+                            ? Icons.meeting_room
+                            : Icons.door_sliding,
+                    color:
+                        sensorData['door'] ?? false
+                            ? Colors.orange
+                            : Colors.green,
                   ),
                 ],
               );
@@ -192,10 +194,7 @@ class _ControlPageState extends State<ControlPage> {
                 ),
                 Text(
                   value,
-                  style: TextStyle(
-                    fontSize: 24,
-                    color: Colors.grey[700],
-                  ),
+                  style: TextStyle(fontSize: 24, color: Colors.grey[700]),
                 ),
               ],
             ),

@@ -17,7 +17,7 @@ import '../notification/notification_controller.dart';
 
 abstract class LoginController extends GetxController {
   // login();
-//signOut();
+  //signOut();
   goToSignUp();
   goToForgetPassword();
   signInWithGoogle();
@@ -25,6 +25,7 @@ abstract class LoginController extends GetxController {
 }
 
 class LoginControllerImp extends LoginController {
+  final users = FirebaseFirestore.instance.collection('users');
   GlobalKey<FormState> formstate = GlobalKey<FormState>();
   late TextEditingController email;
   late TextEditingController password;
@@ -34,6 +35,7 @@ class LoginControllerImp extends LoginController {
   final NotificationController notificationController = Get.put(
     NotificationController(),
   );
+
   @override
   goToSignUp() {
     Get.offNamed(RouteHelper.signUp);
@@ -61,27 +63,23 @@ class LoginControllerImp extends LoginController {
       idToken: googleAuth?.idToken,
     );
 
-    UserCredential userCredential =
-        await FirebaseAuth.instance.signInWithCredential(credential);
+    UserCredential userCredential = await FirebaseAuth.instance
+        .signInWithCredential(credential);
 
     if (googleUser != null) {
-      await AppUsageService.saveToken(googleAuth?.accessToken.toString() ?? '');
-      String userId = googleUser.id;
-      // if (userId.length <= 10) {
-      //   await AppUsageService.saveUserId(userId);
-      // } else {
-      //   await AppUsageService.saveUserId('0');
-      // }
-      await AppUsageService.saveUserName(googleUser.displayName ?? '');
-      await AppUsageService.saveUserEmail(googleUser.email);
-      await AppUsageService.saveLogin(true);
+      // await AppUsageService.saveToken(googleAuth?.accessToken.toString() ?? '');
+      await users.doc(userCredential.user!.uid).get().then((
+        DocumentSnapshot documentSnapshot,
+      ) {
+        if (documentSnapshot.exists) {
+          model = UserModel.fromFirestore(documentSnapshot);
+          print(model!.userName);
+        } else {
+          showCustomSnackBar('You must register first'.tr, isError: true);
+        }
+        print(documentSnapshot.exists);
+      });
     }
-
-    print('googleUser.id ${googleUser!.id}');
-    print(
-        'googleAuth?.accessToken.toString() ${googleAuth?.accessToken.toString()}');
-    print('googleUser.displayName ${googleUser.displayName}');
-    // Get.toNamed(RouteHelper.dashboard);
   }
 
   Future<void> signInWithFacebook() async {
@@ -94,8 +92,9 @@ class LoginControllerImp extends LoginController {
           final OAuthCredential facebookAuthCredential =
               FacebookAuthProvider.credential(accessToken.tokenString);
 
-          await FirebaseAuth.instance
-              .signInWithCredential(facebookAuthCredential);
+          await FirebaseAuth.instance.signInWithCredential(
+            facebookAuthCredential,
+          );
 
           // Get.toNamed(RouteHelper.dashboard);
         } else {
@@ -115,11 +114,11 @@ class LoginControllerImp extends LoginController {
     if (formstate.currentState!.validate()) {
       if (await CheckInternet.checkInternet()) {
         try {
-          UserCredential userCredential =
-              await FirebaseAuth.instance.signInWithEmailAndPassword(
-            email: email.text,
-            password: password.text,
-          );
+          UserCredential userCredential = await FirebaseAuth.instance
+              .signInWithEmailAndPassword(
+                email: email.text,
+                password: password.text,
+              );
 
           if (!userCredential.user!.emailVerified) {
             print("Email not verified. Please check your inbox.");
@@ -134,18 +133,16 @@ class LoginControllerImp extends LoginController {
               .doc(userCredential.user!.uid)
               .get()
               .then((DocumentSnapshot documentSnapshot) {
-            if (documentSnapshot.exists) {
-              model = UserModel.fromFirestore(documentSnapshot);
-              AppUsageService.saveUserName(model!.userName);
-            }
-            print(documentSnapshot.exists);
-          });
+                if (documentSnapshot.exists) {
+                  model = UserModel.fromFirestore(documentSnapshot);
+                  AppUsageService.saveUserName(model!.userName);
+                }
+                print(documentSnapshot.exists);
+              });
           FirebaseFirestore.instance
               .collection('users')
               .doc(userCredential.user!.uid)
-              .update({
-                'tokenDevice': notificationController.fcmToken.value,
-              })
+              .update({'tokenDevice': notificationController.fcmToken.value})
               .then((value) => print('done'))
               .catchError((error) => print("Failed to update user: $error"));
 
@@ -156,8 +153,10 @@ class LoginControllerImp extends LoginController {
             print('No user found for that email.');
             showCustomSnackBar('No user found for that email.', isError: true);
           } else if (e.code == 'wrong-password') {
-            showCustomSnackBar('Wrong password provided for that user.',
-                isError: true);
+            showCustomSnackBar(
+              'Wrong password provided for that user.',
+              isError: true,
+            );
             print('Wrong password provided for that user.');
           }
 
