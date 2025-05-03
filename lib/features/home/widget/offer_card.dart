@@ -55,7 +55,14 @@ class OfferCard extends StatelessWidget {
                   const SizedBox(height: 5),
                   Align(
                     alignment: AlignmentDirectional.centerEnd,
-                    child: Text(name, style: const TextStyle(fontSize: 14)),
+                    child: SizedBox(
+                      width: 150,
+                      child: Text(
+                        name,
+                        style: const TextStyle(fontSize: 14),
+                        maxLines: 1,
+                      ),
+                    ),
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,

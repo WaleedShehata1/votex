@@ -84,10 +84,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                 children: [
                                   InkWell(
                                     onTap: () {
-                                      // controller.printRandomProductData();
-                                      Get.toNamed(
-                                        RouteHelper.notificationsScreen,
-                                      );
+                                      controller.printRandomProductData();
+                                      // Get.toNamed(
+                                      //   RouteHelper.notificationsScreen,
+                                      // );
                                     },
                                     child: Icon(
                                       Icons.notifications_outlined,

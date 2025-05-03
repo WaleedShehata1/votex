@@ -39,10 +39,7 @@ android {
             signingConfig = signingConfigs.getByName("debug")
         }
     }
-    aaptOptions {
-    noCompress.add("tflite")
-    noCompress.add("lite")
-}
+
 }
 
 flutter {
@@ -53,7 +50,5 @@ flutter {
     coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.1.4")
     implementation("com.google.firebase:firebase-analytics")
     implementation(platform("com.google.firebase:firebase-bom:33.13.0"))
-    implementation("org.tensorflow:tensorflow-lite-gpu:+")
-    implementation("org.tensorflow:tensorflow-lite:+")
     testImplementation("junit:junit:4.13.2")
     }

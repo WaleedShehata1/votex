@@ -81,7 +81,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
         srcGlb = Images.coffee3D;
         break;
       case 'مايكروويف':
-      case "Microwave":
+      case "MICROWAVES":
         srcGlb = Images.microwave3D;
         break;
       case "مروحة حائطية":
@@ -206,16 +206,21 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
 
                   // Product Title, Rating & Price
                   Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text(
-                            widget.item.itemName,
-                            style: const TextStyle(
-                              fontSize: 15,
-                              fontWeight: FontWeight.w700,
+                          SizedBox(
+                            width: 170,
+                            child: Text(
+                              widget.item.itemName,
+                              style: const TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600,
+                              ),
                             ),
                           ),
                           Text(
@@ -358,16 +363,20 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                         aspectRatio: _controller.value.aspectRatio,
                         child: VideoPlayer(_controller),
                       ),
-                      FloatingActionButton(
-                        backgroundColor: Colors.transparent,
-                        onPressed: () {
+                      GestureDetector(
+                        onTap: () {
                           setState(() {
                             _controller.value.isPlaying
                                 ? _controller.pause()
                                 : _controller.play();
                           });
                         },
-                        child: const Icon(Icons.play_arrow),
+                        child: Icon(
+                          _controller.value.isPlaying
+                              ? Icons.pause
+                              : Icons.play_arrow,
+                          color: Colors.white,
+                        ),
                       ),
                     ],
                   ),

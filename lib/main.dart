@@ -23,19 +23,8 @@ void main() async {
   await Get.putAsync<SharedPreferences>(
     () async => await SharedPreferences.getInstance(),
     permanent: true,
-  ); //  handle in terminated state
-  var initialNotification =
-      await flutterLocalNotificationsPlugin.getNotificationAppLaunchDetails();
-  if (initialNotification?.didNotificationLaunchApp == true) {
-    // LocalNotifications.onClickNotification.stream.listen((event) {
-    Future.delayed(Duration(seconds: 1), () {
-      // print(event);
-      navigatorKey.currentState!.pushNamed(
-        '/another',
-        arguments: initialNotification?.notificationResponse?.payload,
-      );
-    });
-  }
+  );
+
   await init();
   runApp(const MyApp());
 }

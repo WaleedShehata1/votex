@@ -33,9 +33,7 @@ class ProductCard extends StatefulWidget {
 class _ProductCardState extends State<ProductCard> {
   IconData? icon = Icons.favorite_border_outlined;
 
-  final SavedControllerImp savedController = Get.put(
-    SavedControllerImp(),
-  );
+  final SavedControllerImp savedController = Get.put(SavedControllerImp());
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -70,8 +68,14 @@ class _ProductCardState extends State<ProductCard> {
                   padding: const EdgeInsetsDirectional.only(end: 5),
                   child: Align(
                     alignment: AlignmentDirectional.centerEnd,
-                    child:
-                        Text(widget.name, style: const TextStyle(fontSize: 14)),
+                    child: SizedBox(
+                      width: 150,
+                      child: Text(
+                        widget.name,
+                        style: const TextStyle(fontSize: 14),
+                        maxLines: 1,
+                      ),
+                    ),
                   ),
                 ),
                 Row(
@@ -79,7 +83,9 @@ class _ProductCardState extends State<ProductCard> {
                   children: [
                     Container(
                       padding: const EdgeInsetsDirectional.symmetric(
-                          horizontal: 5, vertical: 2),
+                        horizontal: 5,
+                        vertical: 2,
+                      ),
                       decoration: const BoxDecoration(
                         color: Colors.orange,
                         borderRadius: BorderRadiusDirectional.only(
@@ -92,7 +98,9 @@ class _ProductCardState extends State<ProductCard> {
                           Text(
                             widget.rate,
                             style: const TextStyle(
-                                fontSize: 10, color: Colors.white),
+                              fontSize: 10,
+                              color: Colors.white,
+                            ),
                           ),
                           const Icon(Icons.star, size: 15, color: Colors.white),
                         ],
@@ -127,19 +135,20 @@ class _ProductCardState extends State<ProductCard> {
             top: 8,
             left: 8,
             child: GestureDetector(
-                onTap: () {
-                  savedController.addItem(widget.item);
-                  setState(() {
-                    // for (var element in savedController.savedItems) {
-                    //   if (element.itemId == widget.item.itemId) {
-                    //     savedController.removed(widget.item);
-                    //     icon = Icons.favorite_outlined;
-                    //   }
-                    // }
-                    icon = Icons.favorite_outlined;
-                  });
-                },
-                child: const Icon(Icons.favorite, color: Colors.red)),
+              onTap: () {
+                savedController.addItem(widget.item);
+                setState(() {
+                  // for (var element in savedController.savedItems) {
+                  //   if (element.itemId == widget.item.itemId) {
+                  //     savedController.removed(widget.item);
+                  //     icon = Icons.favorite_outlined;
+                  //   }
+                  // }
+                  icon = Icons.favorite_outlined;
+                });
+              },
+              child: const Icon(Icons.favorite, color: Colors.red),
+            ),
           ),
         ],
       ),
