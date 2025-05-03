@@ -93,7 +93,7 @@ class SignupScreen extends StatelessWidget {
                         children: [
                           CustomButton(
                             onPressed: () {
-                              Get.toNamed(RouteHelper.signIn);
+                              Get.back();
                             },
                             buttonText: 'Login'.tr,
                             width: 50,
@@ -121,45 +121,62 @@ class SignupScreen extends StatelessWidget {
                         ),
                       ),
                       SizedBox(height: 15.h),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Container(
-                            padding: const EdgeInsets.all(
-                              Dimensions.paddingSizeExtraSmall,
-                            ),
-                            decoration: BoxDecoration(
-                              border: Border.all(color: AppColors.colorFont),
-                              borderRadius: BorderRadius.circular(
-                                Dimensions.radiusExtraLarge,
-                              ),
-                            ),
-                            child: GestureDetector(
-                              onTap: () {
-                                // signUpControllerImp.signInWithFacebook();
-                              },
-                              child: Image.asset(Images.facebookIcon),
-                            ),
+                      // Row(
+                      //   mainAxisAlignment: MainAxisAlignment.center,
+                      //   children: [
+                      //     Container(
+                      //       padding: const EdgeInsets.all(
+                      //         Dimensions.paddingSizeExtraSmall,
+                      //       ),
+                      //       decoration: BoxDecoration(
+                      //         border: Border.all(color: AppColors.colorFont),
+                      //         borderRadius: BorderRadius.circular(
+                      //           Dimensions.radiusExtraLarge,
+                      //         ),
+                      //       ),
+                      //       child: GestureDetector(
+                      //         onTap: () {
+                      //           // signUpControllerImp.signInWithFacebook();
+                      //         },
+                      //         child: Image.asset(Images.facebookIcon),
+                      //       ),
+                      //     ),
+                      //     SizedBox(width: 10.w),
+                      //     Container(
+                      //       padding: const EdgeInsets.all(
+                      //         Dimensions.paddingSizeExtraSmall,
+                      //       ),
+                      //       decoration: BoxDecoration(
+                      //         border: Border.all(color: AppColors.colorFont),
+                      //         borderRadius: BorderRadius.circular(
+                      //           Dimensions.radiusExtraLarge,
+                      //         ),
+                      //       ),
+                      //       child: GestureDetector(
+                      //         onTap: () {
+                      //           signUpControllerImp.signInWithGoogle();
+                      //         },
+                      //         child: Image.asset(Images.googleIcon),
+                      //       ),
+                      //     ),
+                      //   ],
+                      // ),
+                      Container(
+                        padding: const EdgeInsets.all(
+                          Dimensions.paddingSizeExtraSmall,
+                        ),
+                        decoration: BoxDecoration(
+                          border: Border.all(color: AppColors.colorFont),
+                          borderRadius: BorderRadius.circular(
+                            Dimensions.radiusExtraLarge,
                           ),
-                          SizedBox(width: 10.w),
-                          Container(
-                            padding: const EdgeInsets.all(
-                              Dimensions.paddingSizeExtraSmall,
-                            ),
-                            decoration: BoxDecoration(
-                              border: Border.all(color: AppColors.colorFont),
-                              borderRadius: BorderRadius.circular(
-                                Dimensions.radiusExtraLarge,
-                              ),
-                            ),
-                            child: GestureDetector(
-                              onTap: () {
-                                signUpControllerImp.signInWithGoogle();
-                              },
-                              child: Image.asset(Images.googleIcon),
-                            ),
-                          ),
-                        ],
+                        ),
+                        child: GestureDetector(
+                          onTap: () {
+                            signUpControllerImp.signInWithGoogle();
+                          },
+                          child: Image.asset(Images.googleIcon),
+                        ),
                       ),
                     ],
                   ),

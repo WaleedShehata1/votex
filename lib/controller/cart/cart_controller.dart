@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:voltex/core/helper/route_helper.dart';
 import '../../core/classes/app_usage_service.dart';
@@ -48,6 +50,9 @@ class CartControllerImp extends CartController {
     super.onInit();
   }
 
+  FirebaseMessaging messaging = FirebaseMessaging.instance;
+  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+      FlutterLocalNotificationsPlugin();
   @override
   void dispose() {
     address.dispose();
@@ -99,20 +104,15 @@ class CartControllerImp extends CartController {
     if (isVisa) {
       if (isCost) {
         createOrder(
-            address: accountControllerImp.address.text,
-            phoneNumber: accountControllerImp.phoneNumber.text);
+          address: accountControllerImp.address.text,
+          phoneNumber: accountControllerImp.phoneNumber.text,
+        );
         Get.toNamed(RouteHelper.homePage);
       } else {
-        showCustomSnackBar(
-          "Insufficient balance".tr,
-          isError: true,
-        );
+        showCustomSnackBar("Insufficient balance".tr, isError: true);
       }
     } else {
-      showCustomSnackBar(
-        "Visa data is incorrect".tr,
-        isError: true,
-      );
+      showCustomSnackBar("Visa data is incorrect".tr, isError: true);
     }
 
     print("items==> ${visa.docs}");
@@ -190,67 +190,105 @@ class CartControllerImp extends CartController {
     String? id = await AppUsageService.getUserId();
     // List<DetiliesOrderModel> detiliesModel = [];
     OrderModel model = OrderModel(
-        address: address,
-        state: 'new',
-        deliveryCost: deliveryFee.toString(),
-        deliveryTime: deliveryTime,
-        itemCount: itemsCount.toString(),
-        payment: 'visa',
-        dataAdd: formattedDate,
-        totlePrice: totalCost.toString(),
-        phoneNumber: phoneNumber,
-        userId: id!);
+      address: address,
+      state: 'new',
+      deliveryCost: deliveryFee.toString(),
+      deliveryTime: deliveryTime,
+      itemCount: itemsCount.toString(),
+      payment: 'visa',
+      dataAdd: formattedDate,
+      totlePrice: totalCost.toString(),
+      phoneNumber: phoneNumber,
+      userId: id!,
+    );
 
-    bills.add(model.toFireStore()).then((value) {
-      if (cartItems.isNotEmpty) {
-        for (var item in cartItems) {
-          var totlePrice = item.discount != 0
-              ? ((item.price * item.count) * (1 - (item.discount / 100)))
-              : (item.price * item.count);
-          DetiliesOrderModel detiliesModel = DetiliesOrderModel(
-            discount: item.discount.toString(),
-            idBills: value.id,
-            idItem: item.itemId!,
-            itemCount: item.count.toString(),
-            itemPrice: item.price.toString(),
-            nameItem: item.itemName,
-            totlePrice: totlePrice.toString(),
-          );
-          bills
-              .doc(value.id)
-              .collection("Bills")
-              .add(detiliesModel.toFireStore())
-              .then((val) {})
-              .catchError((error) {
-            showCustomSnackBar("detiliesModel == $error", isError: true);
-          });
-        }
-      }
-      if (sensorCost != 0.0) {
-        DetiliesOrderModel detiliesModel = DetiliesOrderModel(
-          discount: '0',
-          idBills: value.id,
-          idItem: 'item.itemId',
-          itemCount: 'item.count.toString()',
-          itemPrice: 'item.price.toString()',
-          nameItem: 'item.itemName',
-          totlePrice: 'totlePrice.toString()',
-        );
-        bills
-            .doc(value.id)
-            .collection("Bills")
-            .add(detiliesModel.toFireStore())
-            .then((val) {})
-            .catchError((error) {
-          showCustomSnackBar("detiliesModel == $error", isError: true);
+    bills
+        .add(model.toFireStore())
+        .then((value) {
+          if (cartItems.isNotEmpty) {
+            for (var item in cartItems) {
+              var totlePrice =
+                  item.discount != 0
+                      ? ((item.price * item.count) *
+                          (1 - (item.discount / 100)))
+                      : (item.price * item.count);
+              DetiliesOrderModel detiliesModel = DetiliesOrderModel(
+                discount: item.discount.toString(),
+                idBills: value.id,
+                idItem: item.itemId!,
+                itemCount: item.count.toString(),
+                itemPrice: item.price.toString(),
+                nameItem: item.itemName,
+                totlePrice: totlePrice.toString(),
+              );
+              bills
+                  .doc(value.id)
+                  .collection("Bills")
+                  .add(detiliesModel.toFireStore())
+                  .then((val) {})
+                  .catchError((error) {
+                    showCustomSnackBar(
+                      "detiliesModel == $error",
+                      isError: true,
+                    );
+                  });
+            }
+          }
+          if (sensorCost != 0.0) {
+            DetiliesOrderModel detiliesModel = DetiliesOrderModel(
+              discount: '0',
+              idBills: value.id,
+              idItem: 'item.itemId',
+              itemCount: 'item.count.toString()',
+              itemPrice: 'item.price.toString()',
+              nameItem: 'item.itemName',
+              totlePrice: 'totlePrice.toString()',
+            );
+            bills
+                .doc(value.id)
+                .collection("Bills")
+                .add(detiliesModel.toFireStore())
+                .then((val) {})
+                .catchError((error) {
+                  showCustomSnackBar("detiliesModel == $error", isError: true);
+                });
+          }
+          cartItems.clear();
+          update();
+          showCustomSnackBar("The order has been requested", isError: false);
+          showNotification();
+          print("order == ${value.id}");
+        })
+        .catchError((error) {
+          showCustomSnackBar("order == $error", isError: true);
         });
-      }
-      cartItems.clear();
-      update();
-      showCustomSnackBar("The order has been requested", isError: false);
-      print("order == ${value.id}");
-    }).catchError((error) {
-      showCustomSnackBar("order == $error", isError: true);
-    });
+  }
+
+  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
+  final _localNotifications = FlutterLocalNotificationsPlugin();
+  Future<void> showNotification() async {
+    RemoteNotification? notificatio;
+    await _localNotifications.show(
+      notificatio.hashCode,
+      null,
+      "Your request has been received and is being reviewed.",
+      NotificationDetails(
+        android: AndroidNotificationDetails(
+          "high_importance_channel",
+          "High Importance Notifications",
+          channelDescription:
+              "This channel is used for important notifications.",
+          importance: Importance.high,
+          priority: Priority.high,
+          icon: "@mipmap/ic_launcher",
+        ),
+        iOS: const DarwinNotificationDetails(
+          presentAlert: true,
+          presentBadge: true,
+          presentSound: true,
+        ),
+      ),
+      payload: 'dfdfdfd'.toString(),
+    );
   }
 }

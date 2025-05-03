@@ -22,249 +22,281 @@ class ProductListScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final HomeControllerImp homeController = Get.put(
-      HomeControllerImp(),
-    );
-    final CartControllerImp cartControllerImp = Get.put(
-      CartControllerImp(),
-    );
-    final ProductController productController = Get.put(
-      ProductController(),
-    );
+    final HomeControllerImp homeController = Get.put(HomeControllerImp());
+    final CartControllerImp cartControllerImp = Get.put(CartControllerImp());
+    final ProductController productController = Get.put(ProductController());
     if (homeController.selectedIndex == 1) {
       homeController.getItems();
     }
-    return GetBuilder<HomeControllerImp>(builder: (controller) {
-      return RefreshIndicator(
-        onRefresh: () async {
-          controller.load();
-          controller.selectType = 'All';
-        },
-        child: Scaffold(
-          key: controller.scaffoldKey,
-          appBar: AppBar(
-            backgroundColor: Colors.white,
-            elevation: 0,
-            leading: IconButton(
-              icon: const Icon(Icons.menu_outlined, color: Colors.black),
-              onPressed: () {
-                controller.scaffoldKey.currentState?.openDrawer();
-                controller.update();
-              },
-            ),
-            title: Container(
-              padding: EdgeInsetsDirectional.symmetric(
-                  horizontal: 7.w, vertical: 5.h),
-              decoration: BoxDecoration(
-                  color: AppColors.colorFont,
-                  borderRadius: BorderRadius.circular(15)),
-              child: Text(
-                "VOLTEX",
-                style: robotoBold.copyWith(
-                  color: Colors.white,
-                ),
+    return GetBuilder<HomeControllerImp>(
+      builder: (controller) {
+        return RefreshIndicator(
+          onRefresh: () async {
+            controller.load();
+            controller.selectType = 'All';
+          },
+          child: Scaffold(
+            key: controller.scaffoldKey,
+            appBar: AppBar(
+              backgroundColor: Colors.white,
+              elevation: 0,
+              leading: IconButton(
+                icon: const Icon(Icons.menu_outlined, color: Colors.black),
+                onPressed: () {
+                  controller.scaffoldKey.currentState?.openDrawer();
+                  controller.update();
+                },
               ),
-            ),
-            centerTitle: true,
-            actions: [
-              IconButton(
-                icon: const Icon(Icons.notifications_none, color: Colors.black),
-                onPressed: () {},
-              ),
-            ],
-          ),
-          body: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Image.asset(
-                Images.store2,
-                width: double.infinity,
-                height: 180.h,
-                fit: BoxFit.fitHeight,
-              ),
-              // Search bar
-              Padding(
+              title: Container(
                 padding: EdgeInsetsDirectional.symmetric(
-                    vertical: 5.h, horizontal: 10.w),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    GestureDetector(
-                      onTap: () => Get.to(() => SearchScreen()),
-                      child: Container(
-                        width: 110.w,
-                        height: 20.h,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5.r),
-                          color: Colors.white,
-                          border: Border.all(
-                            width: 0.5,
-                            color: AppColors.colorFont,
-                          ),
-                        ),
-                        child: Row(
-                          children: [
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 2),
-                              child: Image.asset(
-                                Images.searchIcon,
-                                width: 15.w,
-                                fit: BoxFit.fill,
-                                color: const Color(0xff7f7f7f),
-                              ),
-                            ),
-                            Text(
-                              'Search here',
-                              style: TextStyle(color: Colors.grey),
-                            ),
-                          ],
-                        ),
-                        //  CustomTextField(
-                        //   isEnabled: false,
-                        //   colorFill: Colors.white,
-                        //   hintText: 'Search here',
-                        //   prefixIcon: Icon(
-                        //     Icons.search,
-                        //     size: 25.w,
-                        //     color: AppColors.colorFont3,
-                        //   ),
-                        //   borderRadius: Dimensions.radiusExtraLarge,
-                      ),
-                    ),
-                    SizedBox(
-                      width: 111.w,
-                      height: 35.h,
-                      child: DefaultDropdown(
-                        fontSize: 12.sp,
-                        iconSize: 17,
-                        radius: 3.r,
-                        value: controller.selectType,
-                        labelText: 'Type',
-                        colorBorder: Colors.grey.shade200,
-                        items: controller.selectTypeList,
-                        onChanged: (value) {
-                          controller.selectType = value.toString();
-                          controller
-                              .filtterToType(controller.selectType.toString());
-                          controller.update();
-                        },
-                      ),
-                    ),
-                    SizedBox(
-                      width: 110.w,
-                      height: 35.h,
-                      child: controller.filtterList.isEmpty
-                          ? Center(
-                              child: CircularProgressIndicator(),
-                            )
-                          : DefaultDropdown(
-                              fontSize: 12.sp,
-                              iconSize: 15,
-                              radius: 3.r,
-                              icon: const Icon(Icons.filter_alt_outlined),
-                              value: controller.filtter,
-                              labelText: 'filtter',
-                              colorBorder: Colors.grey.shade200,
-                              items: controller.filtterList
-                                  .map<DropdownMenuItem<String>>(
-                                      (String value) {
-                                return DropdownMenuItem<String>(
-                                  value: value,
-                                  child: Text(value),
-                                );
-                              }).toList(),
-                              onChanged: (value) {
-                                switch (value) {
-                                  case "price LowToHig":
-                                    controller
-                                        .sortProducts(SortType.priceLowToHigh);
-                                    break;
-                                  case "price HighToLow":
-                                    controller
-                                        .sortProducts(SortType.priceHighToLow);
-                                    break;
-                                  case "oldest First":
-                                    controller
-                                        .sortProducts(SortType.oldestFirst);
-                                    break;
-                                  case "newest First":
-                                    controller
-                                        .sortProducts(SortType.newestFirst);
-                                    break;
-                                  case "from A To Z":
-                                    controller.sortProducts(SortType.fromAToZ);
-                                    break;
-                                  case "from Z To A":
-                                    controller.sortProducts(SortType.fromZToA);
-                                    break;
-                                  case 'normal':
-                                    controller.sortProducts('normal');
-                                    break;
-                                }
-
-                                controller.filtter = value.toString();
-                                controller.update();
-                              },
-                            ),
-                    ),
-                  ],
+                  horizontal: 7.w,
+                  vertical: 5.h,
+                ),
+                decoration: BoxDecoration(
+                  color: AppColors.colorFont,
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                child: Text(
+                  "VOLTEX",
+                  style: robotoBold.copyWith(color: Colors.white),
                 ),
               ),
-
-              // Product Grid
-              Expanded(
-                child: controller.listItemAndFiltter.isEmpty
-                    ? const Center(
-                        child: CircularProgressIndicator(),
-                      )
-                    : GridView.builder(
-                        padding:
-                            EdgeInsetsDirectional.symmetric(horizontal: 15.w),
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          crossAxisSpacing: 10,
-                          mainAxisSpacing: 10,
-                          mainAxisExtent: 168.h,
-                        ),
-                        itemCount: controller
-                            .listItemAndFiltter.length, // Sample items count
-                        itemBuilder: (context, index) {
-                          return GestureDetector(
-                            onTap: () {
-                              productController.rate =
-                                  controller.listItemAndFiltter[index].rate;
-                              productController.getCommints(
-                                  id: controller
-                                      .listItemAndFiltter[index].itemId!);
-                              Get.to(() => ProductDetailsScreen(
-                                    item: controller.listItemAndFiltter[index],
-                                    items: controller.listItemAndFiltter,
-                                  ));
-                            },
-                            child: ProductCard(
-                              name:
-                                  controller.listItemAndFiltter[index].itemName,
-                              price: controller.listItemAndFiltter[index].price,
-                              image: controller
-                                  .listItemAndFiltter[index].imageIcon,
-                              rate: controller.listItemAndFiltter[index].rate,
-                              item: controller.listItemAndFiltter[index],
-                              onPressed: () {
-                                cartControllerImp.addItem(
-                                    controller.listItemAndFiltter[index]);
-                                cartControllerImp.update();
-                              },
+              centerTitle: true,
+              actions: [
+                IconButton(
+                  icon: const Icon(
+                    Icons.notifications_none,
+                    color: Colors.black,
+                  ),
+                  onPressed: () {},
+                ),
+              ],
+            ),
+            body: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset(
+                  Images.store2,
+                  width: double.infinity,
+                  height: 180.h,
+                  fit: BoxFit.fitHeight,
+                ),
+                // Search bar
+                Padding(
+                  padding: EdgeInsetsDirectional.symmetric(
+                    vertical: 5.h,
+                    horizontal: 10.w,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      GestureDetector(
+                        onTap: () => Get.to(() => SearchScreen()),
+                        child: Container(
+                          width: 110.w,
+                          height: 20.h,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5.r),
+                            color: Colors.white,
+                            border: Border.all(
+                              width: 0.5,
+                              color: AppColors.colorFont,
                             ),
-                          );
-                        },
+                          ),
+                          child: Row(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 2,
+                                ),
+                                child: Image.asset(
+                                  Images.searchIcon,
+                                  width: 15.w,
+                                  fit: BoxFit.fill,
+                                  color: const Color(0xff7f7f7f),
+                                ),
+                              ),
+                              Text(
+                                'Search here',
+                                style: TextStyle(color: Colors.grey),
+                              ),
+                            ],
+                          ),
+                          //  CustomTextField(
+                          //   isEnabled: false,
+                          //   colorFill: Colors.white,
+                          //   hintText: 'Search here',
+                          //   prefixIcon: Icon(
+                          //     Icons.search,
+                          //     size: 25.w,
+                          //     color: AppColors.colorFont3,
+                          //   ),
+                          //   borderRadius: Dimensions.radiusExtraLarge,
+                        ),
                       ),
-              ),
-            ],
+                      SizedBox(
+                        width: 111.w,
+                        height: 35.h,
+                        child: DefaultDropdown(
+                          fontSize: 12.sp,
+                          iconSize: 17,
+                          radius: 3.r,
+                          value: controller.selectType,
+                          labelText: 'Type',
+                          colorBorder: Colors.grey.shade200,
+                          items: controller.selectTypeList,
+                          onChanged: (value) {
+                            controller.selectType = value.toString();
+                            controller.filtterToType(
+                              controller.selectType.toString(),
+                            );
+                            controller.update();
+                          },
+                        ),
+                      ),
+                      SizedBox(
+                        width: 110.w,
+                        height: 35.h,
+                        child:
+                            controller.filtterList.isEmpty
+                                ? Center(child: CircularProgressIndicator())
+                                : DefaultDropdown(
+                                  fontSize: 12.sp,
+                                  iconSize: 15,
+                                  radius: 3.r,
+                                  icon: const Icon(Icons.filter_alt_outlined),
+                                  value: controller.filtter,
+                                  labelText: 'filtter',
+                                  colorBorder: Colors.grey.shade200,
+                                  items:
+                                      controller.filtterList
+                                          .map<DropdownMenuItem<String>>((
+                                            String value,
+                                          ) {
+                                            return DropdownMenuItem<String>(
+                                              value: value,
+                                              child: Text(value),
+                                            );
+                                          })
+                                          .toList(),
+                                  onChanged: (value) {
+                                    switch (value) {
+                                      case "price LowToHig":
+                                        controller.sortProducts(
+                                          SortType.priceLowToHigh,
+                                        );
+                                        break;
+                                      case "price HighToLow":
+                                        controller.sortProducts(
+                                          SortType.priceHighToLow,
+                                        );
+                                        break;
+                                      case "oldest First":
+                                        controller.sortProducts(
+                                          SortType.oldestFirst,
+                                        );
+                                        break;
+                                      case "newest First":
+                                        controller.sortProducts(
+                                          SortType.newestFirst,
+                                        );
+                                        break;
+                                      case "from A To Z":
+                                        controller.sortProducts(
+                                          SortType.fromAToZ,
+                                        );
+                                        break;
+                                      case "from Z To A":
+                                        controller.sortProducts(
+                                          SortType.fromZToA,
+                                        );
+                                        break;
+                                      case 'normal':
+                                        controller.sortProducts('normal');
+                                        break;
+                                    }
+
+                                    controller.filtter = value.toString();
+                                    controller.update();
+                                  },
+                                ),
+                      ),
+                    ],
+                  ),
+                ),
+
+                // Product Grid
+                Expanded(
+                  child:
+                      controller.listItemAndFiltter.isEmpty
+                          ? const Center(child: CircularProgressIndicator())
+                          : GridView.builder(
+                            padding: EdgeInsetsDirectional.symmetric(
+                              horizontal: 15.w,
+                            ),
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 2,
+                                  crossAxisSpacing: 10,
+                                  mainAxisSpacing: 10,
+                                  mainAxisExtent: 173.h,
+                                ),
+                            itemCount:
+                                controller
+                                    .listItemAndFiltter
+                                    .length, // Sample items count
+                            itemBuilder: (context, index) {
+                              return GestureDetector(
+                                onTap: () {
+                                  productController.rate =
+                                      controller.listItemAndFiltter[index].rate;
+                                  productController.getCommints(
+                                    id:
+                                        controller
+                                            .listItemAndFiltter[index]
+                                            .itemId!,
+                                  );
+                                  Get.to(
+                                    () => ProductDetailsScreen(
+                                      item:
+                                          controller.listItemAndFiltter[index],
+                                      items: controller.listItemAndFiltter,
+                                    ),
+                                  );
+                                },
+                                child: ProductCard(
+                                  name:
+                                      controller
+                                          .listItemAndFiltter[index]
+                                          .itemName,
+                                  price:
+                                      controller
+                                          .listItemAndFiltter[index]
+                                          .price,
+                                  image:
+                                      controller
+                                          .listItemAndFiltter[index]
+                                          .imageIcon,
+                                  rate:
+                                      controller.listItemAndFiltter[index].rate,
+                                  item: controller.listItemAndFiltter[index],
+                                  onPressed: () {
+                                    cartControllerImp.addItem(
+                                      controller.listItemAndFiltter[index],
+                                    );
+                                    cartControllerImp.update();
+                                  },
+                                ),
+                              );
+                            },
+                          ),
+                ),
+              ],
+            ),
+            drawer: const AppDrawer(),
           ),
-          drawer: const AppDrawer(),
-        ),
-      );
-    });
+        );
+      },
+    );
   }
 }

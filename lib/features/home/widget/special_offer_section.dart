@@ -11,15 +11,9 @@ import '../../offers/offers_screen.dart';
 import '../../product/proudct_details_screen.dart';
 import 'offer_card.dart';
 
-final CartControllerImp cartControllerImp = Get.put(
-  CartControllerImp(),
-);
-final SavedControllerImp savedController = Get.put(
-  SavedControllerImp(),
-);
-final ProductController productController = Get.put(
-  ProductController(),
-);
+final CartControllerImp cartControllerImp = Get.put(CartControllerImp());
+final SavedControllerImp savedController = Get.put(SavedControllerImp());
+final ProductController productController = Get.put(ProductController());
 
 class SpecialOfferSection extends StatelessWidget {
   const SpecialOfferSection({
@@ -32,9 +26,7 @@ class SpecialOfferSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final CartControllerImp cartControllerImp = Get.put(
-      CartControllerImp(),
-    );
+    final CartControllerImp cartControllerImp = Get.put(CartControllerImp());
     return Padding(
       padding: const EdgeInsetsDirectional.symmetric(horizontal: 15),
       child: Column(
@@ -48,30 +40,32 @@ class SpecialOfferSection extends StatelessWidget {
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
               GestureDetector(
-                onTap: () => Get.to(SpecialOfferScreen(
-                  listItemsOffer: listItemsOffer,
-                )),
+                onTap:
+                    () => Get.to(
+                      SpecialOfferScreen(listItemsOffer: listItemsOffer),
+                    ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     const Text(
                       'See All',
-                      style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                    const SizedBox(
-                      width: 10,
-                    ),
+                    const SizedBox(width: 10),
                     GestureDetector(
-                      onTap: () => Get.to(SpecialOfferScreen(
-                        listItemsOffer: listItemsOffer,
-                      )),
+                      onTap:
+                          () => Get.to(
+                            SpecialOfferScreen(listItemsOffer: listItemsOffer),
+                          ),
                       child: const CircleAvatar(
                         maxRadius: 15,
                         backgroundColor: Colors.blue,
                         child: Icon(Icons.arrow_forward_rounded),
                       ),
-                    )
+                    ),
                   ],
                 ),
               ),
@@ -79,47 +73,55 @@ class SpecialOfferSection extends StatelessWidget {
           ),
           const SizedBox(height: 20),
           SizedBox(
-            height: 195.h,
+            height: 200.h,
             width: double.maxFinite,
             child: Expanded(
               child: GridView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: listItemsOffer.length,
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 1,
-                      mainAxisExtent: 165,
-                      mainAxisSpacing: 10),
-                  itemBuilder: (context, i) {
-                    return GestureDetector(
-                      onTap: () {
-                        productController.getCommints(
-                            id: listItemsOffer[i].itemId!);
+                scrollDirection: Axis.horizontal,
+                itemCount: listItemsOffer.length,
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 1,
+                  mainAxisExtent: 165,
+                  mainAxisSpacing: 10,
+                ),
+                itemBuilder: (context, i) {
+                  return GestureDetector(
+                    onTap: () {
+                      productController.getCommints(
+                        id: listItemsOffer[i].itemId!,
+                      );
 
-                        productController.rate = listItemsOffer[i].rate;
-                        Get.to(ProductDetailsScreen(
+                      productController.rate = listItemsOffer[i].rate;
+                      Get.to(
+                        ProductDetailsScreen(
                           items: listItems,
                           item: listItemsOffer[i],
-                        ));
+                        ),
+                      );
+                    },
+                    child: OfferCard(
+                      save: () {
+                        savedController.addItem(listItemsOffer[i]);
+                        savedController.update();
                       },
-                      child: OfferCard(
-                        save: () {
-                          savedController.addItem(listItemsOffer[i]);
-                          savedController.update();
-                        },
-                        name: listItemsOffer[i].itemName,
-                        price: listItemsOffer[i].price.toString(),
-                        newPrice: (listItemsOffer[i].price *
-                            (1 - (listItemsOffer[i].discount / 100))),
-                        image: listItemsOffer[i].imageIcon,
-                        rate: listItemsOffer[i].rate,
-                        discount: listItemsOffer[i].discount.toString(),
-                        onPressed: () {
-                          cartControllerImp.addItem(listItemsOffer[i]);
-                          cartControllerImp.update();
-                        },
-                      ),
-                    );
-                  }),
+                      name: listItemsOffer[i].itemName,
+                      price: listItemsOffer[i].price.toString(),
+                      newPrice:
+                          (listItemsOffer[i].price *
+                              (1 - (listItemsOffer[i].discount / 100))),
+                      image: listItemsOffer[i].imageIcon,
+                      rate: (double.parse(
+                        listItemsOffer[i].rate,
+                      )).toStringAsFixed(1),
+                      discount: listItemsOffer[i].discount.toString(),
+                      onPressed: () {
+                        cartControllerImp.addItem(listItemsOffer[i]);
+                        cartControllerImp.update();
+                      },
+                    ),
+                  );
+                },
+              ),
             ),
           ),
         ],

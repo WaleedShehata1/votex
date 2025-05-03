@@ -54,14 +54,17 @@ class OfferCard extends StatelessWidget {
                   ),
                   const SizedBox(height: 5),
                   Align(
-                      alignment: AlignmentDirectional.centerEnd,
-                      child: Text(name, style: const TextStyle(fontSize: 14))),
+                    alignment: AlignmentDirectional.centerEnd,
+                    child: Text(name, style: const TextStyle(fontSize: 14)),
+                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Container(
                         padding: const EdgeInsetsDirectional.symmetric(
-                            horizontal: 5, vertical: 2),
+                          horizontal: 5,
+                          vertical: 2,
+                        ),
                         decoration: const BoxDecoration(
                           color: Colors.orange,
                           borderRadius: BorderRadiusDirectional.only(
@@ -71,16 +74,18 @@ class OfferCard extends StatelessWidget {
                         ),
                         child: Row(
                           children: [
-                            Text(rate,
-                                style: const TextStyle(
-                                  fontSize: 10,
-                                  color: Colors.white,
-                                )),
+                            Text(
+                              rate,
+                              style: const TextStyle(
+                                fontSize: 10,
+                                color: Colors.white,
+                              ),
+                            ),
                             const Icon(
                               Icons.star,
                               size: 15,
                               color: Colors.white,
-                            )
+                            ),
                           ],
                         ),
                       ),
@@ -96,14 +101,15 @@ class OfferCard extends StatelessWidget {
                                 color: Colors.red,
                               ),
                             ),
-                            SizedBox(
-                              width: 2.w,
+                            SizedBox(width: 2.w),
+                            Text(
+                              'EGP ${newPrice.toStringAsFixed(1)}',
+                              style: const TextStyle(
+                                fontSize: 12,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.blue,
+                              ),
                             ),
-                            Text('EGP ${newPrice.toStringAsFixed(2)}',
-                                style: const TextStyle(
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.blue)),
                           ],
                         ),
                       ),
@@ -129,19 +135,18 @@ class OfferCard extends StatelessWidget {
                   onTap: save,
                   child: const Padding(
                     padding: EdgeInsets.all(8.0),
-                    child: Icon(
-                      Icons.favorite,
-                      color: Colors.red,
-                    ),
+                    child: Icon(Icons.favorite, color: Colors.red),
                   ),
                 ), // Sale Ribbon
                 ClipPath(
                   clipper: SaleBannerClipper(),
                   child: Container(
                     decoration: const BoxDecoration(
-                        color: Colors.red,
-                        borderRadius: BorderRadiusDirectional.only(
-                            topEnd: Radius.circular(10))),
+                      color: Colors.red,
+                      borderRadius: BorderRadiusDirectional.only(
+                        topEnd: Radius.circular(10),
+                      ),
+                    ),
                     width: 58.w,
                     height: 58.h,
                     alignment: Alignment.topLeft,
@@ -165,7 +170,7 @@ class OfferCard extends StatelessWidget {
                   ),
                 ),
               ],
-            )
+            ),
           ],
         ),
       ),

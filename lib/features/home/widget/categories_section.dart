@@ -12,9 +12,7 @@ class CategoriesSection extends StatelessWidget {
   final List<SubcategoryModel> listSubCategoryes;
   @override
   Widget build(BuildContext context) {
-    final HomeControllerImp homeController = Get.put(
-      HomeControllerImp(),
-    );
+    final HomeControllerImp homeController = Get.put(HomeControllerImp());
     return Padding(
       padding: const EdgeInsetsDirectional.symmetric(horizontal: 15),
       child: Column(
@@ -35,19 +33,15 @@ class CategoriesSection extends StatelessWidget {
                     'See All',
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                   ),
-                  const SizedBox(
-                    width: 10,
-                  ),
+                  const SizedBox(width: 10),
                   GestureDetector(
-                    onTap: () => Get.to(
-                      () => const ProductListScreen(),
-                    ),
+                    onTap: () => Get.to(() => const ProductListScreen()),
                     child: const CircleAvatar(
                       maxRadius: 15,
                       backgroundColor: Colors.blue,
                       child: Icon(Icons.arrow_forward_rounded),
                     ),
-                  )
+                  ),
                 ],
               ),
             ],
@@ -74,7 +68,7 @@ class CategoriesSection extends StatelessWidget {
               crossAxisSpacing: 5,
               mainAxisSpacing: 5,
               childAspectRatio: 1,
-              mainAxisExtent: 181.h,
+              mainAxisExtent: 187.h,
             ),
           ),
           const SizedBox(height: 10),

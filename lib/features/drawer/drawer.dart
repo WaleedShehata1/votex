@@ -5,6 +5,7 @@ import 'package:voltex/core/classes/app_usage_service.dart';
 import 'package:voltex/core/helper/route_helper.dart';
 
 import '../../controller/home/home_controller.dart';
+import '../camera/camera_screen.dart';
 import '../sensor/sensor_screen.dart';
 
 class AppDrawer extends StatelessWidget {
@@ -77,6 +78,14 @@ class AppDrawer extends StatelessWidget {
                 },
                 icon: Icons.sensors,
                 title: "Sensors",
+              ),
+              DrawerItem(
+                onTap: () {
+                  // Get.to(const SensorScreen());
+                  Get.to(() => CameraScreen());
+                },
+                icon: Icons.camera_alt,
+                title: "Camera",
               ),
 
               // Highlighted "About Us" Item

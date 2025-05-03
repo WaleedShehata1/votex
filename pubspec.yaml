@@ -58,7 +58,7 @@ dependencies:
   firebase_auth: ^5.5.1
   firebase_core: ^3.12.1
   google_sign_in: ^6.3.0
-  flutter_facebook_auth: ^7.1.1
+  # flutter_facebook_auth: ^7.1.1
   video_player: ^2.9.3
   flutter_3d_controller: ^2.2.0
   flutter_local_notifications: ^19.0.0
@@ -66,6 +66,13 @@ dependencies:
   webview_flutter: ^4.10.0
   faker: ^2.2.0
   firebase_database: ^11.3.5
+  path_provider: ^2.1.5
+  screenshot: ^3.0.0
+  share_plus: ^11.0.0
+  # tflite_flutter: ^0.11.0
+  # tflite: ^1.1.2
+  camera: ^0.11.1
+  firebase_storage: ^12.4.5
   # intl: ^0.18.0
 
 dev_dependencies:
@@ -94,6 +101,7 @@ flutter:
     - assets/images/
     - assets/svg/
     - assets/3D/
+    - assets/model/
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 

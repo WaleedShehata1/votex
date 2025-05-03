@@ -7,6 +7,7 @@ import '../../controller/auth/forgetpassword.controller.dart';
 import '../../controller/auth/login.controller.dart';
 import '../../controller/auth/resetpassword.controller.dart';
 import '../../controller/auth/signupController.dart';
+import '../../controller/camera/camera_controllerl.dart';
 import '../../controller/contact/contact_controller.dart';
 import '../../controller/home/home_controller.dart';
 import '../../controller/notification/notification_controller.dart';
@@ -18,8 +19,9 @@ class Mybinding extends Bindings {
   @override
   void dependencies() {
     Get.putAsync<SharedPreferences>(
-        () async => await SharedPreferences.getInstance(),
-        permanent: true);
+      () async => await SharedPreferences.getInstance(),
+      permanent: true,
+    );
 
     Get.lazyPut(() => LoginControllerImp(), fenix: true);
     Get.lazyPut(() => ForgetPasswordControllerImp(), fenix: true);
@@ -33,5 +35,6 @@ class Mybinding extends Bindings {
     Get.lazyPut(() => ProductController(), fenix: true);
     Get.lazyPut(() => OrderController(), fenix: true);
     Get.lazyPut(() => NotificationController(), fenix: true);
+    Get.lazyPut(() => CameraControllerl(), fenix: true);
   }
 }

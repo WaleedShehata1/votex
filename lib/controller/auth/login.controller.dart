@@ -3,7 +3,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+// import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:voltex/core/classes/app_usage_service.dart';
@@ -83,31 +83,31 @@ class LoginControllerImp extends LoginController {
   }
 
   Future<void> signInWithFacebook() async {
-    if (await CheckInternet.checkInternet()) {
-      try {
-        final LoginResult loginResult = await FacebookAuth.instance.login();
+    // if (await CheckInternet.checkInternet()) {
+    //   try {
+    //     final LoginResult loginResult = await FacebookAuth.instance.login();
 
-        if (loginResult.status == LoginStatus.success) {
-          final AccessToken accessToken = loginResult.accessToken!;
-          final OAuthCredential facebookAuthCredential =
-              FacebookAuthProvider.credential(accessToken.tokenString);
+    //     if (loginResult.status == LoginStatus.success) {
+    //       final AccessToken accessToken = loginResult.accessToken!;
+    //       final OAuthCredential facebookAuthCredential =
+    //           FacebookAuthProvider.credential(accessToken.tokenString);
 
-          await FirebaseAuth.instance.signInWithCredential(
-            facebookAuthCredential,
-          );
+    //       await FirebaseAuth.instance.signInWithCredential(
+    //         facebookAuthCredential,
+    //       );
 
-          // Get.toNamed(RouteHelper.dashboard);
-        } else {
-          print("Login failed: ${loginResult.message}");
-        }
-      } on Exception catch (e) {
-        print("FacebookAuthException: $e");
-      } catch (e) {
-        print("General error: ${e.toString()}");
-      }
-    } else {
-      showCustomSnackBar('Check the internet connection'.tr, isError: true);
-    }
+    //       // Get.toNamed(RouteHelper.dashboard);
+    //     } else {
+    //       print("Login failed: ${loginResult.message}");
+    //     }
+    //   } on Exception catch (e) {
+    //     print("FacebookAuthException: $e");
+    //   } catch (e) {
+    //     print("General error: ${e.toString()}");
+    //   }
+    // } else {
+    //   showCustomSnackBar('Check the internet connection'.tr, isError: true);
+    // }
   }
 
   Future<void> signIn() async {
@@ -173,7 +173,7 @@ class LoginControllerImp extends LoginController {
   signOut() async {
     GoogleSignIn? googleSignIn = GoogleSignIn();
     googleSignIn.disconnect();
-    await FacebookAuth.instance.logOut();
+    // await FacebookAuth.instance.logOut();
     Get.toNamed(RouteHelper.signIn);
   }
 

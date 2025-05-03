@@ -1,10 +1,11 @@
-import 'dart:math';
+import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
+import 'package:path_provider/path_provider.dart';
+import 'package:screenshot/screenshot.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:voltex/core/model/commint_model.dart';
 import 'package:intl/intl.dart';
 import '../../core/classes/app_usage_service.dart';
@@ -12,7 +13,29 @@ import '../../core/constants/images.dart';
 
 class ProductController extends GetxController {
   String image3D = Images.gasCooker3D;
+  int rateProduct = 0;
   late TextEditingController controller;
+  ScreenshotController screenshotController = ScreenshotController();
+  Future<void> takeScreenshotAndShare(sentence) async {
+    try {
+      // Capture the widget as bytes
+      final imageBytes = await screenshotController.capture();
+      if (imageBytes == null) throw Exception("Screenshot failed");
+
+      // Save the image locally
+      final tempDir = await getTemporaryDirectory();
+      final filePath = '${tempDir.path}/screenshot.png';
+      final file = File(filePath);
+      await file.writeAsBytes(imageBytes);
+
+      // Share the image + sentence
+
+      await Share.shareXFiles([XFile(filePath)], text: sentence);
+    } catch (e) {
+      print('Error taking screenshot and sharing: $e');
+    }
+  }
+
   selectImage3D(String image) {
     switch (image) {
       case 'بوتجاز':
@@ -84,66 +107,24 @@ class ProductController extends GetxController {
     super.onInit();
   }
 
-  final random = Random();
-// addCommint({
-//     required int itemId,
-//     required String itemName,
-//     required String comment,
-//   }) async {
-//     DateTime now = DateTime.now().toUtc();
-//     String formattedDate = DateFormat(
-//       "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'",
-//     ).format(now);
-//     if (await CheckInternet.checkInternet()) {
-//       OverlayLoadingProgress.start();
-//       try {
-//         statusRequest = StatusRequest.loading;
-
-//         var response = await categoriesRepository.postCommint(
-//           dateAdd: formattedDate,
-//           itemName: itemName,
-//           itemId: itemId,
-//           comment: comment,
-//         );
-
-//         if (response.statusCode == 200) {
-//           // item = ItemsResponse.fromJson(response.body);
-//           // // item2.first = item!;
-//           print('commint ${response.body}');
-//           controller.clear();
-//         }
-
-//         await getAllCommintByCategoryId(itemId);
-//         update();
-//         OverlayLoadingProgress.stop();
-//       } catch (e) {
-//         showCustomSnackBar(
-//           'An error occurred. Please try again.'.tr,
-//           isError: true,
-//         );
-//         OverlayLoadingProgress.stop();
-//         print('Error during get category: $e');
-//       }
-//     } else {
-//       OverlayLoadingProgress.stop();
-//       showCustomSnackBar('Check the internet connection'.tr, isError: true);
-//     }
-//   }
-
-  addCommints({required String id}) async {
+  addCommints({required String id, required int rates}) async {
     DateTime now = DateTime.now().toUtc();
     String formattedDate = DateFormat(
       "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'",
     ).format(now);
     String? user = await AppUsageService.getUserName();
-    productDB.doc(id).collection('commints').add({
-      'userName': user,
-      'commint': controller.text,
-      'rate': (random.nextInt(5) + 1).toString(),
-      'dateAdd': formattedDate
-    }).then((DocumentReference docs) {
-      print("object==> ${docs.id}");
-    });
+    productDB
+        .doc(id)
+        .collection('commints')
+        .add({
+          'userName': user,
+          'commint': controller.text,
+          'rate': rates.toString(),
+          'dateAdd': formattedDate,
+        })
+        .then((DocumentReference docs) {
+          print("object==> ${docs.id}");
+        });
     controller.clear();
     isNewCommint = true;
     getCommints(id: id);
@@ -154,35 +135,43 @@ class ProductController extends GetxController {
     int countRates = 0;
     double newRate = 0.0;
     listCommints = [];
-    QuerySnapshot commints = await FirebaseFirestore.instance
-        .collection("items")
-        .doc(id)
-        .collection('commints')
-        .get();
+    QuerySnapshot commints =
+        await FirebaseFirestore.instance
+            .collection("items")
+            .doc(id)
+            .collection('commints')
+            .get();
     for (var com in commints.docs) {
-      listCommints.add(CommintModel(
-        commint: com['commint'],
-        userName: com['userName'],
-        rate: com['rate'],
-      ));
+      listCommints.add(
+        CommintModel(
+          commint: com['commint'],
+          userName: com['userName'],
+          rate: (com['rate']).toString(),
+        ),
+      );
       if (isNewCommint) {
         countRates++;
-        totaleRate = totaleRate + double.parse(com['rate']);
+        totaleRate = totaleRate + double.parse((com['rate']).toString());
       }
     }
     newRate = totaleRate / countRates;
     if (isNewCommint) {
-      FirebaseFirestore.instance.collection("items").doc(id).update({
-        'rate': newRate.toString(),
-      }).then((value) {
-        isNewCommint = false;
-        print(" to update rate: value");
-      }).catchError((error) => print("Failed to update rate: $error"));
+      FirebaseFirestore.instance
+          .collection("items")
+          .doc(id)
+          .update({'rate': newRate.toString()})
+          .then((value) {
+            isNewCommint = false;
+            print(" to update rate: value");
+          })
+          .catchError((error) => print("Failed to update rate: $error"));
     }
     DocumentSnapshot data =
         await FirebaseFirestore.instance.collection("items").doc(id).get();
     rate = double.parse(data['rate']).toStringAsFixed(1);
     print('rate==${rate}');
+    rateProduct = 0;
+    Get.back();
     update();
   }
 

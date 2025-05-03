@@ -10,9 +10,7 @@ import '../../core/model/item_model.dart';
 import '../../core/widget/custom_button.dart';
 import '../../core/widget/custom_image_widget.dart';
 
-final CartControllerImp cartController = Get.put(
-  CartControllerImp(),
-);
+final CartControllerImp cartController = Get.put(CartControllerImp());
 
 class SpecialOfferScreen extends StatelessWidget {
   const SpecialOfferScreen({super.key, required this.listItemsOffer});
@@ -25,8 +23,10 @@ class SpecialOfferScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.blue,
         elevation: 0,
-        title:
-            const Text('Special Offer', style: TextStyle(color: Colors.white)),
+        title: const Text(
+          'Special Offer',
+          style: TextStyle(color: Colors.white),
+        ),
         centerTitle: true,
       ),
       body: Padding(
@@ -71,7 +71,7 @@ class SpecialOfferScreen extends StatelessWidget {
                   crossAxisCount: 2, // 2 products per row
                   crossAxisSpacing: 10,
                   mainAxisSpacing: 10,
-                  mainAxisExtent: 203.h,
+                  mainAxisExtent: 205.h,
                   childAspectRatio: 0.75, // Aspect ratio of items
                 ),
                 itemBuilder: (context, index) {
@@ -161,8 +161,10 @@ class ProductCardOffer extends StatelessWidget {
                 top: 5,
                 right: 5,
                 child: Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 5,
+                    vertical: 2,
+                  ),
                   decoration: BoxDecoration(
                     color: Colors.red,
                     borderRadius: BorderRadius.circular(5),
@@ -178,14 +180,17 @@ class ProductCardOffer extends StatelessWidget {
           const SizedBox(height: 5),
 
           Align(
-              alignment: AlignmentDirectional.centerEnd,
-              child: Text(itemName, style: TextStyle(fontSize: 14))),
+            alignment: AlignmentDirectional.centerEnd,
+            child: Text(itemName, style: TextStyle(fontSize: 14)),
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Container(
                 padding: const EdgeInsetsDirectional.symmetric(
-                    horizontal: 5, vertical: 2),
+                  horizontal: 5,
+                  vertical: 2,
+                ),
                 decoration: const BoxDecoration(
                   color: Colors.orange,
                   borderRadius: BorderRadiusDirectional.only(
@@ -195,16 +200,11 @@ class ProductCardOffer extends StatelessWidget {
                 ),
                 child: Row(
                   children: [
-                    Text(rate,
-                        style: TextStyle(
-                          fontSize: 10,
-                          color: Colors.white,
-                        )),
-                    Icon(
-                      Icons.star,
-                      size: 15,
-                      color: Colors.white,
-                    )
+                    Text(
+                      rate,
+                      style: TextStyle(fontSize: 10, color: Colors.white),
+                    ),
+                    Icon(Icons.star, size: 15, color: Colors.white),
                   ],
                 ),
               ),
@@ -220,14 +220,15 @@ class ProductCardOffer extends StatelessWidget {
                         color: Colors.red,
                       ),
                     ),
-                    SizedBox(
-                      width: 2.w,
+                    SizedBox(width: 2.w),
+                    Text(
+                      ((price * (1 - (offer / 100))).toStringAsFixed(2)),
+                      style: TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.blue,
+                      ),
                     ),
-                    Text(((price * (1 - (offer / 100))).toStringAsFixed(2)),
-                        style: TextStyle(
-                            fontSize: 12,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.blue)),
                   ],
                 ),
               ),

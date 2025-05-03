@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:overlay_kit/overlay_kit.dart';
 import 'package:voltex/core/model/item_model.dart';
@@ -22,6 +24,35 @@ class HomeControllerImp extends HomeController {
   final LocalizationController localizationController = Get.put(
     LocalizationController(sharedPreferences: Get.find()),
   );
+  static final FlutterLocalNotificationsPlugin
+  _flutterLocalNotificationsPlugin =
+      FlutterLocalNotificationsPlugin(); // show a simple notification
+  // static Future showSimpleNotification({
+  //   required String title,
+  //   required String body,
+  //   required String payload,
+  // }) async {
+  //   const AndroidNotificationDetails androidNotificationDetails =
+  //       AndroidNotificationDetails(
+  //         'your channel id',
+  //         'your channel name',
+  //         channelDescription: 'your channel description',
+  //         importance: Importance.max,
+  //         priority: Priority.high,
+  //         ticker: 'ticker',
+  //       );
+  //   const NotificationDetails notificationDetails = NotificationDetails(
+  //     android: androidNotificationDetails,
+  //   );
+  //   await _flutterLocalNotificationsPlugin.show(
+  //     0,
+  //     title,
+  //     body,
+  //     notificationDetails,
+  //     payload: payload,
+  //   );
+  // }
+
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   final GlobalKey<ScaffoldState> scaffoldKey2 = GlobalKey<ScaffoldState>();
   String? selectType;
@@ -464,7 +495,8 @@ class HomeControllerImp extends HomeController {
     isLoadingSearch = true.obs;
 
     for (var ser in listItemAndFiltter) {
-      if (ser.itemName.toLowerCase() == searchTerm.toLowerCase()) {
+      if (ser.itemName.toLowerCase().substring(0, searchTerm.length) ==
+          searchTerm.toLowerCase()) {
         print(ser.itemName.toLowerCase());
         print(itemListSearch.length);
         print(ser.discount);

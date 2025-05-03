@@ -3,7 +3,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+// import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:overlay_kit/overlay_kit.dart';
@@ -139,27 +139,27 @@ class SignUpControllerImp extends SignUpController {
   }
 
   Future<void> signInWithFacebook() async {
-    try {
-      final LoginResult loginResult = await FacebookAuth.instance.login();
+    // try {
+    //   final LoginResult loginResult = await FacebookAuth.instance.login();
 
-      if (loginResult.status == LoginStatus.success) {
-        final AccessToken accessToken = loginResult.accessToken!;
-        final OAuthCredential facebookAuthCredential =
-            FacebookAuthProvider.credential(accessToken.tokenString);
+    //   if (loginResult.status == LoginStatus.success) {
+    //     final AccessToken accessToken = loginResult.accessToken!;
+    //     final OAuthCredential facebookAuthCredential =
+    //         FacebookAuthProvider.credential(accessToken.tokenString);
 
-        await FirebaseAuth.instance.signInWithCredential(
-          facebookAuthCredential,
-        );
+    //     await FirebaseAuth.instance.signInWithCredential(
+    //       facebookAuthCredential,
+    //     );
 
-        // Get.toNamed(RouteHelper.dashboard);
-      } else {
-        print("Login failed: ${loginResult.message}");
-      }
-    } on Exception catch (e) {
-      print("FacebookAuthException: $e");
-    } catch (e) {
-      print("General error: ${e.toString()}");
-    }
+    //     // Get.toNamed(RouteHelper.dashboard);
+    //   } else {
+    //     print("Login failed: ${loginResult.message}");
+    //   }
+    // } on Exception catch (e) {
+    //   print("FacebookAuthException: $e");
+    // } catch (e) {
+    //   print("General error: ${e.toString()}");
+    // }
   }
 
   Future<void> SignUp() async {

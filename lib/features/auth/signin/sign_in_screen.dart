@@ -143,45 +143,62 @@ class LoginScreen extends StatelessWidget {
                           ),
                         ),
                         SizedBox(height: 15.h),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Container(
-                              padding: const EdgeInsets.all(
-                                Dimensions.paddingSizeExtraSmall,
-                              ),
-                              decoration: BoxDecoration(
-                                border: Border.all(color: AppColors.colorFont),
-                                borderRadius: BorderRadius.circular(
-                                  Dimensions.radiusExtraLarge,
-                                ),
-                              ),
-                              child: GestureDetector(
-                                onTap: () {
-                                  // loginControllerImp.signInWithFacebook();
-                                },
-                                child: Image.asset(Images.facebookIcon),
-                              ),
+                        // Row(
+                        //   mainAxisAlignment: MainAxisAlignment.center,
+                        //   children: [
+                        //     Container(
+                        //       padding: const EdgeInsets.all(
+                        //         Dimensions.paddingSizeExtraSmall,
+                        //       ),
+                        //       decoration: BoxDecoration(
+                        //         border: Border.all(color: AppColors.colorFont),
+                        //         borderRadius: BorderRadius.circular(
+                        //           Dimensions.radiusExtraLarge,
+                        //         ),
+                        //       ),
+                        //       child: GestureDetector(
+                        //         onTap: () {
+                        //           loginControllerImp.signInWithFacebook();
+                        //         },
+                        //         child: Image.asset(Images.facebookIcon),
+                        //       ),
+                        //     ),
+                        //     SizedBox(width: 10.w),
+                        //     Container(
+                        //       padding: const EdgeInsets.all(
+                        //         Dimensions.paddingSizeExtraSmall,
+                        //       ),
+                        //       decoration: BoxDecoration(
+                        //         border: Border.all(color: AppColors.colorFont),
+                        //         borderRadius: BorderRadius.circular(
+                        //           Dimensions.radiusExtraLarge,
+                        //         ),
+                        //       ),
+                        //       child: GestureDetector(
+                        //         onTap: () {
+                        //           loginControllerImp.signInWithGoogle();
+                        //         },
+                        //         child: Image.asset(Images.googleIcon),
+                        //       ),
+                        //     ),
+                        //   ],
+                        // ),
+                        Container(
+                          padding: const EdgeInsets.all(
+                            Dimensions.paddingSizeExtraSmall,
+                          ),
+                          decoration: BoxDecoration(
+                            border: Border.all(color: AppColors.colorFont),
+                            borderRadius: BorderRadius.circular(
+                              Dimensions.radiusExtraLarge,
                             ),
-                            SizedBox(width: 10.w),
-                            Container(
-                              padding: const EdgeInsets.all(
-                                Dimensions.paddingSizeExtraSmall,
-                              ),
-                              decoration: BoxDecoration(
-                                border: Border.all(color: AppColors.colorFont),
-                                borderRadius: BorderRadius.circular(
-                                  Dimensions.radiusExtraLarge,
-                                ),
-                              ),
-                              child: GestureDetector(
-                                onTap: () {
-                                  loginControllerImp.signInWithGoogle();
-                                },
-                                child: Image.asset(Images.googleIcon),
-                              ),
-                            ),
-                          ],
+                          ),
+                          child: GestureDetector(
+                            onTap: () {
+                              loginControllerImp.signInWithGoogle();
+                            },
+                            child: Image.asset(Images.googleIcon),
+                          ),
                         ),
                       ],
                     ),
