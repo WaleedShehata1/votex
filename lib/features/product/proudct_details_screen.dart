@@ -103,6 +103,8 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
       case "Iron":
         srcGlb = Images.iron3D;
         break;
+      default:
+        srcGlb = '';
     }
 
     // productController.selectsrcGlb(widget.item.supCategory);
@@ -123,14 +125,19 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
         items.add(product);
       }
     }
-    list = [
-      ModelViewer(
-        backgroundColor: const Color.fromARGB(0xFF, 0xEE, 0xEE, 0xEE),
-        src: srcGlb,
-        autoRotate: true,
-      ),
-      CustomImageWidget(image: widget.item.imageIcon),
-    ];
+    if (srcGlb == '') {
+      list = [CustomImageWidget(image: widget.item.imageIcon)];
+    } else {
+      list = [
+        ModelViewer(
+          backgroundColor: const Color.fromARGB(0xFF, 0xEE, 0xEE, 0xEE),
+          src: srcGlb,
+          autoRotate: true,
+        ),
+        CustomImageWidget(image: widget.item.imageIcon),
+      ];
+    }
+
     super.initState();
   }
 
