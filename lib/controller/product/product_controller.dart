@@ -127,6 +127,8 @@ class ProductController extends GetxController {
         });
     controller.clear();
     isNewCommint = true;
+    rateProduct = 0;
+    Get.back();
     getCommints(id: id);
   }
 
@@ -170,8 +172,7 @@ class ProductController extends GetxController {
         await FirebaseFirestore.instance.collection("items").doc(id).get();
     rate = double.parse(data['rate']).toStringAsFixed(1);
     print('rate==${rate}');
-    rateProduct = 0;
-    Get.back();
+
     update();
   }
 
