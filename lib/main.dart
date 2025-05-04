@@ -20,11 +20,6 @@ void main() async {
     () async => await SharedPreferences.getInstance(),
     permanent: true,
   );
-  await Get.putAsync<SharedPreferences>(
-    () async => await SharedPreferences.getInstance(),
-    permanent: true,
-  );
-
   await init();
   runApp(const MyApp());
 }

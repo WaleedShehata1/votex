@@ -4,22 +4,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../core/constants/app_constants.dart';
 import '../core/constants/dimensions.dart';
-import '../core/helper/chache_helper.dart';
 import '../core/model/language_model.dart';
 
 class LocalizationController extends GetxController implements GetxService {
   final SharedPreferences sharedPreferences;
 
-  LocalizationController({
-    required this.sharedPreferences,
-  }) {
+  LocalizationController({required this.sharedPreferences}) {
     loadCurrentLanguage();
   }
-  Locale _locale = Locale(AppConstants.languages[1].languageCode!,
-      AppConstants.languages[1].countryCode);
+  Locale _locale = Locale(
+    AppConstants.languages[1].languageCode!,
+    AppConstants.languages[1].countryCode,
+  );
   bool _isLtr = true;
   List<LanguageModel> _languages = [];
 
@@ -27,15 +25,15 @@ class LocalizationController extends GetxController implements GetxService {
   bool get isLtr => _isLtr;
   List<LanguageModel> get languages => _languages;
 
-  Locale initLang = CacheHelper.getData(key: 'lang') == null
-      ? Locale(AppConstants.languages[1].languageCode!)
-      : Locale(CacheHelper.getData(key: 'lang'));
+  // Locale initLang = CacheHelper.getData(key: 'lang') == null
+  //     ? Locale(AppConstants.languages[1].languageCode!)
+  //     : Locale(CacheHelper.getData(key: 'lang'));
 
-  void changeLocale(String codeLang) {
-    Locale locale = Locale(codeLang);
-    CacheHelper.savedata(key: 'lang', value: codeLang);
-    Get.updateLocale(locale);
-  }
+  // void changeLocale(String codeLang) {
+  //   Locale locale = Locale(codeLang);
+  //   CacheHelper.savedata(key: 'lang', value: codeLang);
+  //   Get.updateLocale(locale);
+  // }
 
   void setLanguage(Locale locale) {
     Get.updateLocale(locale);
@@ -51,16 +49,19 @@ class LocalizationController extends GetxController implements GetxService {
 
   void saveLanguage(Locale locale) async {
     sharedPreferences.setString(
-        AppConstants.LANGUAGE_CODE, locale.languageCode);
+      AppConstants.LANGUAGE_CODE,
+      locale.languageCode,
+    );
     sharedPreferences.setString(AppConstants.COUNTRY_CODE, locale.countryCode!);
   }
 
   void loadCurrentLanguage() async {
     _locale = Locale(
-        sharedPreferences.getString(AppConstants.LANGUAGE_CODE) ??
-            AppConstants.languages[0].languageCode!,
-        sharedPreferences.getString(AppConstants.COUNTRY_CODE) ??
-            AppConstants.languages[0].countryCode);
+      sharedPreferences.getString(AppConstants.LANGUAGE_CODE) ??
+          AppConstants.languages[0].languageCode!,
+      sharedPreferences.getString(AppConstants.COUNTRY_CODE) ??
+          AppConstants.languages[0].countryCode,
+    );
     _isLtr = _locale.languageCode != 'ar';
     for (int index = 0; index < AppConstants.languages.length; index++) {
       if (AppConstants.languages[index].languageCode == _locale.languageCode) {
@@ -92,10 +93,12 @@ class LocalizationController extends GetxController implements GetxService {
     return GestureDetector(
       onTap: () {
         selectedCondition = index;
-        setLanguage(Locale(
-          AppConstants.languages[index].languageCode!,
-          AppConstants.languages[index].countryCode,
-        ));
+        setLanguage(
+          Locale(
+            AppConstants.languages[index].languageCode!,
+            AppConstants.languages[index].countryCode,
+          ),
+        );
         setSelectIndex(index);
         // Get.toNamed(RouteHelper.onBoardin);
         update();
@@ -105,14 +108,16 @@ class LocalizationController extends GetxController implements GetxService {
         height: 45.h,
         width: double.infinity,
         padding: const EdgeInsets.symmetric(
-            horizontal: Dimensions.paddingSizeLarge,
-            vertical: Dimensions.paddingSizeExtraSmall),
+          horizontal: Dimensions.paddingSizeLarge,
+          vertical: Dimensions.paddingSizeExtraSmall,
+        ),
         decoration: BoxDecoration(
           color:
               isSelected ? Theme.of(context).primaryColor : Colors.transparent,
           borderRadius: BorderRadius.circular(Dimensions.radiusLarge),
-          border:
-              Border.all(color: isSelected ? Colors.white : Colors.transparent),
+          border: Border.all(
+            color: isSelected ? Colors.white : Colors.transparent,
+          ),
         ),
         child: Center(
           child: Text(

@@ -105,6 +105,7 @@ class HomeControllerImp extends HomeController {
     super.onInit();
   }
 
+  // create items to firebase
   var data = [
     {
       "itemName": "Samsung  TV QN900D Neo QLED",

@@ -2,7 +2,6 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import '../../core/classes/status_request.dart';
 import '../../core/helper/route_helper.dart';
 
 abstract class ForgetPasswordController extends GetxController {}
@@ -14,7 +13,6 @@ class ForgetPasswordControllerImp extends ForgetPasswordController {
   GlobalKey<FormState> formstate2 = GlobalKey<FormState>();
   late PageController pageController;
   late TextEditingController email;
-  late StatusRequest statusRequest;
   int countdown = 50;
   late Timer timer;
   bool canResend = false;

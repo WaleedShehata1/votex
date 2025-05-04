@@ -8,7 +8,6 @@ String? shareLink;
 
 class AppConstants {
   static const String appName = 'Votex';
-  static const double appVersion = 1.0;
   static const String userId = 'userId';
   static const String userName = 'userName';
   static const String fontFamily = 'Almarai';
@@ -26,6 +25,9 @@ class AppConstants {
   static List<LanguageModel> languages = [
     LanguageModel(languageName: 'عربى', countryCode: 'SA', languageCode: 'ar'),
     LanguageModel(
-        languageName: 'English', countryCode: 'US', languageCode: 'en'),
+      languageName: 'English',
+      countryCode: 'US',
+      languageCode: 'en',
+    ),
   ];
 }

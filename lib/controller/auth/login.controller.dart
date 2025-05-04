@@ -7,7 +7,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:voltex/core/classes/app_usage_service.dart';
-import '../../core/classes/status_request.dart';
 import '../../core/functions/checkInternet.dart';
 import '../../core/helper/route_helper.dart';
 import '../../core/model/user_model.dart';
@@ -31,7 +30,6 @@ class LoginControllerImp extends LoginController {
   late TextEditingController password;
   LoginControllerImp();
   UserModel? model;
-  late StatusRequest statusRequest;
   final NotificationController notificationController = Get.put(
     NotificationController(),
   );

@@ -10,7 +10,7 @@ class Images {
   static const String userIcon = 'assets/svg/userIcon.svg';
   static const String shape1 = 'assets/svg/shape1.svg';
   static const String store = 'assets/svg/store.svg';
-
+  static const String iconSend = 'assets/svg/send.svg';
   // png
   static const String logo2 = 'assets/images/logo.png';
   static const String washing = 'assets/images/washing.png';
@@ -32,9 +32,6 @@ class Images {
   static const String brand2 = 'assets/images/brand2.png';
   static const String brand3 = 'assets/images/brand3.png';
   static const String brand4 = 'assets/images/brand4.png';
-
-  //svg
-  static const String iconSend = 'assets/svg/send.svg';
 
   //3D
   static const String gasCooker3D = 'assets/3D/ddd.glb';

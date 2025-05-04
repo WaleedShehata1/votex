@@ -51,13 +51,8 @@ class RouteHelper {
     GetPage(name: homeScreen, page: () => const HomeScreen()),
     GetPage(name: homePage, page: () => const HomePage()),
     GetPage(name: ordersScreen, page: () => const OrderScreen()),
-    // GetPage(name: specialOfferScreen, page: () => const SpecialOfferScreen()),
-    // GetPage(name: ratedBrandsScreen, page: () => const RatedBrandsScreen()),
-    // GetPage(name: specialOfferSection, page: () => const SpecialOfferSection()),
     GetPage(name: profileScreen, page: () => const ProfileScreen()),
     GetPage(name: notificationsScreen, page: () => const NotificationsScreen()),
-    // GetPage(
-    //     name: productDetailsScreen, page: () => const ProductDetailsScreen()),
     GetPage(name: settingsScreen, page: () => const SettingsScreen()),
     GetPage(name: addSensorScreen, page: () => const AddSensorScreen()),
     GetPage(name: aboutUsScreen, page: () => const AboutUsScreen()),
