@@ -16,7 +16,10 @@ android {
         targetCompatibility = JavaVersion.VERSION_11
         isCoreLibraryDesugaringEnabled = true
     }
-
+    aaptOptions {
+        noCompress("tflite")
+        noCompress("lite")
+    }
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_11.toString()
     }

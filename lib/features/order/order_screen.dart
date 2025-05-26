@@ -9,39 +9,44 @@ class OrderScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<OrderController>(builder: (controller) {
-      return Scaffold(
-        backgroundColor: Colors.white,
-        appBar: AppBar(
+    return GetBuilder<OrderController>(
+      builder: (controller) {
+        return Scaffold(
           backgroundColor: Colors.white,
-          elevation: 0,
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back_ios, color: Colors.black),
-            onPressed: () => Navigator.pop(context),
+          appBar: AppBar(
+            backgroundColor: Colors.white,
+            elevation: 0,
+            leading: IconButton(
+              icon: const Icon(Icons.arrow_back_ios, color: Colors.black),
+              onPressed: () => Navigator.pop(context),
+            ),
+            title: const Text(
+              "History",
+              style: TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            centerTitle: true,
           ),
-          title: const Text(
-            "History",
-            style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+          body: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+            child: ListView.builder(
+              itemCount: controller.listOrder.length,
+              itemBuilder: (context, index) {
+                return OrderCard(
+                  title: controller.listOrder[index].title,
+                  description: controller.listOrder[index].description,
+                  orderNumber: controller.listOrder[index].orderNumber,
+                  date: controller.formatDate(controller.listOrder[index].date),
+                  image: controller.listOrder[index].image,
+                );
+              },
+            ),
           ),
-          centerTitle: true,
-        ),
-        body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-          child: ListView.builder(
-            itemCount: controller.listOrder.length,
-            itemBuilder: (context, index) {
-              return OrderCard(
-                title: controller.listOrder[index].title,
-                description: controller.listOrder[index].description,
-                orderNumber: controller.listOrder[index].orderNumber,
-                date: controller.formatDate(controller.listOrder[index].date),
-                image: controller.listOrder[index].image,
-              );
-            },
-          ),
-        ),
-      );
-    });
+        );
+      },
+    );
   }
 }
 
@@ -80,12 +85,6 @@ class OrderCard extends StatelessWidget {
                 image: image,
                 fit: BoxFit.cover,
               ),
-              //  Image.network(
-              //   image,
-              //   height: 60,
-              //   width: 60,
-              //   fit: BoxFit.cover,
-              // ),
             ),
             const SizedBox(width: 10),
 

@@ -39,8 +39,8 @@ class MyApp extends StatelessWidget {
                   initialRoute: RouteHelper.initial,
                   // initialRoute: RouteHelper.homePage,
                   fallbackLocale: Locale(
-                    AppConstants.languages[1].languageCode!,
-                    AppConstants.languages[1].countryCode,
+                    AppConstants.languages[0].languageCode!,
+                    AppConstants.languages[0].countryCode,
                   ),
                   debugShowCheckedModeBanner: false,
                   getPages: RouteHelper.routes,

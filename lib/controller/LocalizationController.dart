@@ -15,8 +15,8 @@ class LocalizationController extends GetxController implements GetxService {
     loadCurrentLanguage();
   }
   Locale _locale = Locale(
-    AppConstants.languages[1].languageCode!,
-    AppConstants.languages[1].countryCode,
+    AppConstants.languages[0].languageCode!,
+    AppConstants.languages[0].countryCode,
   );
   bool _isLtr = true;
   List<LanguageModel> _languages = [];
@@ -24,16 +24,6 @@ class LocalizationController extends GetxController implements GetxService {
   Locale get locale => _locale;
   bool get isLtr => _isLtr;
   List<LanguageModel> get languages => _languages;
-
-  // Locale initLang = CacheHelper.getData(key: 'lang') == null
-  //     ? Locale(AppConstants.languages[1].languageCode!)
-  //     : Locale(CacheHelper.getData(key: 'lang'));
-
-  // void changeLocale(String codeLang) {
-  //   Locale locale = Locale(codeLang);
-  //   CacheHelper.savedata(key: 'lang', value: codeLang);
-  //   Get.updateLocale(locale);
-  // }
 
   void setLanguage(Locale locale) {
     Get.updateLocale(locale);

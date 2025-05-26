@@ -4,7 +4,6 @@ import 'package:flutter_3d_controller/flutter_3d_controller.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:model_viewer_plus/model_viewer_plus.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:video_player/video_player.dart';
 import 'package:voltex/core/constants/images.dart';
@@ -13,7 +12,6 @@ import '../../controller/product/product_controller.dart';
 import '../../controller/saved/saved_controller.dart';
 import '../../core/constants/colors.dart';
 import '../../core/constants/dimensions.dart';
-import '../../core/helper/route_helper.dart';
 import '../../core/model/item_model.dart';
 import '../../core/widget/custom_button.dart';
 import '../../core/widget/custom_image_widget.dart';
@@ -203,7 +201,15 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                     }),
                   ),
                   const SizedBox(height: 10),
-
+                  Text(
+                    widget.item.itemName,
+                    style: const TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                    ),
+                    maxLines: 2,
+                  ),
+                  const SizedBox(height: 5),
                   // Product Title, Rating & Price
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -213,16 +219,6 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          SizedBox(
-                            width: 170,
-                            child: Text(
-                              widget.item.itemName,
-                              style: const TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                          ),
                           Text(
                             '(${widget.item.brandName})',
                             style: const TextStyle(
@@ -298,6 +294,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                       ),
                     ],
                   ),
+
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Row(

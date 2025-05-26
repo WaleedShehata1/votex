@@ -84,10 +84,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                 children: [
                                   InkWell(
                                     onTap: () {
-                                      controller.printRandomProductData();
-                                      // Get.toNamed(
-                                      //   RouteHelper.notificationsScreen,
-                                      // );
+                                      // controller.printRandomProductData();
+                                      Get.toNamed(
+                                        RouteHelper.notificationsScreen,
+                                      );
                                     },
                                     child: Icon(
                                       Icons.notifications_outlined,
@@ -173,16 +173,6 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                             ],
                           ),
-                          //  CustomTextField(
-                          //   isEnabled: false,
-                          //   colorFill: Colors.white,
-                          //   hintText: 'Search here',
-                          //   prefixIcon: Icon(
-                          //     Icons.search,
-                          //     size: 25.w,
-                          //     color: AppColors.colorFont3,
-                          //   ),
-                          //   borderRadius: Dimensions.radiusExtraLarge,
                         ),
                       ),
                     ),
@@ -190,7 +180,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 SizedBox(height: 22.h),
                 SizedBox(
-                  height: (MediaQuery.of(context).size.height * 0.65),
+                  height: (MediaQuery.of(context).size.height * 0.60),
                   child: SingleChildScrollView(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,

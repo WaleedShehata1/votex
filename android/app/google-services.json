@@ -8,12 +8,25 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:940242670367:android:2549faec03b0f6c1ac162a",
+        "mobilesdk_app_id": "1:940242670367:android:2ae3213f1feff186ac162a",
         "android_client_info": {
           "package_name": "com.example.voltex"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "940242670367-psf5vp737gn9vdmvcgh4stqvppvf41ai.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.voltex",
+            "certificate_hash": "17d58ffb9d2d65dfe7ca11ab70751e5ea93a388b"
+          }
+        },
+        {
+          "client_id": "940242670367-7hrbqeuih485a4i8mr8s15b57eedettb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyDfmMVht41CBwgZJFNGM1dPW4jJp_pAbJI"
@@ -21,7 +34,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "940242670367-7hrbqeuih485a4i8mr8s15b57eedettb.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "940242670367-bugqm31kiobsukhjcejhhikrsd5ebks9.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.votex"
+              }
+            }
+          ]
         }
       }
     }

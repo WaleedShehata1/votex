@@ -1,25 +1,15 @@
-0 Okra vegetables
-1 Mushroom vegetables
-2 Vegetable balls
-3 Pepper vegetables
-4 cauliflower vegetables
-5 Cucumber vegetables
-6 Corn vegetables
-7 Tomato vegetables
-8 Garlic vegetables
-9 Watercress vegetables
-10 Carrot vegetables
-11 pea vegetables
-12 Onion vegetables
-13 Potato vegetables
-14 eggplant vegetables
-15 Broccoli vegetables
-16 Fish
-17 Crab fish
-18 Fish octopus
-19 Lobster fish
-20 mussels
-21 Fish shrimp
-22 Catfish
-23 Meat
-24 Chickens
+Bean
+Bitter_Gourd
+Bottle_Gourd
+Brinjal
+Broccoli
+Cabbage
+Capsicum
+Carrot
+Cauliflower
+Cucumber
+Papaya
+Potato
+Pumpkin
+Radish
+Tomato

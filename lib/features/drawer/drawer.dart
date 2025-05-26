@@ -96,13 +96,13 @@ class AppDrawer extends StatelessWidget {
                 icon: Icons.info,
                 title: "About us",
               ),
-              DrawerItem(
-                onTap: () {
-                  Get.toNamed(RouteHelper.settingsScreen);
-                },
-                icon: Icons.settings,
-                title: "Settings",
-              ),
+              // DrawerItem(
+              //   onTap: () {
+              //     Get.toNamed(RouteHelper.settingsScreen);
+              //   },
+              //   icon: Icons.settings,
+              //   title: "Settings",
+              // ),
               const SizedBox(height: 15),
               const Divider(color: Colors.grey, height: 2, thickness: 0.5),
               const SizedBox(height: 15),

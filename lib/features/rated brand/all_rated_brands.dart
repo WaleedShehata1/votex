@@ -110,11 +110,12 @@ class _RatedBrandsScreenState extends State<RatedBrandsScreen> {
                   );
                 },
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 4,
-                    crossAxisSpacing: 5,
-                    mainAxisSpacing: 5,
-                    childAspectRatio: 0.1,
-                    mainAxisExtent: 120.h),
+                  crossAxisCount: 4,
+                  crossAxisSpacing: 5,
+                  mainAxisSpacing: 5,
+                  childAspectRatio: 0.1,
+                  mainAxisExtent: 120.h,
+                ),
               ),
             ),
           ],
@@ -123,37 +124,4 @@ class _RatedBrandsScreenState extends State<RatedBrandsScreen> {
       drawer: const AppDrawer(),
     );
   }
-
-  // Function to build a single row of brands
-  // Widget _buildBrandRow(List<BrandModel> brands) {
-  //   return Padding(
-  //     padding: const EdgeInsets.only(bottom: 15),
-  //     child: Row(
-  //       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-  //       children: brands
-  //           .map(
-  //             (brand) => Column(
-  //               children: [
-  //                 GestureDetector(
-  //                   onTap: () => Get.to(ProductListScreen(
-  //                     brand: brand.BrandId,
-  //                   )),
-  //                   child: CircleAvatar(
-  //                     backgroundColor: Colors.white,
-  //                     radius: 30,
-  //                     backgroundImage: AssetImage(brand.imageUrl!),
-  //                   ),
-  //                 ),
-  //                 const SizedBox(height: 5),
-  //                 Text(
-  //                   brand.brandName!,
-  //                   style: const TextStyle(fontSize: 14),
-  //                 ),
-  //               ],
-  //             ),
-  //           )
-  //           .toList(),
-  //     ),
-  //   );
-  // }
 }

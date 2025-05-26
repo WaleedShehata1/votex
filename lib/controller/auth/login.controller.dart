@@ -80,34 +80,6 @@ class LoginControllerImp extends LoginController {
     }
   }
 
-  Future<void> signInWithFacebook() async {
-    // if (await CheckInternet.checkInternet()) {
-    //   try {
-    //     final LoginResult loginResult = await FacebookAuth.instance.login();
-
-    //     if (loginResult.status == LoginStatus.success) {
-    //       final AccessToken accessToken = loginResult.accessToken!;
-    //       final OAuthCredential facebookAuthCredential =
-    //           FacebookAuthProvider.credential(accessToken.tokenString);
-
-    //       await FirebaseAuth.instance.signInWithCredential(
-    //         facebookAuthCredential,
-    //       );
-
-    //       // Get.toNamed(RouteHelper.dashboard);
-    //     } else {
-    //       print("Login failed: ${loginResult.message}");
-    //     }
-    //   } on Exception catch (e) {
-    //     print("FacebookAuthException: $e");
-    //   } catch (e) {
-    //     print("General error: ${e.toString()}");
-    //   }
-    // } else {
-    //   showCustomSnackBar('Check the internet connection'.tr, isError: true);
-    // }
-  }
-
   Future<void> signIn() async {
     if (formstate.currentState!.validate()) {
       if (await CheckInternet.checkInternet()) {
@@ -171,7 +143,6 @@ class LoginControllerImp extends LoginController {
   signOut() async {
     GoogleSignIn? googleSignIn = GoogleSignIn();
     googleSignIn.disconnect();
-    // await FacebookAuth.instance.logOut();
     Get.toNamed(RouteHelper.signIn);
   }
 

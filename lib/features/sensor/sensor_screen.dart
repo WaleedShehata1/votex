@@ -74,12 +74,12 @@ class ControlPage extends StatefulWidget {
 }
 
 class _ControlPageState extends State<ControlPage> {
-  // @override
-  // void initState() {
-  //   FirebaseDatabase.instance.databaseURL =
-  //       'https://refmonitor-92db2-default-rtdb.asia-southeast1.firebasedatabase.app/';
-  //   super.initState();
-  // }
+  @override
+  void initState() {
+    FirebaseDatabase.instance.databaseURL =
+        'https://console.firebase.google.com/project/chat-app-d86a7/database/chat-app-d86a7-default-rtdb/data/~2F';
+    super.initState();
+  }
 
   final DatabaseReference dbRef = FirebaseDatabase.instance.ref(
     'System',
@@ -122,15 +122,13 @@ class _ControlPageState extends State<ControlPage> {
                   ),
                   _buildGadget(
                     title: "Light",
-                    value: sensorData['Light'] ?? false ? 'On' : 'Off',
+                    value: sensorData['Light'] == 1 ? 'On' : 'Off',
                     icon:
-                        sensorData['Light'] ?? false
+                        sensorData['Light'] == 1
                             ? Icons.lightbulb
                             : Icons.lightbulb_outline,
                     color:
-                        sensorData['Light'] ?? false
-                            ? Colors.amber
-                            : Colors.grey,
+                        sensorData['Light'] == 1 ? Colors.amber : Colors.grey,
                   ),
                   _buildGadget(
                     title: "Temperature",
