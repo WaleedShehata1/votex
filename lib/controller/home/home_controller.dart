@@ -604,7 +604,7 @@ class HomeControllerImp extends HomeController {
       itemTest = ItemModel.fromFirestore(item);
       itemTest.itemId = item.id;
       listItem.add(itemTest);
-      if (itemTest.discount != '') {
+      if (itemTest.discount > 0) {
         listItemOffer.add(itemTest);
       }
 

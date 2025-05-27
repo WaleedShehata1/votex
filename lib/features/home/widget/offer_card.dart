@@ -101,7 +101,7 @@ class OfferCard extends StatelessWidget {
                         child: Row(
                           children: [
                             Text(
-                              price,
+                              double.parse(discount) > 0 ? price : '',
                               style: const TextStyle(
                                 fontSize: 10,
                                 decoration: TextDecoration.lineThrough,
@@ -145,37 +145,39 @@ class OfferCard extends StatelessWidget {
                     child: Icon(Icons.favorite, color: Colors.red),
                   ),
                 ), // Sale Ribbon
-                ClipPath(
-                  clipper: SaleBannerClipper(),
-                  child: Container(
-                    decoration: const BoxDecoration(
-                      color: Colors.red,
-                      borderRadius: BorderRadiusDirectional.only(
-                        topEnd: Radius.circular(10),
-                      ),
-                    ),
-                    width: 58.w,
-                    height: 58.h,
-                    alignment: Alignment.topLeft,
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 10, top: 10),
-                      child: RotatedBox(
-                        quarterTurns: -1,
-                        child: Transform.rotate(
-                          angle: 0.7,
-                          child: Text(
-                            "${discount.substring(0, 2)}%",
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 12,
+                double.parse(discount) > 0
+                    ? ClipPath(
+                      clipper: SaleBannerClipper(),
+                      child: Container(
+                        decoration: const BoxDecoration(
+                          color: Colors.red,
+                          borderRadius: BorderRadiusDirectional.only(
+                            topEnd: Radius.circular(10),
+                          ),
+                        ),
+                        width: 58.w,
+                        height: 58.h,
+                        alignment: Alignment.topLeft,
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 10, top: 10),
+                          child: RotatedBox(
+                            quarterTurns: -1,
+                            child: Transform.rotate(
+                              angle: 0.7,
+                              child: Text(
+                                "${discount.substring(0, 1)}%",
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 12,
+                                ),
+                              ),
                             ),
                           ),
                         ),
                       ),
-                    ),
-                  ),
-                ),
+                    )
+                    : SizedBox(),
               ],
             ),
           ],

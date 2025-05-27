@@ -36,33 +36,6 @@ class SpecialOfferScreen extends StatelessWidget {
           children: [
             const SizedBox(height: 10),
 
-            // Choose Discount Text
-            // const Text(
-            //   'Choose Your Discount',
-            //   style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-            // ),
-            // const SizedBox(height: 8),
-
-            // // Discount Filter Bar
-            // Row(
-            //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            //   children: [
-            //     _discountButton('All', isSelected: true),
-            //     _discountButton('10%'),
-            //     _discountButton('20%', isSelected: false),
-            //     _discountButton('30%'),
-            //     _discountButton('40%'),
-            //   ],
-            // ),
-            // const SizedBox(height: 10),
-
-            // // Discount Label
-            // const Text(
-            //   '20% Discount',
-            //   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            // ),
-            const SizedBox(height: 10),
-
             // Products Grid
             Expanded(
               child: GridView.builder(
@@ -71,7 +44,7 @@ class SpecialOfferScreen extends StatelessWidget {
                   crossAxisCount: 2, // 2 products per row
                   crossAxisSpacing: 10,
                   mainAxisSpacing: 10,
-                  mainAxisExtent: 205.h,
+                  mainAxisExtent: 190.h,
                   childAspectRatio: 0.75, // Aspect ratio of items
                 ),
                 itemBuilder: (context, index) {
@@ -146,17 +119,12 @@ class ProductCardOffer extends StatelessWidget {
           Stack(
             children: [
               CustomImageWidget(
-                height: 95.h,
+                height: 80.h,
                 width: double.infinity,
                 fit: BoxFit.fitHeight,
                 image: image,
               ),
-              // Image.asset(
-              //   Images.refrigerators, // Change this to your actual image
-              //   height: 95.h,
-              //   width: double.infinity,
-              //   fit: BoxFit.fitHeight,
-              // ),
+
               Positioned(
                 top: 5,
                 right: 5,
@@ -181,7 +149,11 @@ class ProductCardOffer extends StatelessWidget {
 
           Align(
             alignment: AlignmentDirectional.centerEnd,
-            child: Text(itemName, style: TextStyle(fontSize: 14)),
+            child: Text(
+              itemName,
+              style: TextStyle(fontSize: 14, overflow: TextOverflow.ellipsis),
+              maxLines: 1,
+            ),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
