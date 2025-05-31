@@ -37,36 +37,6 @@ class ModelTflowController extends GetxController {
     }
   }
 
-  // Run inference on the selected image
-  // classifyImage(File image) async {
-  //   try {
-  //     // Run TFLite model on the image
-
-  //     var recognitions = await Tflite.runModelOnImage(
-  //       path: image.path,
-  //       numResults: 5, // Return top 5 results
-  //       threshold: 0.5, // Confidence threshold
-  //       imageMean: 127.5, // Defaults
-  //       imageStd: 127.5, // Defaults
-  //       asynch: true, // Run in background thread
-  //     );
-
-  //     _recognitions = recognitions;
-  //     fruits.add((_recognitions![0]['label']).toString());
-  //     print(_recognitions![0]['label']);
-
-  //     loadingModel = false;
-  //     update();
-
-  //     print("Recognition results: $_recognitions");
-  //   } catch (e) {
-  //     print('Error classifying image: $e');
-
-  //     loadingModel = false;
-
-  //     update();
-  //   }
-  // }
   Future<void> classifyImageFromUrl(String image) async {
     try {
       // Show loading
@@ -97,7 +67,7 @@ class ModelTflowController extends GetxController {
       // Step 4: Update UI
       _recognitions = recognitions;
       if (_recognitions != null || _recognitions!.isNotEmpty) {
-        fruits.add((_recognitions![0]['label']).toString());
+        fruits.add((_recognitions![0]['label']).toString().lowerCamelCase);
       }
       update();
       OverlayLoadingProgress.stop();
@@ -117,11 +87,12 @@ class ModelTflowController extends GetxController {
         recipes.where((recipe) {
           // Return true only if all ingredients are available
           update();
-          return recipe.ingredients.every(
-            (ingredient) => available.contains(ingredient),
-          );
+          return recipe.components.every((ingredient) {
+            return available.contains(ingredient);
+          });
         }).toList();
     update();
+    print(listFoodRecipesnew);
     return listFoodRecipesnew;
   }
 
@@ -145,9 +116,12 @@ class ModelTflowController extends GetxController {
       }
 
       for (var url in urls) {
-        classifyImageFromUrl(url);
+        await classifyImageFromUrl(url);
       }
-      findMatchingRecipes(available: fruits, recipes: listFoodRecipes);
+      if (fruits.isNotEmpty) {
+        print("fruits= $fruits");
+        findMatchingRecipes(available: fruits, recipes: listFoodRecipes);
+      }
       isLoading = false;
 
       update();

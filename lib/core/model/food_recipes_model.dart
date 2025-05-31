@@ -1,3 +1,5 @@
+import 'package:velocity_x/velocity_x.dart';
+
 class Recipe {
   final String name;
   final String description;
@@ -42,6 +44,9 @@ class Ingredient {
   Ingredient({required this.amount, required this.component});
 
   factory Ingredient.fromJson(Map<String, dynamic> json) {
-    return Ingredient(amount: json['Amount'], component: json['Component']);
+    return Ingredient(
+      amount: json['Amount'],
+      component: json['Component'].toString().lowerCamelCase,
+    );
   }
 }
