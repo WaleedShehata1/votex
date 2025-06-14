@@ -98,11 +98,9 @@ class ModelTflowController extends GetxController {
 
   // get the images from the folder in Firebase Storage
   Future<void> fetchImagesFromFolder() async {
-    OverlayLoadingProgress.start();
-
     final storageRef = FirebaseStorage.instance.ref();
     DateTime now = DateTime.now().toUtc();
-    String formattedDate = DateFormat("2025-05-31").format(now);
+    String formattedDate = DateFormat("yyyy-MM-dd").format(now);
     print(formattedDate);
     final folderRef = storageRef
         .child('fruits')

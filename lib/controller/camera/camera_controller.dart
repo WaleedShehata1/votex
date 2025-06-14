@@ -8,7 +8,7 @@ class CameraController extends GetxController {
   Future<void> fetchImagesFromFolder() async {
     final storageRef = FirebaseStorage.instance.ref();
     DateTime now = DateTime.now().toUtc();
-    String formattedDate = DateFormat("2025-05-31").format(now);
+    String formattedDate = DateFormat("yyyy-MM-dd").format(now);
     print(formattedDate);
     final folderRef = storageRef
         .child('fruits')
