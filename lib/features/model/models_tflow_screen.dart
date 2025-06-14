@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:voltex/features/recipes/recipe_screen.dart';
 
 import '../../controller/model/model_tflow_controller.dart';
 import '../../core/constants/colors.dart';
@@ -67,54 +68,55 @@ class ModelsTflowScreen extends StatelessWidget {
                           )
                           : Padding(
                             padding: const EdgeInsets.all(4.0),
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(15.r),
-                              child: Stack(
-                                fit: StackFit.expand,
-
-                                children: [
-                                  CustomImageWidget(
-                                    image:
-                                        controller
-                                            .listFoodRecipesnew[index]
-                                            .imageUrl,
-                                    fit: BoxFit.cover,
+                            child: GestureDetector(
+                              onTap: () {
+                                Get.to(
+                                  RecipeScreen(
+                                    data: controller.listFoodRecipesnew[index],
                                   ),
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                      vertical: 4.0,
+                                );
+                              },
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(15.r),
+                                child: Stack(
+                                  fit: StackFit.expand,
+
+                                  children: [
+                                    CustomImageWidget(
+                                      image:
+                                          controller
+                                              .listFoodRecipesnew[index]
+                                              .imageUrl,
+                                      fit: BoxFit.cover,
                                     ),
-                                    child: Align(
-                                      alignment:
-                                          AlignmentDirectional.bottomCenter,
-                                      child: Text(
-                                        controller.listFoodRecipes[index].name,
-                                        style: TextStyle(
-                                          fontSize: 12.sp,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.white,
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                        vertical: 4.0,
+                                      ),
+                                      child: Align(
+                                        alignment:
+                                            AlignmentDirectional.bottomCenter,
+                                        child: Text(
+                                          controller
+                                              .listFoodRecipes[index]
+                                              .name,
+                                          style: TextStyle(
+                                            fontSize: 12.sp,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.white,
+                                          ),
+                                          textAlign: TextAlign.center,
                                         ),
-                                        textAlign: TextAlign.center,
                                       ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             ),
                           );
                     },
                   ),
                 ),
-                // CustomButton(
-                //   onPressed: () {},
-                //   buttonText: 'Food recipes',
-                //   boarderColor: AppColors.colorFont,
-                //   textColor: Colors.white,
-                //   width: 150.w,
-                //   height: 35.h,
-                //   borderRadius: BorderRadius.circular(10.r),
-                //   radius: Dimensions.paddingSizeExtremeLarge,
-                // ),
               ],
             ),
           );
