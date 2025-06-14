@@ -72,10 +72,11 @@ class LoginControllerImp extends LoginController {
         if (documentSnapshot.exists) {
           model = UserModel.fromFirestore(documentSnapshot);
           print(model!.userName);
+          Get.toNamed(RouteHelper.homePage);
         } else {
           showCustomSnackBar('You must register first'.tr, isError: true);
         }
-        print(documentSnapshot.exists);
+        print(documentSnapshot.id);
       });
     }
   }
