@@ -122,13 +122,15 @@ class _ControlPageState extends State<ControlPage> {
                   ),
                   _buildGadget(
                     title: "Light",
-                    value: sensorData['Light'] == 1 ? 'On' : 'Off',
+                    value: sensorData['Light'] == true ? 'On' : 'Off',
                     icon:
-                        sensorData['Light'] == 1
+                        sensorData['Light'] == true
                             ? Icons.lightbulb
                             : Icons.lightbulb_outline,
                     color:
-                        sensorData['Light'] == 1 ? Colors.amber : Colors.grey,
+                        sensorData['Light'] == true
+                            ? Colors.amber
+                            : Colors.grey,
                   ),
                   _buildGadget(
                     title: "Temperature",
@@ -144,13 +146,13 @@ class _ControlPageState extends State<ControlPage> {
                   ),
                   _buildGadget(
                     title: "Door",
-                    value: sensorData['door'] ?? false ? 'Open' : 'Closed',
+                    value: sensorData['Light'] ?? false ? 'Open' : 'Closed',
                     icon:
-                        sensorData['door'] ?? false
+                        sensorData['Light'] ?? false
                             ? Icons.meeting_room
                             : Icons.door_sliding,
                     color:
-                        sensorData['door'] ?? false
+                        sensorData['Light'] ?? false
                             ? Colors.orange
                             : Colors.green,
                   ),

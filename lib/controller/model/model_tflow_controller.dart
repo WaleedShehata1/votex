@@ -67,7 +67,7 @@ class ModelTflowController extends GetxController {
       // Step 4: Update UI
       _recognitions = recognitions;
       if (_recognitions != null || _recognitions!.isNotEmpty) {
-        fruits.add((_recognitions![0]['label']).toString().lowerCamelCase);
+        fruits.add((_recognitions![0]['label']).toString());
       }
       update();
       OverlayLoadingProgress.stop();
@@ -104,7 +104,7 @@ class ModelTflowController extends GetxController {
     print(formattedDate);
     final folderRef = storageRef
         .child('fruits')
-        .child(formattedDate); // replace with your folder
+        .child("2025-06-14"); // replace with your folder
 
     try {
       final ListResult result = await folderRef.listAll();

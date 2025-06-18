@@ -12,7 +12,7 @@ class CameraController extends GetxController {
     print(formattedDate);
     final folderRef = storageRef
         .child('fruits')
-        .child(formattedDate); // replace with your folder
+        .child("2025-06-14"); // replace with your folder
 
     try {
       final ListResult result = await folderRef.listAll();

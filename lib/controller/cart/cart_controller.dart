@@ -85,6 +85,7 @@ class CartControllerImp extends CartController {
     } else {
       totalCost = sensorCost + deliveryFee;
     }
+    update();
   }
 
   Future<void> getVisa() async {
