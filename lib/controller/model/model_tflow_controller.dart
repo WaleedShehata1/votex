@@ -66,8 +66,18 @@ class ModelTflowController extends GetxController {
 
       // Step 4: Update UI
       _recognitions = recognitions;
+      print(_recognitions![0]['label'].toString());
       if (_recognitions != null || _recognitions!.isNotEmpty) {
-        fruits.add((_recognitions![0]['label']).toString());
+        bool isFound = false;
+        for (var i = 0; i < fruits.length; i++) {
+          if (fruits[i] == (_recognitions![0]['label']).toString()) {
+            isFound = true;
+            break;
+          }
+        }
+        if (isFound == false) {
+          fruits.add((_recognitions![0]['label']).toString());
+        }
       }
       update();
       OverlayLoadingProgress.stop();
@@ -104,7 +114,7 @@ class ModelTflowController extends GetxController {
     print(formattedDate);
     final folderRef = storageRef
         .child('fruits')
-        .child("2025-06-14"); // replace with your folder
+        .child(formattedDate); // replace with your folder
 
     try {
       final ListResult result = await folderRef.listAll();
