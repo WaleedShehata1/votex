@@ -7,7 +7,7 @@ Cabbage
 Capsicum
 Carrot
 Cauliflower
-option
+Cucumber
 Papaya
 Potato
 Pumpkin

@@ -54,4 +54,6 @@ flutter {
     implementation("com.google.firebase:firebase-analytics")
     implementation(platform("com.google.firebase:firebase-bom:33.13.0"))
     testImplementation("junit:junit:4.13.2")
+    implementation("org.tensorflow:tensorflow-lite:1.0.0") // or your version
+    implementation ("org.tensorflow:tensorflow-lite-gpu:1.0.0")
     }
