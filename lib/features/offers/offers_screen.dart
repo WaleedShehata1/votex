@@ -172,9 +172,14 @@ class ProductCardOffer extends StatelessWidget {
                 ),
                 child: Row(
                   children: [
-                    Text(
-                      rate,
-                      style: TextStyle(fontSize: 10, color: Colors.white),
+                    SizedBox(
+                      width: 15,
+                      height: 15,
+                      child: Text(
+                        rate,
+                        style: TextStyle(fontSize: 10, color: Colors.white),
+                        textAlign: TextAlign.center,
+                      ),
                     ),
                     Icon(Icons.star, size: 15, color: Colors.white),
                   ],

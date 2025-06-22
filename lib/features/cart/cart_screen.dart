@@ -87,16 +87,11 @@ class _CartScreenState extends State<CartScreen> {
                     ),
                   ),
                   ProposalSection(proposalItem),
-                  // SummarySection(
-                  //     subtotal: controller.subtotal,
-                  //     sensorCost: controller.sensorCost,
-                  //     delivery: controller.deliveryFee,
-                  //     totalCost: controller.totalCost),
+
                   Column(
                     children: [
                       SummaryRow(label: "Sensor", value: controller.sensorCost),
                       SummaryRow(label: "Subtotal", value: controller.subtotal),
-                      // SummaryRow(label: "Delivery", value: controller.deliveryFee),
                       const Divider(thickness: 0.5),
                       SummaryRow(
                         label: "Total Cost",
@@ -108,12 +103,7 @@ class _CartScreenState extends State<CartScreen> {
                   // const CheckoutButton(),
                   CustomButton(
                     onPressed: () {
-                      // if (controller.cartItems.isNotEmpty ||
-                      //     proposalItem["count"] != 0) {
-                      //   Get.to(() => const PaymentScreen());
-                      // }
                       Get.to(() => PaymentScreen());
-                      // controller.createOrder();
                     },
                     height: 30.h,
                     buttonText: "Checkout",
@@ -245,6 +235,7 @@ class _CartItemCardState extends State<CartItemCard> {
                                           cartController.sensorprice =
                                               proposalItem['price'];
                                           cartController.call();
+                                          cartController.update();
                                         }
                                       }
                                     }
@@ -288,6 +279,7 @@ class _CartItemCardState extends State<CartItemCard> {
                                       }
                                     }
                                     cartController.call();
+                                    cartController.update();
                                   }),
                               child: Container(
                                 decoration: BoxDecoration(
@@ -306,37 +298,12 @@ class _CartItemCardState extends State<CartItemCard> {
                           ],
                         ),
                       ),
-                      // CustomButton(
-                      //   height: 30.h,
-                      //   width: 100.w,
-                      //   isBold: false,
-                      //   buttonText: "Buy now",
-                      //   textColor: Colors.white,
-                      //   radius: 15.r,
-                      //   color: Colors.green,
-                      // ),
                       const SizedBox(height: 6),
                     ],
                   ),
                 ),
               ],
             ),
-            // GestureDetector(
-            //   onTap: () {
-            //     setState(() {
-            //       add = !add;
-            //     });
-            //   },
-            //   child: Align(
-            //       alignment: AlignmentDirectional.center,
-            //       child: Row(
-            //         children: [
-            //           const Text("add sensor (optional)"),
-            //           Icon(add ? Icons.expand_less : Icons.expand_more),
-            //         ],
-            //       )),
-            // ),
-            // add ? ProposalSection(widget.proposalItem) : const SizedBox(),
           ],
         ),
       ),
@@ -462,6 +429,7 @@ class _ProposalSectionState extends State<ProposalSection> {
                             cartController.sensorprice = proposalItem['price'];
 
                             cartController.call();
+                            cartController.update();
                           }),
                       child: Container(
                         decoration: BoxDecoration(
@@ -492,6 +460,7 @@ class _ProposalSectionState extends State<ProposalSection> {
                             cartController.sensorcount = proposalItem['count'];
                             cartController.sensorprice = proposalItem['price'];
                             cartController.call();
+                            cartController.update();
                           }),
                       child: Container(
                         decoration: BoxDecoration(

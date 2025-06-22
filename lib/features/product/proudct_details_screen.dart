@@ -298,13 +298,13 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                           child: VideoPlayer(_controller),
                         ),
                         GestureDetector(
-                          onTap:
-                              () => setState(
-                                () =>
-                                    _controller.value.isPlaying
-                                        ? _controller.pause()
-                                        : _controller.play(),
-                              ),
+                          onTap: () {
+                            _controller.value.isPlaying
+                                ? _controller.pause()
+                                : _controller.play();
+                            productController2.update();
+                          },
+
                           child: Icon(
                             _controller.value.isPlaying
                                 ? Icons.pause
@@ -424,14 +424,13 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                 StarRatingInput(
                                   currentRating: productController2.rateProduct,
                                   onRate: (value) {
-                                    setState(() {
-                                      productController2.rateProduct = value;
-                                    });
+                                    productController2.rateProduct = value;
+
                                     productController2.addCommints(
                                       id: widget.item.itemId!,
                                       rates: value,
                                     );
-                                    Get.back();
+
                                     productController2.update();
                                   },
                                 ),

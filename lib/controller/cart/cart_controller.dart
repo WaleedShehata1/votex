@@ -254,6 +254,7 @@ class CartControllerImp extends CartController {
                 });
           }
           cartItems.clear();
+          sensorcount = 0;
           update();
           showCustomSnackBar("The order has been requested", isError: false);
           showNotification();
