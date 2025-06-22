@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import '../../../controller/home/home_controller.dart';
-import '../../../core/helper/route_helper.dart';
 import '../../../core/model/subcategory_model.dart';
 import '../../store/store_screen.dart';
 import 'category_card.dart';

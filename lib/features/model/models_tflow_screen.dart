@@ -4,9 +4,6 @@ import 'package:get/get.dart';
 import 'package:voltex/features/recipes/recipe_screen.dart';
 
 import '../../controller/model/model_tflow_controller.dart';
-import '../../core/constants/colors.dart';
-import '../../core/constants/dimensions.dart';
-import '../../core/widget/custom_button.dart';
 import '../../core/widget/custom_image_widget.dart';
 
 class ModelsTflowScreen extends StatelessWidget {

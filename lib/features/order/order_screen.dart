@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../../controller/order/order_controller.dart';
@@ -31,18 +32,29 @@ class OrderScreen extends StatelessWidget {
           ),
           body: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-            child: ListView.builder(
-              itemCount: controller.listOrder.length,
-              itemBuilder: (context, index) {
-                return OrderCard(
-                  title: controller.listOrder[index].title,
-                  description: controller.listOrder[index].description,
-                  orderNumber: controller.listOrder[index].orderNumber,
-                  date: controller.formatDate(controller.listOrder[index].date),
-                  image: controller.listOrder[index].image,
-                );
-              },
-            ),
+            child:
+                controller.isLoading
+                    ? Center(child: CircularProgressIndicator())
+                    : controller.listOrder.isEmpty
+                    ? Text(
+                      'empty',
+                      style: TextStyle(fontSize: 28.sp),
+                      textAlign: TextAlign.center,
+                    )
+                    : ListView.builder(
+                      itemCount: controller.listOrder.length,
+                      itemBuilder: (context, index) {
+                        return OrderCard(
+                          title: controller.listOrder[index].title,
+                          description: controller.listOrder[index].description,
+                          orderNumber: controller.listOrder[index].orderNumber,
+                          date: controller.formatDate(
+                            controller.listOrder[index].date,
+                          ),
+                          image: controller.listOrder[index].image,
+                        );
+                      },
+                    ),
           ),
         );
       },

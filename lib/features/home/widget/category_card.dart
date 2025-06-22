@@ -1,15 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../core/constants/images.dart';
 import '../../../core/widget/custom_image_widget.dart';
 
 class CategoryCard extends StatelessWidget {
-  const CategoryCard({
-    super.key,
-    required this.category,
-    required this.image,
-  });
+  const CategoryCard({super.key, required this.category, required this.image});
   final String category;
   final String image;
   @override
@@ -21,7 +16,11 @@ class CategoryCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white,
         boxShadow: [
-          BoxShadow(color: Colors.grey.shade200, spreadRadius: 5, blurRadius: 5)
+          BoxShadow(
+            color: Colors.grey.shade200,
+            spreadRadius: 5,
+            blurRadius: 5,
+          ),
         ],
         borderRadius: BorderRadius.circular(15),
       ),
@@ -57,14 +56,10 @@ class CategoryCard extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(5),
                 decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(5),
-                    color: const Color(0xffdfe9ff)),
-                child: const Text(
-                  '109',
-                  style: TextStyle(
-                    fontSize: 12,
-                  ),
+                  borderRadius: BorderRadius.circular(5),
+                  color: const Color(0xffdfe9ff),
                 ),
+                child: const Text('109', style: TextStyle(fontSize: 12)),
               ),
               Text(category, style: const TextStyle(fontSize: 12)),
             ],

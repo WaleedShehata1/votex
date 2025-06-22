@@ -5,7 +5,6 @@ import '../../controller/home/home_controller.dart';
 import '../../core/model/brand_model.dart';
 import '../../core/widget/custom_image_widget.dart';
 import '../drawer/drawer.dart';
-import '../store/store_screen.dart';
 
 class RatedBrandsScreen extends StatefulWidget {
   const RatedBrandsScreen({super.key, required this.brands});

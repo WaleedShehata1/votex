@@ -8,29 +8,23 @@ class OrderController extends GetxController {
   final orders = FirebaseFirestore.instance.collection('Bills');
   List<GetOrderModel> order = [];
   List<screenOrder> listOrder = [];
+  bool isLoading = false;
   Future<void> getOrder() async {
+    isLoading = true;
     order = [];
     QuerySnapshot orders =
         await FirebaseFirestore.instance.collection("Bills").get();
     String? id = await AppUsageService.getUserId();
-    // await orders.get().then((DocumentSnapshot documentSnapshot) {
-    //   if (documentSnapshot.exists) {
-    //     model = UserModel.fromFirestore(documentSnapshot);
-    //     userName.text = model!.userName;
-    //     address.text = model!.address;
-    //     phoneNumber.text = model!.phone;
-    //   }
-    //   print(documentSnapshot.exists);
-    // });
 
     for (var item in orders.docs) {
       if (item['userId'] == id) {
         List<BillModel> list = [];
-        var orders2 = await FirebaseFirestore.instance
-            .collection("Bills")
-            .doc(item.id)
-            .collection('Bills')
-            .get();
+        var orders2 =
+            await FirebaseFirestore.instance
+                .collection("Bills")
+                .doc(item.id)
+                .collection('Bills')
+                .get();
 
         for (var element in orders2.docs) {
           list.add(BillModel.fromFirestore(element));
@@ -39,6 +33,10 @@ class OrderController extends GetxController {
       }
     }
     creatListOrders();
+    if (orders.docs.isEmpty) {
+      isLoading = false;
+    }
+
     update();
   }
 
@@ -51,18 +49,22 @@ class OrderController extends GetxController {
               .doc(bill.idItem)
               .get()
               .then((DocumentSnapshot documentSnapshot) {
-            if (documentSnapshot.exists) {
-              listOrder.add(screenOrder(
-                  date: or.dataAdd,
-                  title: bill.nameItem + documentSnapshot['brand'],
-                  description: documentSnapshot['description'],
-                  orderNumber: or.orderId,
-                  image: documentSnapshot['imageIcon']));
-            }
-          });
+                if (documentSnapshot.exists) {
+                  listOrder.add(
+                    screenOrder(
+                      date: or.dataAdd,
+                      title: bill.nameItem + documentSnapshot['brand'],
+                      description: documentSnapshot['description'],
+                      orderNumber: or.orderId,
+                      image: documentSnapshot['imageIcon'],
+                    ),
+                  );
+                }
+              });
         }
       }
     }
+    isLoading = false;
     update();
   }
 

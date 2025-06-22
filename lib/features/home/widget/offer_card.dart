@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
 
-import '../../../controller/saved/saved_controller.dart';
 import '../../../core/constants/colors.dart';
 import '../../../core/constants/dimensions.dart';
-import '../../../core/constants/images.dart';
 import '../../../core/shape/sale_shape.dart';
 import '../../../core/widget/custom_button.dart';
 import '../../../core/widget/custom_image_widget.dart';

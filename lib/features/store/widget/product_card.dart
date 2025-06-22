@@ -69,7 +69,7 @@ class _ProductCardState extends State<ProductCard> {
                   child: Align(
                     alignment: AlignmentDirectional.centerEnd,
                     child: SizedBox(
-                      width: 150,
+                      width: 200.w,
                       child: Text(
                         widget.name,
                         style: const TextStyle(fontSize: 14),
@@ -95,11 +95,16 @@ class _ProductCardState extends State<ProductCard> {
                       ),
                       child: Row(
                         children: [
-                          Text(
-                            widget.rate,
-                            style: const TextStyle(
-                              fontSize: 10,
-                              color: Colors.white,
+                          SizedBox(
+                            width: 15,
+                            height: 15,
+                            child: Text(
+                              widget.rate,
+                              style: const TextStyle(
+                                fontSize: 10,
+                                color: Colors.white,
+                              ),
+                              textAlign: TextAlign.center,
                             ),
                           ),
                           const Icon(Icons.star, size: 15, color: Colors.white),

@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import '../../controller/cart/cart_controller.dart';
 import '../../core/constants/colors.dart';
 import '../../core/constants/dimensions.dart';
-import '../../core/constants/images.dart';
 import '../../core/model/item_model.dart';
 import '../../core/widget/custom_button.dart';
 import '../../core/widget/custom_image_widget.dart';
@@ -69,6 +68,7 @@ class SpecialOfferScreen extends StatelessWidget {
   }
 
   // Discount button widget
+  // ignore: unused_element
   Widget _discountButton(String text, {bool isSelected = false}) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),

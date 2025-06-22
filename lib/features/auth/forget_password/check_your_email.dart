@@ -54,30 +54,11 @@ class CheckYourEmail extends StatelessWidget {
             ),
             const SizedBox(height: 30),
             Text(""),
-            // ElevatedButton(
-            //   onPressed: () {
-            //     Get.toNamed(RouteHelper.passwordUpdatedScreen);
-            //   },
-            //   style: ElevatedButton.styleFrom(
-            //     backgroundColor: AppColors.colorFont,
-            //     minimumSize: const Size(double.infinity, 50),
-            //     shape: RoundedRectangleBorder(
-            //       borderRadius: BorderRadius.circular(8),
-            //     ),
-            //   ),
-            //   child: const Text(
-            //     "OPEN YOUR EMAIL",
-            //     style: TextStyle(
-            //       fontSize: 16,
-            //       fontWeight: FontWeight.bold,
-            //       color: Colors.white,
-            //     ),
-            //   ),
-            // ),
+
             const SizedBox(height: 10),
             ElevatedButton(
               onPressed: () {
-                Get.to(LoginScreen());
+                Get.offAllNamed(RouteHelper.signIn);
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: const Color.fromARGB(255, 168, 216, 255),

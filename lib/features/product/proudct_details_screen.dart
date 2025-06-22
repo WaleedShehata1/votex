@@ -17,6 +17,9 @@ import '../../core/widget/custom_button.dart';
 import '../../core/widget/custom_image_widget.dart';
 import '../home/widget/customTextField.widgets.dart';
 import '../store/widget/product_card.dart';
+import 'widget/build_star_rating.dart';
+import 'widget/star_rating_input.dart';
+import 'widget/static_star_display.dart';
 
 class ProductDetailsScreen extends StatefulWidget {
   const ProductDetailsScreen({
@@ -147,12 +150,10 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
               elevation: 0,
               actions: [
                 IconButton(
-                  icon: Icon(icon, color: Colors.red),
+                  icon: Icon(Icons.favorite_border, color: Colors.red),
                   onPressed: () {
                     savedController.addItem(widget.item);
-                    setState(() {
-                      icon = Icons.favorite_outlined;
-                    });
+                    setState(() {});
                   },
                 ),
                 IconButton(
@@ -170,24 +171,24 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  // Product Image
                   SizedBox(
                     height: 210,
                     width: MediaQuery.of(context).size.width * 0.95,
-                    child: CarouselSlider(
-                      options: CarouselOptions(
-                        onPageChanged: (index, reason) {
-                          setState(() {});
-                          print(list.length);
-                          currentPage = index;
-                        },
-                        aspectRatio: 1 / 1,
-                        height: 160.h,
-                        viewportFraction: 0.9,
-                        enlargeCenterPage: true,
-                      ),
-                      items: list,
-                    ),
+                    child:
+                        list.isEmpty
+                            ? const Center(child: Text("No images"))
+                            : CarouselSlider(
+                              options: CarouselOptions(
+                                onPageChanged:
+                                    (index, _) =>
+                                        setState(() => currentPage = index),
+                                aspectRatio: 1 / 1,
+                                height: 160.h,
+                                viewportFraction: 0.9,
+                                enlargeCenterPage: true,
+                              ),
+                              items: list,
+                            ),
                   ),
                   SizedBox(height: 5.h),
                   Row(
@@ -210,82 +211,24 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                     maxLines: 2,
                   ),
                   const SizedBox(height: 5),
-                  // Product Title, Rating & Price
                   Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            '(${widget.item.brandName})',
-                            style: const TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                              color: Colors.blue,
-                            ),
-                          ),
-                        ],
+                      Text(
+                        '(${widget.item.brandName})',
+                        style: const TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.blue,
+                        ),
                       ),
                       Row(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Icon(
-                            (double.parse(productController2.rate)) <= 5 &&
-                                    (double.parse(productController2.rate)) >= 1
-                                ? Icons.star
-                                : (double.parse(productController2.rate)) < 1 &&
-                                    (double.parse(productController2.rate)) > 0
-                                ? Icons.star_half
-                                : Icons.star_border,
-                            color: Colors.orange,
-                            size: 16,
+                          StaticStarDisplay(
+                            rating:
+                                double.tryParse(productController2.rate) ?? 0,
                           ),
-                          Icon(
-                            (double.parse(productController2.rate)) <= 5 &&
-                                    (double.parse(productController2.rate)) >= 2
-                                ? Icons.star
-                                : (double.parse(productController2.rate)) < 2 &&
-                                    (double.parse(productController2.rate)) > 1
-                                ? Icons.star_half
-                                : Icons.star_border,
-                            color: Colors.orange,
-                            size: 16,
-                          ),
-                          Icon(
-                            (double.parse(productController2.rate)) <= 5 &&
-                                    (double.parse(productController2.rate)) >= 3
-                                ? Icons.star
-                                : (double.parse(productController2.rate)) < 3 &&
-                                    (double.parse(productController2.rate)) > 2
-                                ? Icons.star_half
-                                : Icons.star_border,
-                            color: Colors.orange,
-                            size: 16,
-                          ),
-                          Icon(
-                            (double.parse(productController2.rate)) <= 5 &&
-                                    (double.parse(productController2.rate)) >= 4
-                                ? Icons.star
-                                : (double.parse(productController2.rate)) < 4 &&
-                                    (double.parse(productController2.rate)) > 3
-                                ? Icons.star_half
-                                : Icons.star_border,
-                            color: Colors.orange,
-                            size: 16,
-                          ),
-                          Icon(
-                            (double.parse(productController2.rate)) == 5
-                                ? Icons.star
-                                : double.parse(productController2.rate) > 4
-                                ? Icons.star_half
-                                : Icons.star_border,
-                            color: Colors.orange,
-                            size: 16,
-                          ),
+                          SizedBox(width: 4),
                           Text(
                             '(${productController2.rate}/5)',
                             style: const TextStyle(color: Colors.blue),
@@ -294,7 +237,6 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                       ),
                     ],
                   ),
-
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Row(
@@ -323,9 +265,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       CustomButton(
-                        onPressed: () {
-                          cartControllerImp.addItem(widget.item);
-                        },
+                        onPressed: () => cartControllerImp.addItem(widget.item),
                         buttonText: 'Add to cart',
                         boarderColor: AppColors.colorFont,
                         textColor: Colors.white,
@@ -336,9 +276,8 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                       ),
                       const SizedBox(width: 5),
                       CustomButton(
-                        onPressed: () {
-                          cartControllerImp.addItemAndCart(widget.item);
-                        },
+                        onPressed:
+                            () => cartControllerImp.addItemAndCart(widget.item),
                         buttonText: 'Buy now',
                         boarderColor: Colors.green,
                         textColor: Colors.white,
@@ -349,47 +288,39 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                       ),
                     ],
                   ),
-
                   const SizedBox(height: 10),
-
-                  // Video Player Section
-                  Stack(
-                    alignment: AlignmentDirectional.center,
-                    children: [
-                      AspectRatio(
-                        aspectRatio: _controller.value.aspectRatio,
-                        child: VideoPlayer(_controller),
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            _controller.value.isPlaying
-                                ? _controller.pause()
-                                : _controller.play();
-                          });
-                        },
-                        child: Icon(
-                          _controller.value.isPlaying
-                              ? Icons.pause
-                              : Icons.play_arrow,
-                          color: Colors.white,
+                  if (_controller.value.isInitialized)
+                    Stack(
+                      alignment: AlignmentDirectional.center,
+                      children: [
+                        AspectRatio(
+                          aspectRatio: _controller.value.aspectRatio,
+                          child: VideoPlayer(_controller),
                         ),
-                      ),
-                    ],
-                  ),
-
+                        GestureDetector(
+                          onTap:
+                              () => setState(
+                                () =>
+                                    _controller.value.isPlaying
+                                        ? _controller.pause()
+                                        : _controller.play(),
+                              ),
+                          child: Icon(
+                            _controller.value.isPlaying
+                                ? Icons.pause
+                                : Icons.play_arrow,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ],
+                    ),
                   const SizedBox(height: 15),
-
-                  // Product Description
                   Text(
                     widget.item.itemDescription,
                     textAlign: TextAlign.start,
                     style: const TextStyle(fontSize: 14, color: Colors.black54),
                   ),
-
                   const SizedBox(height: 15),
-
-                  // Ratings & Reviews Section
                   const Text(
                     'Ratings & Reviews',
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
@@ -397,466 +328,157 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(
-                        (double.parse(productController2.rate)) <= 5 &&
-                                (double.parse(productController2.rate)) >= 1
-                            ? Icons.star
-                            : (double.parse(productController2.rate)) < 1 &&
-                                (double.parse(productController2.rate)) > 0
-                            ? Icons.star_half
-                            : Icons.star_border,
-                        color: Colors.orange,
-                        size: 16,
+                      StaticStarDisplay(
+                        rating: double.tryParse(productController2.rate) ?? 0,
                       ),
-                      Icon(
-                        (double.parse(productController2.rate)) <= 5 &&
-                                (double.parse(productController2.rate)) >= 2
-                            ? Icons.star
-                            : (double.parse(productController2.rate)) < 2 &&
-                                (double.parse(productController2.rate)) > 1
-                            ? Icons.star_half
-                            : Icons.star_border,
-                        color: Colors.orange,
-                        size: 16,
-                      ),
-                      Icon(
-                        (double.parse(productController2.rate)) <= 5 &&
-                                (double.parse(productController2.rate)) >= 3
-                            ? Icons.star
-                            : (double.parse(productController2.rate)) < 3 &&
-                                (double.parse(productController2.rate)) > 2
-                            ? Icons.star_half
-                            : Icons.star_border,
-                        color: Colors.orange,
-                        size: 16,
-                      ),
-                      Icon(
-                        (double.parse(productController2.rate)) <= 5 &&
-                                (double.parse(productController2.rate)) >= 4
-                            ? Icons.star
-                            : (double.parse(productController2.rate)) < 4 &&
-                                (double.parse(productController2.rate)) > 3
-                            ? Icons.star_half
-                            : Icons.star_border,
-                        color: Colors.orange,
-                        size: 16,
-                      ),
-                      Icon(
-                        (double.parse(productController2.rate)) == 5
-                            ? Icons.star
-                            : double.parse(productController2.rate) > 4
-                            ? Icons.star_half
-                            : Icons.star_border,
-                        color: Colors.orange,
-                        size: 16,
-                      ),
+                      SizedBox(width: 4),
                       Text(
                         '(${productController2.rate}/5)',
                         style: const TextStyle(color: Colors.blue),
                       ),
                     ],
                   ),
-
                   const SizedBox(height: 10),
-
-                  // Review Card
-                  Column(
-                    children: [
-                      SizedBox(
-                        height: 100,
-                        width: double.maxFinite,
-                        child: GridView.builder(
-                          shrinkWrap: true,
-                          scrollDirection: Axis.horizontal,
-                          // physics: const NeverScrollableScrollPhysics(),
-                          gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 1,
-                                crossAxisSpacing: 5,
-                                mainAxisSpacing: 10,
-                                mainAxisExtent: 200.h,
-                              ),
-                          itemCount: productController2.listCommints.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            return Container(
-                              width: double.maxFinite,
-                              height: 120,
-                              padding: const EdgeInsets.all(10),
-                              decoration: BoxDecoration(
-                                color: Colors.grey[100],
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              child: Column(
-                                children: [
-                                  Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      CircleAvatar(
-                                        radius: 20,
-                                        child: Icon(Icons.person),
-                                      ),
-                                      SizedBox(width: 10),
-                                      Expanded(
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              productController2
-                                                  .listCommints[index]
-                                                  .userName,
-                                              style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
-                                            Row(
-                                              children: [
-                                                Icon(
-                                                  (double.parse(
-                                                                widget
-                                                                    .item
-                                                                    .rate,
-                                                              )) <=
-                                                              5 &&
-                                                          (double.parse(
-                                                                widget
-                                                                    .item
-                                                                    .rate,
-                                                              )) >=
-                                                              1
-                                                      ? Icons.star
-                                                      : (double.parse(
-                                                                widget
-                                                                    .item
-                                                                    .rate,
-                                                              )) <
-                                                              1 &&
-                                                          (double.parse(
-                                                                widget
-                                                                    .item
-                                                                    .rate,
-                                                              )) >
-                                                              0
-                                                      ? Icons.star_half
-                                                      : Icons.star_border,
-                                                  color: Colors.orange,
-                                                  size: 16,
-                                                ),
-                                                Icon(
-                                                  (double.parse(
-                                                                productController2
-                                                                    .listCommints[index]
-                                                                    .rate,
-                                                              )) <=
-                                                              5 &&
-                                                          (double.parse(
-                                                                productController2
-                                                                    .listCommints[index]
-                                                                    .rate,
-                                                              )) >=
-                                                              2
-                                                      ? Icons.star
-                                                      : (double.parse(
-                                                                productController2
-                                                                    .listCommints[index]
-                                                                    .rate,
-                                                              )) <
-                                                              2 &&
-                                                          (double.parse(
-                                                                productController2
-                                                                    .listCommints[index]
-                                                                    .rate,
-                                                              )) >
-                                                              1
-                                                      ? Icons.star_half
-                                                      : Icons.star_border,
-                                                  color: Colors.orange,
-                                                  size: 16,
-                                                ),
-                                                Icon(
-                                                  (double.parse(
-                                                                productController2
-                                                                    .listCommints[index]
-                                                                    .rate,
-                                                              )) <=
-                                                              5 &&
-                                                          (double.parse(
-                                                                productController2
-                                                                    .listCommints[index]
-                                                                    .rate,
-                                                              )) >=
-                                                              3
-                                                      ? Icons.star
-                                                      : (double.parse(
-                                                                productController2
-                                                                    .listCommints[index]
-                                                                    .rate,
-                                                              )) <
-                                                              3 &&
-                                                          (double.parse(
-                                                                productController2
-                                                                    .listCommints[index]
-                                                                    .rate,
-                                                              )) >
-                                                              2
-                                                      ? Icons.star_half
-                                                      : Icons.star_border,
-                                                  color: Colors.orange,
-                                                  size: 16,
-                                                ),
-                                                Icon(
-                                                  (double.parse(
-                                                                productController2
-                                                                    .listCommints[index]
-                                                                    .rate,
-                                                              )) <=
-                                                              5 &&
-                                                          (double.parse(
-                                                                productController2
-                                                                    .listCommints[index]
-                                                                    .rate,
-                                                              )) >=
-                                                              4
-                                                      ? Icons.star
-                                                      : (double.parse(
-                                                                productController2
-                                                                    .listCommints[index]
-                                                                    .rate,
-                                                              )) <
-                                                              4 &&
-                                                          (double.parse(
-                                                                widget
-                                                                    .item
-                                                                    .rate,
-                                                              )) >
-                                                              3
-                                                      ? Icons.star_half
-                                                      : Icons.star_border,
-                                                  color: Colors.orange,
-                                                  size: 16,
-                                                ),
-                                                Icon(
-                                                  (double.parse(
-                                                            productController2
-                                                                .listCommints[index]
-                                                                .rate,
-                                                          )) ==
-                                                          5
-                                                      ? Icons.star
-                                                      : double.parse(
-                                                            productController2
-                                                                .listCommints[index]
-                                                                .rate,
-                                                          ) >
-                                                          4
-                                                      ? Icons.star_half
-                                                      : Icons.star_border,
-                                                  color: Colors.orange,
-                                                  size: 16,
-                                                ),
-                                              ],
-                                            ),
-                                            Text(
-                                              productController2
-                                                  .listCommints[index]
-                                                  .commint,
-                                              style: TextStyle(fontSize: 14),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            );
-                          },
-                        ),
+                  SizedBox(
+                    height: 100,
+                    width: double.infinity,
+                    child: GridView.builder(
+                      shrinkWrap: true,
+                      scrollDirection: Axis.horizontal,
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 1,
+                        crossAxisSpacing: 5,
+                        mainAxisSpacing: 10,
+                        mainAxisExtent: 200.h,
                       ),
-                      SizedBox(height: 10),
-                      CustomTextFieldChat(
-                        controller: productController2.controller,
-                        onPress: () {
-                          if (productController2.controller.text.isNotEmpty) {
-                            Get.bottomSheet(
-                              Container(
-                                padding: EdgeInsetsDirectional.symmetric(
-                                  vertical: 15,
-                                ),
-                                height: 75.h,
-                                width: double.maxFinite,
-                                margin: EdgeInsetsDirectional.only(bottom: 70),
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(30),
-                                ),
-                                child: Column(
-                                  children: [
-                                    Text('Choose your rating for the product'),
-                                    SizedBox(height: 10.h),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
+                      itemCount: productController2.listCommints.length,
+                      itemBuilder: (context, index) {
+                        final comment = productController2.listCommints[index];
+                        return Container(
+                          padding: const EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            color: Colors.grey[100],
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                children: [
+                                  const CircleAvatar(
+                                    radius: 20,
+                                    child: Icon(Icons.person),
+                                  ),
+                                  SizedBox(width: 10),
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
-                                        GestureDetector(
-                                          onTap: () {
-                                            setState(() {
-                                              productController2.rateProduct =
-                                                  1;
-                                            });
-                                            productController2.addCommints(
-                                              id: widget.item.itemId!,
-                                              rates: 1,
-                                            );
-                                            productController2.update();
-                                          },
-                                          child: Icon(
-                                            productController2.rateProduct >= 1
-                                                ? Icons.star
-                                                : Icons.star_border,
-                                            color: Colors.amber,
+                                        Text(
+                                          comment.userName,
+                                          style: const TextStyle(
+                                            fontWeight: FontWeight.bold,
                                           ),
                                         ),
-                                        SizedBox(width: 10),
-                                        GestureDetector(
-                                          onTap: () {
-                                            setState(() {
-                                              productController2.rateProduct =
-                                                  2;
-                                            });
-                                            productController2.addCommints(
-                                              id: widget.item.itemId!,
-                                              rates: 2,
-                                            );
-                                            productController2.update();
-                                          },
-                                          child: Icon(
-                                            productController2.rateProduct >= 2
-                                                ? Icons.star
-                                                : Icons.star_border,
-                                            color: Colors.amber,
-                                          ),
+                                        StaticStarDisplay(
+                                          rating:
+                                              double.tryParse(comment.rate) ??
+                                              0,
                                         ),
-                                        SizedBox(width: 10),
-                                        GestureDetector(
-                                          onTap: () {
-                                            setState(() {
-                                              productController2.rateProduct =
-                                                  3;
-                                            });
-                                            productController2.addCommints(
-                                              id: widget.item.itemId!,
-                                              rates: 3,
-                                            );
-                                            productController2.update();
-                                          },
-                                          child: Icon(
-                                            productController2.rateProduct >= 3
-                                                ? Icons.star
-                                                : Icons.star_border,
-                                            color: Colors.amber,
-                                          ),
-                                        ),
-                                        SizedBox(width: 10),
-                                        GestureDetector(
-                                          onTap: () {
-                                            setState(() {
-                                              productController2.rateProduct =
-                                                  4;
-                                            });
-                                            productController2.addCommints(
-                                              id: widget.item.itemId!,
-                                              rates: 4,
-                                            );
-                                            productController2.update();
-                                          },
-                                          child: Icon(
-                                            productController2.rateProduct >= 4
-                                                ? Icons.star
-                                                : Icons.star_border,
-                                            color: Colors.amber,
-                                          ),
-                                        ),
-                                        SizedBox(width: 10),
-                                        GestureDetector(
-                                          onTap: () {
-                                            setState(() {
-                                              productController2.rateProduct =
-                                                  5;
-                                            });
-                                            productController2.addCommints(
-                                              id: widget.item.itemId!,
-                                              rates: 5,
-                                            );
-                                            productController2.update();
-                                          },
-                                          child: Icon(
-                                            productController2.rateProduct == 5
-                                                ? Icons.star
-                                                : Icons.star_border,
-                                            color: Colors.amber,
-                                          ),
+                                        Text(
+                                          comment.commint,
+                                          style: const TextStyle(fontSize: 14),
                                         ),
                                       ],
                                     ),
-                                  ],
-                                ),
+                                  ),
+                                ],
                               ),
-                            );
-                            productController2.update();
-                          }
-                        },
-                      ),
-                    ],
+                            ],
+                          ),
+                        );
+                      },
+                    ),
                   ),
-
+                  SizedBox(height: 10),
+                  CustomTextFieldChat(
+                    controller: productController2.controller,
+                    onPress: () {
+                      if (productController2.controller.text.isNotEmpty) {
+                        Get.bottomSheet(
+                          Container(
+                            padding: const EdgeInsets.symmetric(vertical: 15),
+                            height: 75.h,
+                            margin: const EdgeInsets.only(bottom: 70),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(30),
+                            ),
+                            child: Column(
+                              children: [
+                                const Text(
+                                  'Choose your rating for the product',
+                                ),
+                                SizedBox(height: 10.h),
+                                StarRatingInput(
+                                  currentRating: productController2.rateProduct,
+                                  onRate: (value) {
+                                    setState(() {
+                                      productController2.rateProduct = value;
+                                    });
+                                    productController2.addCommints(
+                                      id: widget.item.itemId!,
+                                      rates: value,
+                                    );
+                                    Get.back();
+                                    productController2.update();
+                                  },
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      }
+                    },
+                  ),
                   SizedBox(height: 20.h),
-
-                  // Product List
                   SizedBox(
                     height: 180.h,
                     width: MediaQuery.of(context).size.width * 0.95,
-                    child: Expanded(
-                      child: GridView.builder(
-                        shrinkWrap: true,
-                        scrollDirection: Axis.horizontal,
-                        // physics: const NeverScrollableScrollPhysics(),
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 1,
-                          crossAxisSpacing: 10,
-                          mainAxisSpacing: 10,
-                          mainAxisExtent: 130.h,
-                        ),
-                        itemCount: items.length,
-                        itemBuilder: (context, index) {
-                          return GestureDetector(
-                            onTap: () {
-                              productController2.rate = items[index].rate;
-                              productController2.getCommints(
-                                id: items[index].itemId!,
-                              );
-
-                              Get.to(
-                                ProductDetailsScreen(
-                                  item: items[index],
-                                  items: items,
-                                ),
-                              );
-                            },
-                            child: ProductCard(
-                              name: items[index].itemName,
-                              price: items[index].price,
-                              image: items[index].imageIcon,
-                              rate: items[index].rate,
-                              item: items[index],
-                              onPressed: () {
-                                cartControllerImp.addItem(items[index]);
-                              },
-                            ),
-                          );
-                        },
+                    child: GridView.builder(
+                      shrinkWrap: true,
+                      scrollDirection: Axis.horizontal,
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 1,
+                        crossAxisSpacing: 10,
+                        mainAxisSpacing: 10,
+                        mainAxisExtent: 130.h,
                       ),
+                      itemCount: widget.items.length,
+                      itemBuilder: (context, index) {
+                        final item = widget.items[index];
+                        return GestureDetector(
+                          onTap: () {
+                            productController2.rate = item.rate;
+                            productController2.getCommints(id: item.itemId!);
+                            Get.to(
+                              () => ProductDetailsScreen(
+                                item: item,
+                                items: widget.items,
+                              ),
+                            );
+                          },
+                          child: ProductCard(
+                            name: item.itemName,
+                            price: item.price,
+                            image: item.imageIcon,
+                            rate: item.rate,
+                            item: item,
+                            onPressed: () => cartControllerImp.addItem(item),
+                          ),
+                        );
+                      },
                     ),
                   ),
                   SizedBox(height: 40.h),

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
-import 'package:voltex/core/constants/images.dart';
 
 import '../../controller/notification/notification_controller.dart';
 import '../../core/widget/custom_image_widget.dart';
@@ -10,64 +9,70 @@ class NotificationsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<NotificationController>(builder: (controller) {
-      return Scaffold(
-        backgroundColor: Colors.white,
-        appBar: AppBar(
+    return GetBuilder<NotificationController>(
+      builder: (controller) {
+        return Scaffold(
           backgroundColor: Colors.white,
-          elevation: 0,
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back_ios, color: Colors.black),
-            onPressed: () => Navigator.pop(context),
-          ),
-          title: const Text(
-            "Notifications",
-            style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
-          ),
-          centerTitle: true,
-        ),
-        body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text(
-                "Recent",
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+          appBar: AppBar(
+            backgroundColor: Colors.white,
+            elevation: 0,
+            leading: IconButton(
+              icon: const Icon(Icons.arrow_back_ios, color: Colors.black),
+              onPressed: () => Navigator.pop(context),
+            ),
+            title: const Text(
+              "Notifications",
+              style: TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
               ),
-              const SizedBox(height: 10),
-              Expanded(
-                child: ListView.builder(
-                  itemCount: controller.listNotifications.length,
-                  itemBuilder: (context, index) {
-                    return NotificationCard(
-                      title: controller.listNotifications[index].title,
-                      time: controller
-                          .formatDate(controller.listNotifications[index].date),
-                      description:
-                          controller.listNotifications[index].description,
-                      image:
-                          'https://www.lenovo.com/medias/lenovo-laptop-thinkpad-x1-carbon-gen-9-hero.png?context=bWFzdGVyfHJvb3R8NzAxNzJ8aW1hZ2UvcG5nfGgyZS9oYzgvMTEzNjUyMTk0OTc2MjIucG5nfDk1NGI2OGNlZDA4NjVkM2U1MWJmNGU5OTU0NjJmMjY0NzNhOGYyZmYzMzlmOWIzMTlkZjg2OWY1ZmFkODRmZDM',
-                    );
-                  },
+            ),
+            centerTitle: true,
+          ),
+          body: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  "Recent",
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                 ),
-              ),
-              // Center(
-              //   child: TextButton(
-              //     onPressed: () {
-              //       // Handle delete all
-              //     },
-              //     child: const Text(
-              //       "Delete All",
-              //       style: TextStyle(color: Colors.black, fontSize: 16),
-              //     ),
-              //   ),
-              // )
-            ],
+                const SizedBox(height: 10),
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: controller.listNotifications.length,
+                    itemBuilder: (context, index) {
+                      return NotificationCard(
+                        title: controller.listNotifications[index].title,
+                        time: controller.formatDate(
+                          controller.listNotifications[index].date,
+                        ),
+                        description:
+                            controller.listNotifications[index].description,
+                        image:
+                            'https://www.lenovo.com/medias/lenovo-laptop-thinkpad-x1-carbon-gen-9-hero.png?context=bWFzdGVyfHJvb3R8NzAxNzJ8aW1hZ2UvcG5nfGgyZS9oYzgvMTEzNjUyMTk0OTc2MjIucG5nfDk1NGI2OGNlZDA4NjVkM2U1MWJmNGU5OTU0NjJmMjY0NzNhOGYyZmYzMzlmOWIzMTlkZjg2OWY1ZmFkODRmZDM',
+                      );
+                    },
+                  ),
+                ),
+                // Center(
+                //   child: TextButton(
+                //     onPressed: () {
+                //       // Handle delete all
+                //     },
+                //     child: const Text(
+                //       "Delete All",
+                //       style: TextStyle(color: Colors.black, fontSize: 16),
+                //     ),
+                //   ),
+                // )
+              ],
+            ),
           ),
-        ),
-      );
-    });
+        );
+      },
+    );
   }
 }
 
@@ -99,11 +104,7 @@ class NotificationCard extends StatelessWidget {
             // Product Image
             ClipRRect(
               borderRadius: BorderRadius.circular(8),
-              child: CustomImageWidget(
-                image: image,
-                height: 50,
-                width: 50,
-              ),
+              child: CustomImageWidget(image: image, height: 50, width: 50),
               // Image.network(
               //   image,
               //   height: 50,

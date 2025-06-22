@@ -548,7 +548,7 @@ class HomeControllerImp extends HomeController {
   filtterToType(String typing) {
     filtterListItem = [];
 
-    if (typing == 'الكل') {
+    if (typing == 'all') {
       listItemAndFiltter = listItem;
     } else {
       for (var item in listItem) {
@@ -565,8 +565,8 @@ class HomeControllerImp extends HomeController {
   getSubCategores() async {
     selectTypeList = [
       const DropdownMenuItem<String>(
-        value: 'الكل',
-        child: Center(child: Text('الكل')),
+        value: 'all',
+        child: Center(child: Text('all')),
       ),
     ];
     listSubCategoryes = [];

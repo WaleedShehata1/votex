@@ -1,4 +1,7 @@
-# Please add these rules to your existing keep rules in order to suppress warnings.
-# This is generated automatically by the Android Gradle plugin.
--dontwarn org.tensorflow.lite.gpu.GpuDelegateFactory$Options$GpuBackend
--dontwarn org.tensorflow.lite.gpu.GpuDelegateFactory$Options
+# TensorFlow Lite - keep all GPU classes
+-keep class org.tensorflow.lite.** { *; }
+-dontwarn org.tensorflow.lite.**
+
+# Prevent stripping inner classes related to GpuDelegate
+-keep class org.tensorflow.lite.gpu.** { *; }
+-dontwarn org.tensorflow.lite.gpu.**
